@@ -90,7 +90,7 @@
             
             <div class = "col-sm-3 padding-0" style="margin-left: 0">
             <label>Transaction:</label>
-              <select ng-model = "transactiontype">
+              <select ng-change ="transactioncall(transactiontype)" ng-model = "transactiontype">
                 <option></option>
                 <option ng-repeat = "transaction in transactionType " id="idid">{{transaction.transactionType}}</option>
               </select>
@@ -140,16 +140,16 @@
           
           <div class = "col-sm-2" id="section">
             <label>Section:
-              <select ng-disabled="all">
+              <select ng-model="sectionnames" ng-change="getsection(sectionnames)" ng-disabled="all">
                 <option></option>
-                  <option ng-repeat="section in sectioname" ng-disabled="all" >{{section.SectionName}}</option>
+                  <option ng-repeat="section in sectioname">{{section.SectionName}}</option>
               </select>
             </label>
           </div>
           
           <div class = "col-sm-2">
             <span id ="rate" >
-              <label pull-left>Rate:<input type = "text" id="idid" style="height: 40px;width: 100px;color:blue;font-size: 30px" ng-model="purchaserate" ng-blur = "rate()"></label>
+              <label pull-left>Rate:<input type = "text" id="idid" style="height: 40px;width: 100px;color:blue;font-size: 30px" ng-model="finalrate" ng-blur = "rate();itemtaxfun()"></label>
               </span>
           </div>
           
@@ -160,7 +160,7 @@
         <div class ="row3">
            <div class ="col-sm-5 padding-0 row">
               <label>Item Code:</label>
-             <b><input list="itemname" name="itemname" id="idid" ng-model="itemcode" ng-blur="itemdetailsfetchfun(itemcode);itemtaxfun(itemcode)"></b>
+             <b><input list="itemname" name="itemname" id="idid" ng-model="itemcode" ng-blur="itemdetailsfetchfun(itemcode)"></b>
               <datalist id = "itemname">
                 <select>
                   <option ng-repeat="item in itemdetails" ng-model="itemcode">{{item.ItemCode}}</option>
@@ -263,22 +263,22 @@
           <table class="table table-bordered">
                 <tbody style="font-size:15px;border:2px solid">
                 <tr style="background-color:dodgerblue;color: white"><th style="width:50%">Taxable Value</th>
-                  <td>{{finalvalue}}</td>
+                  <td>{{taxablevalue1 | number : 3}}</td>
                   </tr>
                   <tr><th>Tax</th>
-                    <td>00</td>
+                    <td>{{tax1 | number : 3}}</td>
                   </tr>
                   <tr><th>Discount</th>
                     <td>00</td>
                   </tr>
                   <tr><th>Sub Total</th>
                   
-                  <td>{{finalvalue}}</td></tr>
+                  <td>{{subtotal1}}</td></tr>
                   <tr><th>Charges</th>
                   <td>00</td>
                   </tr>
                   <tr><th>Invoice Value</th>
-                    <td>{{finalvalue}}</td>
+                    <td>{{invoicevalue1}}</td>
                   </tr>
                   <tr><th>Adjustment</th>
                     <td>00</td>
@@ -294,8 +294,8 @@
         <p style="font-size:30px">Pieces:{{piece}}</p>
         <p style="font-size:30px;color:blue"> Nett:{{finalvalue}} </p>
         </div>
-
         </div>
+        
         <br>
         <div>
         <button type="button" class=" btn-default" id="idid">Delete</button>

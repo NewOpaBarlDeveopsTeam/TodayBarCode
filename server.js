@@ -3715,9 +3715,9 @@ app.post('/purchasepost:purchasetran',function(req,res){
     var netpieces = str_array[10];
     netpieces = parseInt(netpieces);
     console.log(netpieces)
-    var purchaserate= str_array[11];
-    purchaserate = parseInt(purchaserate);
-    console.log(purchaserate)
+    var finalrate= str_array[11];
+    finalrate = parseInt(finalrate);
+    console.log(finalrate)
     var umosize= str_array[12];
     //purchaserate = parseInt(purchaserate);
     console.log(umosize)
@@ -3744,12 +3744,15 @@ app.post('/purchasepost:purchasetran',function(req,res){
     var entryrowno= str_array[20];
     entryrowno = parseInt(entryrowno);
     console.log(entryrowno)
-//    var entryrowno= str_array[20];
-//    entryrowno = parseInt(entryrowno);
-//    console.log(entryrowno)
+    var salerate= str_array[21];
+    salerate = parseInt(salerate);
+    console.log(salerate)
+    var purchaserate= str_array[22];
+    purchaserate = parseInt(purchaserate);
+    console.log(purchaserate)
   
 
-    db.stockBookDetail.insert({"VocherId" : voucherid,"ItemId":itemid,"ParentStock":parentstock,"IsComposite":composite,"IsSplittable":splittable,"stockInWord":stockinward,"AccN0":accno,"PosID":posid,"StockBookId":stockid,"EntryRowNo":entryrowno,"VocherDate":voucherdate,"NetQty":umosize,"NetPieces":netpieces,"PurchaseRate":purchaserate,"ChargeableUnits":netpieces,"AllIncluValue":allincluvalue,"UOMSizeMasterId":uomsizemasterid,"ReferenceNo":referenceno,"StockPointId":stockpointid,"UOMId":uomid,"InvGroupName":invgroupname},function(err,doc){
+    db.stockBookDetail.insert({"VocherId" : voucherid,"ItemId":itemid,"ParentStock":parentstock,"IsComposite":composite,"IsSplittable":splittable,"stockInWord":stockinward,"AccN0":accno,"PosID":posid,"StockBookId":stockid,"EntryRowNo":entryrowno,"VocherDate":voucherdate,"NetQty":umosize,"NetPieces":netpieces,"PurchaseRate":purchaserate,SaleRate:salerate,Rate:finalrate,"ChargeableUnits":netpieces,"AllIncluValue":allincluvalue,"UOMSizeMasterId":uomsizemasterid,"ReferenceNo":referenceno,"StockPointId":stockpointid,"UOMId":uomid,"InvGroupName":invgroupname},function(err,doc){
     res.json(doc)
      console.log(doc.VocherId+"voucherrrrrrrr")
      console.log(typeof(doc.VocherId)+"doc.VocherIddoc.VocherId")
@@ -3779,9 +3782,12 @@ app.post('/stockbookheadresave:headresave',function(req,res){
     console.log(vouchertime+"vouchertime");
     var accclosed=str_array[5];
     accclosed = parseInt(accclosed);
-    console.log(accclosed+"accclosed")
+    console.log(accclosed+"accclosed");
+    var sectionid=str_array[6];
+    sectionid = parseInt(sectionid);
+    console.log(sectionid+"sectionid")
 
-    db.stockBookHeader.insert({"VoucherId" : voucherid,"AcCloseId":accclosed,"PartyId":partyid,"VoucherDate":voucherdate,"VoucherClass":voucherclass,"VoucherTime":vouchertime,"VoucherType":voucherclass},function(err,doc){
+    db.stockBookHeader.insert({"VoucherId" : voucherid,"AcCloseId":accclosed,"PartyId":partyid,"VoucherDate":voucherdate,"VoucherClass":voucherclass,"VoucherTime":vouchertime,"VoucherType":voucherclass,"SectionId":sectionid},function(err,doc){
     res.json(doc)
 //     console.log(doc.VocherId+"voucherrrrrrrr")
 //     console.log(typeof(doc.VocherId)+"doc.VocherIddoc.VocherId")

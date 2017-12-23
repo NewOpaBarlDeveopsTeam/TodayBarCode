@@ -11,17 +11,6 @@ app.controller('Tranctioncntrl',['$scope','$http','$window','$filter',
 var salereport=[];
 $scope.all=true;
  
-
-            
-
-
-
-
-
-
-
-
-
 $http.get('/tranction').success(function(response)
         {
  	   	 
@@ -125,7 +114,7 @@ $http.get('/itembar'+$scope.login).success(function(response)
  	var skuid=response[0].ItemSKUID;
  	$scope.baritemname= response[0].ItemName;
  	$scope.itemidd=response[0].itemId;
-console.log($scope.itemidd);
+    console.log($scope.itemidd);
  	console.log($scope.baritemname);
  	console.log(skuid);
    $scope.uomsize=response[0].UOMSize;
@@ -152,7 +141,8 @@ $http.get ('/uomid'+$scope.uomsize).success(function(response){
 
 
 $scope.getsection=function(ratess,num)
-{  alert(num)
+{  
+  alert(num)
 	$scope.pieceno=num;
   console.log($scope.pieceno);
 	alert(ratess);
@@ -176,30 +166,18 @@ $scope.getsection=function(ratess,num)
      $scope.saleerate12 = $scope.salerates[s].SaleRate*num;
      console.log($scope.saleerate12);
 
-	}
+	 }
+   }
 }
-}
 
 
- $scope.rats = function(itcode,saleerate12,num,sectionss){
+ $scope.rats = function(itcode,saleerate12,num,sectionss,barrr){
    
-  
-  
-
-   
-// $http.get('uoid'+$scope.uo).success()
-
     var obj = {};
-    // $scope.qunty=uom;
-
     $scope.discountrate=0
-    //$scope.type=Standard
     console.log($scope.pieceno+"pieces")
-    
     console.log($scope.baritemname+"item")
     console.log( $scope.saleerate+"value")
-   
-    
     obj["item"]=$scope.baritemname;
      // obj["quantity"]=$scope.qunty;
     obj["pieces"]=$scope.pieceno;
@@ -210,6 +188,11 @@ $scope.getsection=function(ratess,num)
     obj["value"]= $scope.saleerate12;
     obj["uomsize"]=$scope.uomsizeno;
     obj["uomname"]=$scope.uo;
+    alert($scope.barrr+"barrrrrrr")
+   alert($scope.num+"salepieces")
+   alert($scope.uom+"uomuom")
+   alert($scope.sectionss+"sectionsssectionss")
+   alert($scope.saleerate12+"saleerate12saleerate12")
     salereport.push(obj);
     $scope.salereport1 = salereport;
     console.log($scope.salereport1)
@@ -229,6 +212,12 @@ $scope.getsection=function(ratess,num)
 
     } 
     // $scope.saleerate12=null; 
+   $scope.barrr = null;
+   $scope.num = null;
+   $scope.uom = null;
+   $scope.sectionss = null;
+   $scope.saleerate12 = null;
+   
   }
 
 $http.get('/getinvoice'+$scope.login).success(function(response){

@@ -11,8 +11,10 @@
    <script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js">
     </script>
-<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
-
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js">
+</script>
+</head>
+  <title>Sale</title>
   <style>
     .btn{
       width:100px;
@@ -82,8 +84,6 @@
 
 
   </style>
-  </head>
-
   <body ng-controller="Tranctioncntrl">
 
     <div class = "container-fluid">
@@ -156,13 +156,13 @@
             <label>Section:
               <select  ng-model="sectionnames" ng-change="getsection(sectionnames,num)">
                    <option> </option>
-                   <option  id="idid" ng-repeat="secname in sesname" ng-model="sectionss">{{secname.SectionName}}</option>
+        <option  id="idid" ng-repeat="secname in sesname" ng-model="sectionss">{{secname.SectionName}}</option>
               </select>
             </label>
           </div>
            <div class = "col-sm-2">
             <span id ="rate">
-              <label pull-left>Rate:<input type = "text" id="idid" style="color:blue" ng-model="saleerate12" ng-click="rats(uom,itcode,saleerate12,num,sectionss)"></label>
+              <label pull-left>Rate:<input type = "text" id="idid" style="color:blue" ng-model="saleerate12" ng-click="rats(uom,itcode,saleerate12,num,sectionss,barrr)"></label>
               </span>
           </div>
         </div>
@@ -237,6 +237,74 @@
               </tbody>
 	    	</table>
 	    	</div>
+          <br>
+          
+          
+          
+          <div class="row">
+        <div class=" col-md-3 table" style="width: 320px;">
+             	<table class="table table-bordered" style="border:2px solid">
+                <thead style="font-size: 15px">
+                <tr>
+                <th>Name</th>
+                <th>Method</th>
+                <th>Value</th>
+                <th>Amount</th>
+                </tr>
+                </thead>
+                <tr style="background-color:dodgerblue;color: white">
+                <td>TCS</td>
+                <td>AMOUNT</td>
+                <td>0</td>
+                <td>00</td>
+                </tr>
+                <tr>
+                <td>RoundOff</td>
+                <td>AMOUNT</td>
+                <td>0</td>
+                <td>00</td>
+                </tr>
+                <tbody>
+                </tbody>
+                </table>
+          </div>
+        <div class="col-md-4 table" id="yash" style="width:360px">
+          <table class="table table-bordered">
+                <tbody style="font-size:15px;border:2px solid">
+                <tr style="background-color:dodgerblue;color: white"><th style="width:50%">Taxable Value</th>
+                  <td>{{finalvalue}}</td>
+                  </tr>
+                  <tr><th>Tax</th>
+                    <td>00</td>
+                  </tr>
+                  <tr><th>Discount</th>
+                    <td>00</td>
+                  </tr>
+                  <tr><th>Sub Total</th>
+                  
+                  <td>{{finalvalue}}</td></tr>
+                  <tr><th>Charges</th>
+                  <td>00</td>
+                  </tr>
+                  <tr><th>Invoice Value</th>
+                    <td>{{finalvalue}}</td>
+                  </tr>
+                  <tr><th>Adjustment</th>
+                    <td>00</td>
+                  </tr>
+            </tbody>
+            </table>
+          
+        </div>
+        <br>
+        <div class=" col-md-5">
+        <span style="font-size: 19px">  item disc Total:00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;final Item Value: {{finalvalue}} </span>
+        <p style="font-size:30px">Items:{{totalitems}}</p>
+        <p style="font-size:30px">Pieces:{{piece}}</p>
+        <p style="font-size:30px;color:blue"> Nett:{{finalvalue}} </p>
+        </div>
+        </div>
+<!--
         <div class="inner">
              	<table class="table table-bordered">
                 <thead style="font-size: 15px">
@@ -298,7 +366,8 @@
         <p style="font-size:30px">  <strong>Pieces:</strong>{{piece}}</p>
         <p style="font-size:30px;color:blue"> <strong>Total:</strong> {{finalvalue}} </p>
         </div>
-        <div class="clearfix">
+-->
+        <div>
         <button type="button" class=" btn-default" id="idid">Delete</button>
         <span style="margin-left: 100px">
         <label>Remarks:<input type = "text" style="width:300px"></label>
