@@ -3595,7 +3595,7 @@ app.get('/stockpointfetch:posnamefetch',function(req,res)
   var posnamefetch1 = req.params.posnamefetch;
   console.log(posnamefetch1)
   console.log("stockpoint calllllllllllllllllllllllllllllllll")
-  db.StockPointMaster.find({"POS Name":posnamefetch1},function(err,doc){
+  db.StockPointMaster.find({"POSName":posnamefetch1},function(err,doc){
   res.json(doc);
         
 })
@@ -3631,17 +3631,65 @@ app.get('/skuitemnamefetch:purchaserate',function(req,res)
          res.json(doc1);
       })   
     })
+    
+    app.get('/itemuomqtyfetch:uomsize',function(req,res){
+      var uomsize1 = parseInt(req.params.uomsize);
+        console.log(uomsize1+"skuidfind1skuidfind1skuidfind1");
+        console.log(typeof(uomsize1))
+        db.UOMSizeMaster.find({"UOMSizeMasterID":uomsize1},function(err,doc1){
+        //console.log(doc1[0]); 
+         res.json(doc1);
+      })   
+    })
+    
+     app.get('/StdUOMID:stduomid',function(req,res){
+      var stduomid1 = parseInt(req.params.stduomid);
+        db.UOMConversion.find({"BaseUOMID":stduomid1},function(err,doc1){
+         res.json(doc1);
+      })   
+    })
+     
+      app.get('/Displayuomfetch:displayuomid',function(req,res){
+      var displayuomid1 = parseInt(req.params.displayuomid);
+        db.UOM.find({"UOMID":displayuomid1},function(err,doc1){
+         res.json(doc1);
+      })   
+    })
+      
+      app.get('/itemidfind:itemid',function(req,res){
+      var itemid1 = parseInt(req.params.itemid);
+        db.ItemSKU.find({"ItemCode":itemid1},function(err,doc1){
+         res.json(doc1);
+      })   
+    })
+      
+      app.get('/findcount',function(req,res){
+        db.stockBookDetail.count(function(err,doc1){
+         res.json(doc1);
+      })   
+    })
+      
+      app.get('/itemtaxfind:merge',function(req,res){
+      var merge1 = req.params.merge;
+      var str_array=merge1.split(",");
+      var itemposname=str_array[0];
+      console.log(itemposname+"itemposname");
+      var itemiddd = str_array[1];
+      itemiddd = parseInt(itemiddd);
+      console.log(itemiddd)
+      db.itemdata.find({$and:[{"POSName": itemposname },{"id" : itemiddd}] },function(err,doc){
+        res.json(doc);
+      })   
+    })
         
 
 // for purchasesave item
-var stockbookid = 1;
-var entryrowno = 0;
+   //var entryrowno = 0;
 app.post('/purchasepost:purchasetran',function(req,res){
-   stockbookid++;
-   entryrowno++;
-   var purchasetran1 = req.params.purchasetran;
-   console.log(purchasetran1);
-   var str_array=purchasetran1.split(",");
+    //entryrowno++;
+    var purchasetran1 = req.params.purchasetran;
+    console.log(purchasetran1);
+    var str_array=purchasetran1.split(",");
     var voucherid=str_array[0];
     console.log(voucherid+"voucherid");
     var itemid=str_array[1];
@@ -3676,9 +3724,32 @@ app.post('/purchasepost:purchasetran',function(req,res){
     var allincluvalue= str_array[13];
     allincluvalue = parseInt(allincluvalue);
     console.log(allincluvalue)
+    var uomsizemasterid= str_array[14];
+    uomsizemasterid = parseInt(uomsizemasterid);
+    console.log(uomsizemasterid);
+    var referenceno= str_array[15];
+    referenceno = parseInt(referenceno);
+    console.log(referenceno)
+    var stockpointid= str_array[16];
+    stockpointid = parseInt(stockpointid);
+    console.log(stockpointid)
+    var uomid= str_array[17];
+    uomid = parseInt(uomid);
+    console.log(uomid)
+    var invgroupname= str_array[18];
+    console.log(invgroupname)
+    var stockid= str_array[19];
+    stockid = parseInt(stockid);
+    console.log(stockid)
+    var entryrowno= str_array[20];
+    entryrowno = parseInt(entryrowno);
+    console.log(entryrowno)
+//    var entryrowno= str_array[20];
+//    entryrowno = parseInt(entryrowno);
+//    console.log(entryrowno)
   
 
-    db.stockBookDetail.insert({"VocherId" : voucherid,"ItemId":itemid,"ParentStock":parentstock,"IsComposite":composite,"IsSplittable":splittable,"stockInWord":stockinward,"AccN0":accno,"PosID":posid,"StockBookId":stockbookid,"EntryRowNo":entryrowno,"VocherDate":voucherdate,"NetQty":umosize,"NetPieces":netpieces,"PurchaseRate":purchaserate,"ChargeableUnits":netpieces,"AllIncluValue":allincluvalue},function(err,doc){
+    db.stockBookDetail.insert({"VocherId" : voucherid,"ItemId":itemid,"ParentStock":parentstock,"IsComposite":composite,"IsSplittable":splittable,"stockInWord":stockinward,"AccN0":accno,"PosID":posid,"StockBookId":stockid,"EntryRowNo":entryrowno,"VocherDate":voucherdate,"NetQty":umosize,"NetPieces":netpieces,"PurchaseRate":purchaserate,"ChargeableUnits":netpieces,"AllIncluValue":allincluvalue,"UOMSizeMasterId":uomsizemasterid,"ReferenceNo":referenceno,"StockPointId":stockpointid,"UOMId":uomid,"InvGroupName":invgroupname},function(err,doc){
     res.json(doc)
      console.log(doc.VocherId+"voucherrrrrrrr")
      console.log(typeof(doc.VocherId)+"doc.VocherIddoc.VocherId")
@@ -3719,6 +3790,203 @@ app.post('/stockbookheadresave:headresave',function(req,res){
      
 
       })
+ })
+
+// TRANCTION DETAIL START NOWWWWWWWWWWWWWWWWWWWWWWWWWWW
+
+  app.get('/tranction',function(req,res){
+    console.log("vavavavvavavavavavavavaavavvavaavav")
+     
+    db.transactionMaster.find(function(err,doc){
+      // console.log(doc[0].TransctionType);
+      res.json(doc);
+    })
+  })
+  
+ 
+app.get('/partyfetch/',function(req,res){
+console.log("bababababbabbbababababababbaabbaba")
+db.partyMaster.find(function(err,doc){
+  res.json(doc);
+})
+
+})
+
+app.get('/uomfetch/',function(req,res){
+console.log("bababababbabbbababababababbaabbaba")
+db.UOM.find(function(err,doc){
+  res.json(doc);
+})
+
+})
+
+app.get('/sesfetch:posname',function(req,res){
+  var poss= req.params.posname;
+  console.log(poss+"jajajajajjajjajajajajajajajaj");
+
+ 
+db.SectionMaster.find({"POSName":poss},function(err,doc){
+  res.json(doc);
+})
+
+})
+    
+
+    app.get('/stocktype:poname',function(req,res){
+      
+      var pss=req.params.poname;
+      console.log(pss+"pllllllllllllllllllllllllllllll")
+
+      db.StockPointMaster.find({"POSName":pss},function(err,doc){
+        res.json(doc);
+      })
+    })
+
+
+
+    app.get('/itembar:barname',function(req,res){
+      console.log("barrrrrrrrrrrrrrrrrrrrrrr")
+      var Barname=req.params.barname;
+      
+   db.ItemSKU.find({"POSName":Barname},function(err,doc){
+        res.json(doc);
+      })
+    })
+
+
+
+     app.get('/getsku:skuuu',function(req,res){
+      console.log("barrrrrrrrrrrrrrrrrrrrrrr")
+      var sku=parseInt(req.params.skuuu);
+      console.log(sku+"iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
+      
+   db.ItemSKU.find({"ItemCode":sku},function(err,doc){
+        res.json(doc);
+      })
+    })
+
+
+  app.get('/allrate:alskuid',function(req,res){
+      console.log("barrrrrrrrrrrrrrrrrrrrrrr")
+      var alskuid= parseInt(req.params.alskuid);
+      console.log(alskuid+"iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
+      
+   db.ItemSKURate.find({"ItemSKUID":alskuid},function(err,doc){
+        res.json(doc);
+      })
+    }) 
+
+app.get('/getinvoice:barn',function(req,res){
+      console.log("barrrrrrrrrrrrrrrrrrrrrrr")
+      var barname=  req.params.barn;
+ 
+      
+   db.invoiceDetails.find({"POSName":barname},function(err,doc){
+        res.json(doc);
+      })
+    }) 
+
+app.get('/uomid:uoid',function(req,res){
+      console.log("777777777777777777777777777777777777")
+      var uomid=  req.params.uoid;
+      console.log(typeof(uomid))
+      var uomid=parseInt(uomid);
+ 
+      
+   db.UOMSizeMaster.find({"UOMSizeMasterID":uomid},function(err,doc){
+        res.json(doc);
+      })
+    })
+
+
+
+/////////STOCK BOOK DETAIL//////////////////
+app.post('/saledetail:salereturn',function(req,res){
+   var salereturn1 = req.params.salereturn;
+   console.log(salereturn1);
+   var str_array=salereturn1.split(",");
+    var voucherid=str_array[0];
+    console.log(voucherid+"voucherid");
+    var itemid=str_array[1];
+    console.log(itemid+"itemid");
+    var posname=str_array[2];
+    console.log(posname+"posname");
+    var saledate=str_array[3];
+    console.log(saledate+"saledate");
+    var posid=str_array[4];
+    console.log(posid+"posId");
+
+    var sectionsalerate=str_array[5];
+    console.log(sectionsalerate+"sectionsalerate");
+
+    var  netpiece=str_array[6];
+    console.log(netpiece+"netpiece");
+
+    var  value=str_array[7];
+    console.log(value+"value");
+
+    var  uomsizeid=str_array[8];
+    console.log(uomsizeid+"uomsizeid");
+
+    var  uomid=str_array[9];
+    console.log(uomid+"uomid");
+
+    var  stocktypeid=str_array[10];
+    console.log(stocktypeid+"stocktypeid");
+    var  stockinword=str_array[11];
+    console.log(stockinword+"stockinword");
+
+  
+  db.stockBookDetail.insert({"VocherId":voucherid,"ItemId":itemid,"VocherDate":saledate,"PosID":posid,"SaleRate":sectionsalerate,"NetPieces":netpiece,"Value":value,"UOMSizeMasterId":uomsizeid,"UOMId":uomid,"StockPointId":stocktypeid,"stockInWord":stockinword },function(err,doc){
+  res.json(doc)
+  console.log(doc.VocherId) 
+  var voucherid=parseInt(doc.VocherId)
+  console.log(typeof(voucherid))
+     // console.log(doc.VocherId+"voucherrrrrrrr")
+     var voucher1 = voucherid+1;
+     db.invoiceDetails.update({"POSName":posname},{$set:{"invoiceNumber":voucher1}}, function(err,res){
+       
+   })
+      })
+
+
+ })
+
+///// STOCK BOOK HEADER/////////////////////////////////
+app.post('/saleheader:salereturn',function(req,res){
+  console.log("bandeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+   var salereturn1 = req.params.salereturn;
+   console.log(salereturn1);
+   var str_array=salereturn1.split(",");
+    var voucherid=str_array[0];
+    console.log(voucherid+"voucherid");
+    var itemid=str_array[1];
+    console.log(itemid+"itemid");
+    var posname=str_array[2];
+    console.log(posname+"posname");
+    var saledate=str_array[3];
+    console.log(saledate+"saledate");
+    var posid=str_array[4];
+    console.log(posid+"posId");
+
+    var voucherclass=str_array[5];
+    console.log(voucherclass+"voucherclass");
+
+     var section=str_array[6];
+    console.log(section+"section");
+     var hhmmsstt=str_array[7];
+    console.log(hhmmsstt+"hhmmsstt");
+       var sectionid=str_array[8];
+    console.log(sectionid+"sectionid");
+  
+  db.stockBookHeader.insert({"VoucherId" : voucherid,"VoucherDate":saledate,"VoucherClass":voucherclass,"VoucherType":section,"VoucherTime":hhmmsstt,"sectionId":sectionid},function(err,doc){
+    res.json(doc)
+    
+ 
+    
+      })
+
+
  })
 
      
