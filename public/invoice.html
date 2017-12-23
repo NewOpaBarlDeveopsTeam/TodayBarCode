@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <meta charset="utf-8"/>
+  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<!-- Optional theme -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<title>Invoice</title>
+</head>
+   <script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js">
+    </script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
+
+<link href="tax.css" rel="stylesheet">
+  <style>
+
+   .bs-example{
+        margin: 20px;
+    }
+   #kot  {
+  border-style: solid;
+  width: 52%;
+}
+.table{
+  margin: 0 ;
+  padding: 0;
+}
+.kot{
+  margin: 0 ;
+  padding: 0;
+}
+.button {
+	width: 50px;
+  color:black;
+}
+#kot1 {
+	margin-top: -50px;
+}
+.panel-body{
+  margin: 0 ;
+  padding: 0;
+}
+table tbody {
+	overflow: auto;
+	height: 230px;
+}
+
+table tbody tr{
+	height: 30px;
+}
+
+.panel-body {
+	margin-top: -57px;
+}
+
+.panel.panel-default {
+	margin-top: -36px;
+}
+p {
+	margin: 0 0 0px;
+}
+  </style>
+  <!-- onload=window.print() -->
+  <body id="printSectionId" >
+      <div class="word-content">
+          <div class="container" ng-controller="CartCntrl" style="width:22%;">
+              <div class="row" style="font-size:12px;margin-top:-10px">
+                  <div class="col-xs-12" style="margin-top:0px">
+                      <div class="row"style="margin-top:0px">
+                          <h4 style="margin-left:100px">Invoice</h4>
+                      </div>
+                      <div class = "row"style="margin-top:-20px">
+                        <h5 style="margin-left:50px">{{billcar[0].restaurant}}</h5>
+                      </div>
+                      <div class = "row"style="margin-top:-20px">
+                        <h5 class="pull-right"><b>Invoice:{{billcar[0].Orderid}}</h5>
+                      </div>
+            <td>---------------------------------------------</td>
+                      <div class="row"style="margin-top:-20px">
+                          <div class="col-xs-6">
+                              <address>
+                              <strong>Billed To:</strong><br>
+                              {{billcar[0].mobile}}
+                              </address>
+                          </div>
+                      </div>
+                      <div class="row"style="margin-top:-20px">
+                          <div class="col-xs-6">
+                              <address>
+                              <strong>Payment Method:</strong><br>
+                              {{billcar[0].Orderstatus}}<br>
+                              </address>
+                          </div>
+                          <div class="col-xs-6 text-right" style="margin-top:-10px">
+                          <address>
+                              <strong>Order Date:</strong><br>
+                              {{billcar[0].date | date:'medium'}}<br><br>
+                              </address>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+      <!-- order summary -->
+       <div class="row">
+          <div class="col-md-12">
+              <div class="panel panel-default">
+                <div class="panel-heading">
+                <h5 class="panel-title"><strong>Order summary</strong></h5>
+                </div>
+                <div class="panel-body"style="margin-top:-60px">
+                  <div class="table-responsive">
+                    <table class="table table-condensed" style="height:15%;font-size:	15px;">
+                      <div style="margin-top:40px;font-size:08px">
+                        <thead>
+                            <tr>
+                                <td></td>
+                                <td>Item</td>
+                                <td>Qty</td>
+                                <td>Price</td>
+                                <td></td>
+                                <td>Totals</td>
+                            </tr>
+                        </thead>
+                      </div>
+                       <tbody style="margin-top:-10px;font-size:12px">
+                        <tr ng-repeat="bi in billcar">
+                            <td>{{bi.alias}}</td>
+                            <td>{{bi.name}}</td>
+                            <td>{{bi.quantity}}</td>
+                            <td>{{bi.Price}}<td>
+                            <td>{{bi.itemtotal}}</td>
+                        </tr>
+                        <br>
+                        <tr>
+                            <td class="thick-line"></td>
+                            <td class="thick-line"></td>
+                            <td class="thick-line"></td>
+                            <td class="thick-line"></td>
+                            <td class="no-line text-center"><strong>Item Total</strong></td>
+                            <td class="no-line text-right">{{billcar[0].subtotal}}</td>
+                        </tr>
+                        <tr>
+                            <td class="thick-line"></td>
+                            <td class="thick-line"></td>
+                            <td class="thick-line"></td>
+                            <td class="thick-line"></td>
+                            <td class="no-line text-center"><strong>Round Off</strong></td>
+                            <td class="no-line text-right">{{billcar[0].roundNumber}}</td>
+                        </tr>
+                        <tr ng-repeat="cc in billcar[0].Charge">
+<!--                        {{billcar[0].ChargeName}}-->
+                            <td class="thick-line"></td>
+                            <td class="thick-line"></td>
+                            <td class="thick-line"></td>
+                            <td class="thick-line"></td>
+                          <td class="no-line text-right"><strong>{{cc.ChargeName}}</strong></td>
+                          <td class="no-line text-right">{{cc.ChargeValue}}</td>
+                        </tr>
+                        <tr>
+                            <td class="thick-line"></td>
+                            <td class="thick-line"></td>
+                            <td class="thick-line"></td>
+                            <td class="thick-line"></td>
+                            <td class="no-line text-center"><strong>Final Total</strong></td>
+                            <td class="no-line text-right">{{billcar[0].FinalTotal}}</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                    <table class="table">
+                      <thead class="thead-inverse"style="font-size:12px">
+                        <tr>
+                            <td><strong>Tax</strong></td>
+                            <td><strong>Amt</strong></td>
+                            <td><strong>T_Amt</strong></td>
+                            <td><strong>Total</strong></td>
+                        </tr>
+                      </thead>
+                      <tbody style="font-size:12px">
+                        <div align="left">
+                            <tr ng-repeat="bb in displayalias">
+                                <td>{{bb.aliasname}}{{bb._id}}</td>
+                                <td>{{bb.Hidden| number : 2 }}</td>
+                                <td >{{bb.Gst | number : 2 }}</td>
+                                <td>{{bb.itemtotal| number : 2 }}</td>
+                            </tr>
+                        </div>
+                        <div  id="gst" style="font-size:12px">
+                             <td>----</td>
+                             <td>Sgst:{{sg | number : 2 }} Cgst:{{cg | number : 2 }} </td>
+                             <td>----</td>
+                        </div>
+                      </tbody>
+                    </table>
+                    <br>
+                    <div class="kot" id="kot1" style="font-size:12px;margin-left:-40px">
+                    <ul ng-repeat="ki in kottbill">
+                      Invoice:-{{billcar[0].Orderid}}<br>{{billcar[0].restaurant}}<br>Kot:-{{ki.Prefix}}{{ki.Kotnumber}}<br>{{ki.itemtype}}
+                      <li ng-repeat="bil in billcar" ng-if="ki.itemtype == bil.itemtype">{{bil.name}}:{{bil.quantity}}</li>
+                    </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+           <div>
+       </div>
+</div>
+<!-- <a class="word-export" href="javascript:void(0)">Export to word(.doc)</a> -->
+</div>
+    <script src="script/jquery-3.2.1.min.js"></script>
+    <script src="script/FileSaver.js"></script>
+    <script src="script/jquery.wordexport.js"></script>
+    <script>
+    $('.word-export').ready(function(event){
+        setTimeout(function(){
+        $('.word-content').wordExport("Template").trigger('click');
+      },1000);
+      });
+    </script>
+    <!-- <button ng-click="printToCart('printSectionId')" class="button" align="center">Print</button> -->
+  </body>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+  <script type="text/javascript" src="controllers/usercontroller.js"></script>
+  </html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+	<title>Report Gen</title>
+
+	<style>
+ h3 
+	{
+		text-align:center;
+	}
+div
+    {
+	    border:1px solid ;
+	    height:100%;
+	   
+	}
+.alter
+	{
+	   height:550px;
+	   background-color:lightGray;
+	}
+.alter1
+	{
+		height:400px;
+		margin-right:10px;
+		margin-left:10px;
+		margin-top:10px;
+		background-color:white;
+	}
+.alter2
+    {
+       height:20px;
+    }
+.checkbox
+	{
+		padding:12px;
+	}
+input[type=text]
+	{  widli:5%;
+	}
+input[type=checkbox]
+	{    
+		widli:30;
+		height:20;
+	}
+ 
+th	{
+	   border:1px solid;
+	}
+table
+	{
+		border-collapse:collapse;
+		width:100%;
+	}
+		
+</style>
+</head>
+
+<body ng-controller="ReportCntrl">
+
+<div class="container"> 
+<h3>POS Day-analysis Reports</h3>
+
+<div class="alter">
+From <input type="date"  ng-model="bit1.date2">
+To   <input type="date"  ng-model="bit2.date1">
+Report <select>
+              <option value="summary">1.summary</option>
+			  <option value="summary">2.summary</option>
+			  <option value="summary">3.summary</option>
+			  <option value="summary">4.summary</option>
+ 
+       </select>
+ Pos   <select>
+			  <option value="summary"> Resturant cashier</option>
+			  <option value="summary"> summary</option>
+			  <option value="summary"> summary</option>
+			  <option value="summary"> summary</option> 
+			 
+	   </select> </br> </br>
+<input type="checkbox"> apply time
+
+From <input type="time">  
+To   <input type="time"> 
+ <select>
+				<option> </option>
+				<option>2</option>
+				<option>3</option>
+				<option>4</option>
+		</select>Bill no.
+From <input type="text">
+To   <input type="text"> 
+
+<input type="submit" value="preview" ng-click="preview(bit1.date2,bit2.date1)">
+<input type="submit" value="Export" ng-click="exportData()"> 
+ <div class="alter1">
+<table>
+	<tr>
+	<th>Category</th>
+	<th>Items</th>
+	<th>Qty</th>
+	<th>Amount</th>
+	<!-- <th>resturant</th> -->
+	</tr>
+	<tr ng-repeat="display in displayReport">
+	<td>{{display.category}}</td>
+	<td>{{display.name}}</td>
+	<td>{{display.quantity}}</td>
+	<td>{{display.itemTotal}}</td>
+		
+	</tr>
+</table>	
+ 
+ 
+</div>
+ <pre><input type="checkbox"> Print Bold        Section Name-All                                                   <input type="submit" value="Section">  <input type="submit" value="PDF">  <input type="submit" value="Print">   <input type="submit" value="Close"></pre>
+
+</div>
+</div>
+</body>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+<script type="text/javascript" src="controllers/reportcntrl.js"></script> 
+</html>

@@ -1,0 +1,112 @@
+<!DOCTYPE>
+<html ng-app="myApp">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+ <title>Oder food online</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+    <style>
+        .error {
+            color: red;
+        }
+
+          .panel-default> #heading1
+{
+  background:lightgrey;
+  height:50px;
+}
+button {
+  background-color: orange;
+}
+        body {margin:0;}
+
+.topnav {
+  overflow: hidden;
+  background-color: #333;
+}
+
+.topnav a {
+  float: left;
+  display: block;
+  color: #f2f2f2;
+  text-align: center;
+  padding: 14px 16px;
+  text-decoration: none;
+  font-size: 17px;
+}
+
+.topnav a:hover {
+  background-color: #ddd;
+  color: black;
+}
+
+.topnav a.active {
+/*    background-color: #4CAF50;*/
+    color: white;
+}
+/*.splash {
+  display: none;
+}
+
+[ng-cloak].splash {
+  background-color: #428bca;
+  width: 100%;
+  text-align: center;
+  color: white;
+  display: block !important;
+}*/
+
+    </style>
+</head>
+<!-- <script>
+      window.onload=function(){
+         window.setTimeout(function(){
+           angular.bootstrap(document.body,[]);
+         },4000);
+      }
+    </script>   -->
+<body>
+
+ <div class="container" ng-controller="IndexCntrl">
+ <!-- <div class="splash" ng-cloak="">
+        <p>Loading</p>
+    </div>
+    <div ng-cloak=""> -->
+
+
+
+<div class="panel panel-default">
+ <div class="panel-heading" id="heading1">
+ <font color="blue" size="05"><p align="center">WELCOME TO U MALL</p></font>
+ </div></div>
+     <div class="topnav">
+  <a class="active" href="item.html"><h1>Inventry</h1></a>
+  <a href="welcomepage1.html"><h1>WelCome Page</h1></a>
+        <a href="indextaxation.html"><h1>taxation Page</h1></a>
+       </div>
+
+
+
+<!--
+ <h1>{{phoneNumber}}</h1>
+    <ng-form name="myForm">
+
+        <label>Enter Your Mobile Number</label> <br>
+            <input type="text" placeholder="+91-xxx-xxxxx" name="phone" ng-pattern=phoneNumbr  ng-model="user.mobile" required />
+            <br><span class="error" ng-show="myForm.phone.$error.pattern">Please Enter the Phone no matching  pattern [+91-xxx-xxxxx || 91-xxx-xxxxx]</span> <br>
+        <button ng-disabled="myForm.$invalid" ng-click="mobile(user.mobile)">Submit</button>
+    </ng-form>
+-->
+   </div>
+
+
+</body>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+
+     <script type="text/javascript" src="controllers/usercontroller.js"></script>
+</html>

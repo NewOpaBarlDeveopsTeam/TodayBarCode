@@ -1,0 +1,1 @@
+"C:\Program Files\Microsoft Office\Office15\WINWORD.EXE" D:\yash\Kamat111.doc /mFilePrintDefault

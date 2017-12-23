@@ -1,0 +1,198 @@
+<!DOCTYPE>
+<html ng-app="myApp">
+  <head>
+    <title>Charge</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+  <style>
+    .container{
+    border: 1px solid grey;
+    height: 100%;
+    width:100%;
+    }
+    .voucher{
+    border: 1px solid grey;
+    height: 90%;
+    width:98%;
+    background-color:gainsboro;
+
+    }
+    #tabid {
+    height: 50%;
+    width: 98%;
+    background-color: white;
+    border: 2px solid grey;
+    margin-top: 20px;
+    margin:10px;
+    }
+    .voucheraccount{
+    height: 25%;
+    border: 2px solid black;
+    background-color: grey;
+    margin:10px;
+    overflow: auto;
+    }
+    #tr {
+	height: 1px;
+}
+#chargeselect
+{
+  background-color: blue;
+}
+.text{
+  width:50px;
+  border: 0;
+}
+.text1{
+  width:120px;
+  border: 0;
+}
+#selected{
+background-color:white;
+height:auto;
+}
+.red {
+    background-color: red;
+}
+/*.active:focus{
+  background-color:blue;
+}*/
+    .selected{
+    background-color: blue;
+    }
+    
+a {color:black;}      /* unvisited link */
+a:visited {color:black;}  /* visited link */
+a:hover {color:black;}  /* mouse over link */
+a:active {color:black;}
+  </style>
+  <body ng-controller="ChargeCntrl">
+  <div class="container">
+    <h3 align="center">Charge Definition</h3>
+    <div class="voucher">
+      <div class="voucherdata">
+        <table class="table table-bordered" id="tabid">
+          <tr>
+            <th style="margin:0px;" id="tr">Voucher Class</th>
+          </tr>
+          <tr>
+<!--
+            <td>
+            <option ng-repeat="charge in chargeConfigure"  ng-init="index=0; classes=['red', 'green', 'blue']" ng-class="classes[index % classes.length]" ng-model="charge.InvVoucherCla" ng-click="selectrow(charge.InvVoucherCla);index = index + 1">{{charge.InvVoucherCla}}</option>
+            </td>
+-->
+            <td>
+            <option ng-repeat="charge in chargeConfigure"ng-model="charge.InvVoucherCla" ng-click="selectrow(charge.InvVoucherCla,$index)" ng-class="{selected:$index === index1}">{{charge.InvVoucherCla}}</option>
+            </td>
+          </tr>
+        </table>
+        <div align="center">
+            <button type="button" ng-click="addNew(details);disable()">New</button>
+<!--          ;disable()-->
+            <button type="button" ng-click=edititem()>Edit</button>
+            <button type="button" ng-click=deleteitem()>Delete</button>
+            <a href = "poslogin.html">
+            <button type="button" ng-click=closeitem()>close</button>
+            </a>
+        </div>
+      </div>
+      <div>
+          <label style="margin-left:30px;">Voucher Class:</label>
+          <td>
+          <select ng-model="getInvVoucher" ng-change="selectrow(getInvVoucher)">
+          <option ng-repeat="charge in chargeConfigure">{{charge.InvVoucherCla}}</option>
+          </select>
+          </td>
+        </div>
+
+      <div class="voucheraccount">
+          <table class="table table-bordered" id="tabid">
+            <!-- background-color:white; -->
+          <thead style="width:auto">
+          <tr>
+          <th>Sl No</th>
+          <th>Charge Name</th>
+          <th>Account Name</th>
+          <th width="1%"></th>
+          <th>Add/Sub</th>
+          <th width="1%"></th>
+          <th>Value</th>
+          <th>Valuation In</th>
+          <th width="1%"></th>
+          <th>Editable</th>
+          <th>Taxable</th>
+          <!-- <th>Check</th> -->
+          </tr>
+          </thead>
+          <!-- ng-if="ca.count != 0" -->
+          <tbody>
+          <div>
+
+          <tr ng-repeat="details in chargedetails" ng-class="{selected : details === idSelectedVote}" >
+
+<!--          <td ng-model="details.ChargeId" ng-init="index=0; classes=['red', 'green', 'blue']" ng-class="classes[index % classes.length]" ng-click=" seldetails(details,$index);index = index + 1">{{$index+1}}</td>-->
+            
+            <td ng-model="details.ChargeId" ng-click=" seldetails(details,$index)"ng-class="{selected:$index === indexx}">{{$index+1}}</td>
+
+          <td><input type="text" ng-model="details.chargeName" class="text1" ng-disabled="all"  value="{{details.chargeName}}"/></td>
+
+          <td ng-model="details.accountName">
+          {{details.accountName}}
+          <td >
+          <select class="selectpicker" ng-model="details.accountName" ng-change = "accountFetch(details.accountName)" ng-disabled="all">
+          <option  ng-repeat="account1  in  account">{{account1.accountName}}</option>
+          </select>
+          </td>
+          </td>
+
+          <td ng-model="details.AddSub">
+          {{details.AddSub}}
+          <td>
+          <select class="selectpicker" ng-model="details.AddSub" ng-disabled="all" >
+          <option  ng-repeat="addsub1  in  addsub">{{addsub1.addsub}}</option>
+          </select>
+          </td>
+          </td>
+
+          <td><input type="text" class="text" ng-model="details.ChargeValue" ng-disabled="all"  value="{{details.ChargeValue}}"/></td>
+
+          <td ng-model="details.ChargeMethod">
+          {{details.ChargeMethod}}
+          <td>
+          <select class="selectpicker" ng-model="details.ChargeMethod" ng-disabled="all" >
+          <option  ng-repeat="x  in  value">{{x.valueIn}}</option>
+          </select>
+          </td>
+          </td>
+ 
+          <td>
+          <input type="checkbox" ng-model="details.Editable" ng-disabled="all" >
+          </td>
+
+          <td>
+          <input type="checkbox" ng-model="details.Taxable" ng-disabled="all" >
+          </td>
+
+          </tr>
+
+          </div>
+          </tbody>
+          </table>
+      </div>
+      <div>
+          <button type="button" style="margin-left:10px">Delete</button>
+          <button type="button"style="margin-left:500px" ng-click="saveitem()">Save</button>
+          <!-- <button type="button" style="margin-left:20px" ng-click="update(chargedetails123)">Update</button> -->
+        <a href="charge.html">
+          <button type="button" style="margin-left:20px">Cancel</button>
+        </a>
+      </div>
+    </div>
+  </div>
+  </body>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+<script type="text/javascript" src="controllers/chargecontroller.js"></script>
+</html>

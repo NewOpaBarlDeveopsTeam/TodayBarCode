@@ -1,0 +1,161 @@
+<!DOCTYPE>
+<html ng-app="myApp">
+<head>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<script type="text/javascript" src="libs/angular-bootstrap/ui-bootstrap-tpis.js"></script>
+
+<!-- Optional theme -->
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous"> -->
+<title>Restaurant</title>
+
+<style>
+#button{
+  background: pink;
+}
+hr { 
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 2px;
+} 
+.centerize { 
+    text-align: center;
+}
+.panel-default> #heading1 
+{
+  background:black;
+  height:130px;
+}
+.panel-default> #heading2 
+{
+  /*background:grey;*/
+  height:10%;
+}
+.tab {
+  margin-top: 10px;
+  margin-left:0px;
+  font-family: Latha; 
+}
+p{
+  font-size: 35;
+}
+#footer {
+position: fixed;
+bottom: 40px;
+height: 50px;
+width: 50%;
+background-color: white;
+}
+#text{
+  width: 100px;
+}
+#search {
+   height: 3em; width: 10em;
+    background: black;
+  }
+  #search1 {
+   height: 3em; width: 10em;
+    background: green;
+  }
+#container{width:100%;}
+#left{float:left;width:100px;}
+#right{float:right;width:100px;margin-bottom: 10px;}
+#center{margin:0 auto;width:100px;}
+</style>
+<!-- <SCRIPT type="text/javascript">
+    window.history.forward();
+    function noBack() { window.history.forward(); }
+</SCRIPT> -->
+</head>
+<body>
+<div ng-controller="FirstCntrl">
+<div class="panel panel-default">
+ <div class="panel-heading" id="heading1">
+ 
+  <div class="tab">
+  <a href="order.html"><img src="http://downloadicons.net/sites/default/files/left-arrow-icon-35895.png" height="80" width="80"></a> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+
+  
+  <a href="index.html"><font color="white" size="50">CART DETAILS </font></a>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+
+  
+
+<!--  <a href="index.html"><img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcToGffelO4KGK5bQVr6PYa_WxYETfuaMF27NrFxTn8Zg_Fz_w2ZO2a9KA" height="80" width="80"></a> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; -->  
+
+ <!-- <a href="index.html"><img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR6jaf2B2-LQqLJBZtEq1GK3w7fRyRAfXMV-0MzWlrNNDb9W4LpvYyCTcbu" height="100" width="100"></a> &nbsp;&nbsp; &nbsp;&nbsp;  -->
+  
+ 
+  <!-- <span><a href="index.html"><font color="white" size="08"><b>Thanks</a></font></span> -->
+  
+
+  <!-- <span><a href="#"><font color="white" size="05"><b>Tracks & Sessions</a></font></span>
+  
+
+  <span><a href="part.html"><font color="white" size="05"><b>Participants</a></font></span>
+    
+
+  <span><a href="RegisterPage.html"><font color="white" size="05"><b>Register</a></font></span> -->
+  </div>
+    </div>
+ </div> 
+ <!-- <div ng-repeat="item in itemlist">{{item.name}}
+ <div><button ng-click="delete(item.name)">hello</button></div></div> -->
+ <div style="text-align:left;float:left;margin-left:20px;"><font size="08" color="black">Your Order
+  
+  <a href="cart.html"><div style="text-align:right;float:right;margin-right:20px;"><font color="green" >Apply Changes </font></a><br><br>
+
+ <div ng-repeat="item in itemlist">
+&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+<!-- <h1 ng-repeat="item in itemlist">{{item.name}}</h1> -->
+<!-- <div ng-repeat="item in itemlist">hi..{{item.name}}</div> -->
+<div style="text-align:left;float:left;"><input type="number" id="text" placeholder="{{item.quan}}" ng-model="user.quan" /> x {{item.name}}</div><br><br>
+ <div style="text-align:left;float:left;">
+<button  ng-click="edit(item.name,user.quan)">Add</button>&nbsp;&nbsp;
+<img src= "http://www.freeiconspng.com/uploads/close-icon-39.png" height="50" width="50" ng-click="delete(item.name)"></font></div>
+<!-- <div style="text-align:left;float:left;margin-left:10px;"><font size="08" color="black">{{item.item}}x {{item.name}}</div>  -->
+<div style="text-align:right;float:right;"><font color="green" size="08">Rs {{item.total}}</font></div><br>
+ <div align="right">
+ </div></div>
+</div></div>
+<p ng-show="!itemlist.length">No Orders to Display</p>
+<br><br><br><br><br>
+<!-- <div ng-repeat="item in itemlist">
+<h1><font color="grey">{{item.name}}</h1>
+<h3>Qty:{{item.quan}}</h3>
+<h2>Shipping charges Applicable</font></h2><br> -->
+<!-- <p>Edit</p></div> -->
+
+
+
+<!-- <div ng-repeat="item in itemlist"><font size="08"></font></div> -->
+
+   <!-- <a href="dosa.html"><p align="center"><font color="green" size="08">Add Items</p></font></a></p></a></div> -->
+
+     <!-- <div class="panel-body" id="heading2"> -->
+ <!-- <li ng-repeat="test in test">{{test}}</li> -->
+ &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; 
+ <!-- <h1><font size="08">Comments</font></h1> 
+ <input type="text" name="usrname"> -->
+ <!-- <div class="panel panel-default">
+ <div class="panel-heading" id="heading2">
+ <div class="tab">
+  <img id="hello" src="https://cdn0.iconfinder.com/data/icons/ie_Bright/128/minus_remove_green.png" height="100" width="100" ng-click="count1($event)"></a> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+ 
+  <font color="black">{{count}}</font> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+
+  <img id="hi" src="http://jabaali.in/wp-content/uploads/2016/09/plus-green.png" height="100" width="100" data-ng-click="count1($event)"></a> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;</div>
+<!--   <div id="container">
+  <div id="left"><img  src="https://cdn0.iconfinder.com/data/icons/ie_Bright/482/plus_add_minus.png" height="50px" width="50px" /></div>
+  <div id="center">hello</div>
+  <div id="right"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Plus_blue.svg/1000px-Plus_blue.svg.png" height="50" width="50"></div>
+</div> --> 
+
+</body>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/ngstorage/0.3.6/ngStorage.min.js"></script> 
+    <script type="text/javascript" src="controllers/usercontroller.js"></script> 
+</html>

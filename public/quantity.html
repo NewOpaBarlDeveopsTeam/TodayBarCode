@@ -1,0 +1,173 @@
+<!DOCTYPE>
+<html ng-app="myApp">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quantity</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+<style>
+
+#img4{
+  background: black;
+}
+#button{
+  background: pink;
+}
+hr { 
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 2px;
+} 
+.centerize { 
+    text-align: center;
+}
+ #heading1 
+{
+  background:lightgrey;
+  
+  height: 50px; 
+}
+}
+#index {
+  background: black;
+  height: 130px;
+}
+.panel-default> #heading2 
+{
+  /*background:grey;*/
+  height:150px;
+}
+.tab {
+  margin-top: 10px;
+  margin-left:0px;
+  font-family: Latha; 
+}
+p{
+  font-size: 35;
+}
+#footer {
+position: fixed;
+bottom: 40px;
+height: 50px;
+width: 50%;
+background-color: white;
+}
+#search {
+  margin-left: 17%;
+   height: 3em; width: 13em;
+    background: black;
+  }
+  /*#search1 {
+   height: 3em; width: 10em;
+    background: green;
+  }*/
+#container{width:100%;}
+#left{float:left;width:100px;}
+#right{float:right;width:100px;margin-bottom: 10px;}
+#center{margin:0 auto;width:100px;}
+}
+#heading1
+{
+  background-color:lightgrey;
+  height:50px;
+}
+.qty
+{
+  display: inline-flex;
+   margin-left: 10px;
+}
+.qtyitem
+{
+ margin-left:50px;
+}
+#restname
+{
+ 
+  font-size: 20px;
+}
+#itemfont{
+  font-size: 15px;
+  font-weight: bold;
+  color: black;
+}
+#row1{
+  margin-left: 30px;
+}
+input[type="text"]
+{
+  font-size: 20px;
+  width: 100%;
+  border-top:0;
+}
+#wrapper{
+  display: flex;
+  width: 100%;
+  justify-content:space-between;
+  margin-left: 0px;
+}
+#first {
+    width: 100px;
+    float:left; /* add this */
+}
+  
+</style>
+<!-- <SCRIPT type="text/javascript">
+    window.history.forward();
+    function noBack() { window.history.forward(); }
+</SCRIPT> -->
+</head>
+<body>
+<div ng-controller="FirstCntrl">
+<div class="panel-heading" id="heading1">
+    <p id="restname"><b>{{restname}}</b></p>
+   </div> 
+ <h4>{{itemname}}</h4><br>
+ <div align="center">
+  <img id="hello" src="https://cdn0.iconfinder.com/data/icons/ie_Bright/128/minus_remove_green.png" height="50" width="50" ng-click="count1($event)" class="qty">
+  
+  <h4 class="qty"><font color="black">{{count}}</font></h4>
+ 
+  
+  <img id="hi" src="http://jabaali.in/wp-content/uploads/2016/09/plus-green.png" height="50" width="50" data-ng-click="count1($event)" class="qty">
+  </div><br><br>
+  <div id="itemfont" style="text-align:left;float:left;">{{count}}&nbsp;&nbsp;Plate(s)</div>
+  <div id="itemfont" style="text-align:right;float:right;">Price per Plate:₹{{price}}</div><br><br><br>
+  <h3 align="center">₹{{tol}}</h3><br><br><br><br>
+  <input type="text" name="" placeholder="Any specific instructions">
+  <div id="wrapper">
+  <div id="first">
+<!-- -->
+  <a href="menu.html" ng-click="additems(txt.comment)"><img src="https://cdn0.iconfinder.com/data/icons/online-business-and-seo/64/good_search_results_check_mark_ok_approved-512.png" height="50px" width="50px">
+  <h4><font color="black" size="02">Add This Item</font></h4></a>
+  </div>
+  <div id="second">
+  <img src="http://findicons.com/files/icons/77/icandy_junior_toolbar/128/back_2.png" height="50px" width="50px">
+  <a href="menu.html"><h4><font color="black" size="02">Choose Another Item</font></h4></a>
+  </div>
+  </div>
+
+
+
+</div>
+</body>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/ngstorage/0.3.6/ngStorage.min.js"></script> 
+    <script type="text/javascript" src="controllers/usercontroller.js"></script> 
+</html>
+ <!-- <button type="text" id="search" ng-click="login()"><font color="white">Proceed to Checkout -></button></font></button>
+ <div>
+  <a href="dosa.html"><p align="center"><font color="green" size="08">Add Items</p></font></a></p></a></div>
+  #search {
+   height: 3em; width: 20em;
+    background: green;
+  } -->

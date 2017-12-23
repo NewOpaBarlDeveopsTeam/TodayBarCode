@@ -1,0 +1,24 @@
+{
+  "name": "restaurant1010",
+  "version": "1.0.0",
+  "description": "",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "^1.16.1",
+    "csv-write-stream": "^2.0.0",
+    "express": "^4.14.1",
+    "filereader": "^0.10.3",
+    "mongojs": "^2.4.0",
+    "mongoose": "^4.9.7",
+    "node-printer": "^1.0.2",
+    "officegen": "^0.4.5",
+    "q": "^1.5.0"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "author": "",
+  "license": "ISC"
+}

@@ -1,0 +1,96 @@
+<!DOCTYPE>
+<html ng-app="myApp">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+ <title>Oder food online</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<style>
+hr { 
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 2px;
+} 
+.centerize { 
+    text-align: left;
+}
+.panel-default> #heading1 
+{
+  /*width: 100px;*/
+  background:lightgrey;
+  height:50px;
+}
+.tab {
+  margin-top: 10px;
+  margin-left:0px;
+  font-family: Latha; 
+}
+p{
+  font-size: 35;
+}
+</style>
+<!-- <SCRIPT type="text/javascript">
+    window.history.forward();
+    function noBack() { window.history.forward(); }
+</SCRIPT> -->
+</head>
+<body>
+<div class="container" ng-controller="CatCntrl" >
+<div class="panel panel-default">
+ <div class="panel-heading" id="heading1">
+ <p align="center"><font color="blue" size="05">U MALL-RESTAURANTS</font></p>
+ 
+
+<!-- <div ng-repeat="res in users">
+ </div>
+<h1 text align="center"><font color="red">{{errmess}}</font></h1>
+<div class="col-md-6 col-md-offset-3">
+<div class="panel panel-default">
+ <div class="panel-heading" id="heading1">
+  <img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcRBC6Rzg8_mlThVV7DHU8ozkra990wrZ7rZqsq4VU3OJwa8WlZC" id="img" height="50" width="50">
+  <font color="white" size="06">Login</font>
+  <div class="pull-right">
+  <img src="elms global logo.jpg" height="53" width="60">
+  </div>
+  </div>
+  </div>
+   <form ng-submit="login(user.name,user.password)">
+<div class="form-group" ng-class="{ 'has-error': form.username.$dirty && form.username.$error.required }">
+            <label for="username">Username</label>
+            <input type="text" name="username" id="username" class="form-control" ng-model="user.name" required />
+            <span ng-show="form.username.$dirty && form.username.$error.required" class="help-block">Username is required</span>
+        </div>
+        <div class="form-group" ng-class="{ 'has-error': form.password.$dirty && form.password.$error.required }">
+            <label for="password">Password</label>
+            <input type="password" name="password" id="password" class="form-control" ng-model="user.password" required />
+            <span ng-show="form.password.$dirty && form.password.$error.required" class="help-block">Password is required</span>
+        </div>
+        <div class="form-actions">
+            <button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary" >login</button> </form>  <a href="index.html" class="btn btn-link">Cancel</a> </div>
+            <hr>
+            <br><br>
+            <div class="centerize">
+            <a href="registerpage.html"><button type="submit" ng-disabled="form.$invalid || vm.dataLoading" class="btn btn-primary" id="id">Register</button></a>
+    </div> -->
+    
+  <!-- <img src="dosa.jpg" id="img" height="100" width="100">&nbsp;&nbsp; 
+  <font color="black" size="08">Hotel</font> -->
+  </div>
+  
+  <div align="left">  <div ng-repeat="rest in resttype">
+   <a href="loginpage.html"><p ng-model="rest.POSName" ng-click="restname(rest.POSName)"><font size="05" color="black">{{rest.POSName}}</font></p><hr><br><br><br></a></div></div>&nbsp;&nbsp; 
+  </div>
+</div>
+</body>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script type="text/javascript" src="controllers/usercontroller.js"></script> 
+</html>

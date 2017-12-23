@@ -1,0 +1,221 @@
+<!DOCTYPE>
+<html ng-app="myApp">
+<head>
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<script type="text/javascript" src="libs/angular-bootstrap/ui-bootstrap-tpis.js"></script>
+<title>Order food online</title>
+
+<style>
+hr { 
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 10px;
+} 
+hr1 { 
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 2px;
+    background-color: DeepPink;
+} 
+.centerize { 
+    text-align: center;
+}
+#heading3{
+  background: green;
+  
+}
+.panel-default> #heading1 
+{
+  /*width: 100px;*/
+  background:lightgrey;
+  height:130px;
+}
+.tab {
+  margin-top: 10px;
+  margin-left:0px;
+  font-family: Latha; 
+}
+/*p{
+  font-size: 35;
+}*/
+#search {
+   height: 3em; width: 20em;
+    background: green;
+  }
+  input[type="text"]
+{
+  font-size: 60px;
+  width: 100%;
+}
+#heading2{
+  height: 30%;
+  background: grey;
+}
+#div{
+  font-size: 50px;
+  color: black;
+}
+button[type="button"]
+{
+  height: 7%;
+  width: 220%;
+  background-color: orange;
+  font-color:white;
+}
+#row2
+{
+  margin-left: 7%;
+}
+#butt
+{
+  display: inline-flex;
+  /*margin-left: 10px;*/
+  height: 8%;
+/*  width: 280px;*/
+  background-color: orange;
+  border-radius: 10px;
+  margin-left: 31px;
+
+}
+.col-sm-6 button {
+  width: 100%s;
+}
+
+.col-sm-2 > button {
+  margin-left: 150px;
+}
+.col-sm-4 button {
+  width: 100%;
+}
+.col-sm-4 font {
+  font-size: 100%;
+  margin-left: 10px;
+  text-align: center;
+}
+#heading3
+{
+  height: 80px;
+  background-color: grey;
+}
+#but1
+{
+  width: 220;
+  height: 20px;
+}
+#but2
+{
+  width: 220;
+  margin-left: 30px;
+}
+#but2 > button {
+  margin-left: 187px;
+}
+#p1{
+  margin-left: 30px;
+}
+#restname{
+  font-size: 55px;
+}
+#ti
+{
+  column-count:5;
+}
+.mypanel {
+    height: 100px;
+    overflow-y: scroll;
+}
+/*#t1
+{
+  margin-top: 50px;
+}*/
+</style>
+<!-- <SCRIPT type="text/javascript">
+    window.history.forward();
+    function noBack() { window.history.forward(); }
+</SCRIPT> -->
+</head>
+<body>
+<div ng-controller="FirstCntrl">
+<div class="panel panel-default">
+ <div class="panel-heading" id="heading1">
+ <h1 id="restname" align="center">CART</font></h1>
+ </div></div>
+
+ <input type="text" name="" placeholder="Select Delivery Method"><br>
+ <input type="text" name="" placeholder="Select Payment Option"><br>
+ <input type="text" name="" placeholder="Enter Coupon Code"><br><br><br>
+ 
+ <div class="panel-heading mypanel" id="heading2">
+
+ <h1 align="center"><font color="white" size="10"><b>{{restname}}</b></font></h1>
+<table id="t1" cellspacing="5" cellpadding="5" width="100%">
+  <thead>
+    <tr>
+    <th></th>
+    <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  <tr>
+  <td> <font size="10"><b>Sub-Total Price</b></td>
+  <td><font size="10"><b>₹{{subtol}}</b></td>
+  </tr>
+  <tr>
+  <tr>
+  <td><font size="10"><i>Delivery Charges</td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+  <td><font size="10"><i>₹0</td>
+  </tr>
+  <td><font size="10"><i>Service fee(10%)</td>
+  <td><font size="10"><i>₹{{serchar}}</td>
+  </tr>
+  <tr>
+  <td><font size="10"><b>Final Price</td>
+  <td><font size="10"><b>₹{{total}}</td>
+  </tr>
+  </tbody>
+</table>
+</div>
+ <br>
+ <hr>
+ <br>
+ <div class="row" id="row2">
+ <div class="col-sm-2" id="but1">
+ <a href="menu.html"><button type="button" name=""><font color="white" size="10">Add Another</font></button></a>
+ </div>
+ <div class="col-sm-2" id="but2">
+ <button type="button" name=""><font color="white" size="10">Confirm Order</button>
+ </div>
+ </div>
+ <!-- <div class= row align="center">
+ <button id="butt"><font color="white" size="07">Add Another</button>
+ <button id="butt">Confirm Order</button></font></button>
+ </div> -->
+
+ <hr>
+<div class="panel-heading" id="heading3">
+<h1 id="p1">Selected Items in Cart</h1>
+</div>
+
+ <div ng-repeat="item in list">
+ <!-- <h1><font color="black">{{item.name}}</h1> -->
+ <p><font color="orange">{{item.quan}} Plate(s) of {{item.name}}</font></p>
+ <font color="black">₹{{item.total}}<hr1>
+ </div>
+
+</div>
+</body>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/ngstorage/0.3.6/ngStorage.min.js"></script> 
+    <script type="text/javascript" src="controllers/usercontroller.js"></script> 
+</html>

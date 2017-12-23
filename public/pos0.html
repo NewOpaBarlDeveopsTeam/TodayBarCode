@@ -1,0 +1,91 @@
+<!DOCTYPE>
+<html ng-app="myApp">
+<head>
+<meta charset="utf-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Point of Sale Counter</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <style>
+#heading2
+{
+  background:orange;
+}
+  #heading3 {
+  border: 1px solid;
+  height: 60%;
+  padding: 10px;
+  margin-top: 10px;
+  margin-left:100px;
+  background-color: #FFF5EE;
+}
+         p {
+             color: azure;
+
+        }
+h1 {
+color:gold;
+    }
+.btn.danger {
+  margin-left: 44%;
+  width: 104px;
+  background-color: paleturquoise;
+}
+.ng-scope{
+  background-color: #FFA500;
+}
+.inventory{
+  border: 1px solid;
+  background-color:
+}
+</style>
+</head>
+<body ng-controller="PosCntrl">
+        <div><p><center><h1 style="color:#FFF5EE"><b>{{loginnnn}}<b/></h1><center></p></div>
+        <div class="container">
+        <div class="row">
+        <div id="heading3">
+        <div class="panel-heading"><p><center><h1><b>Session Details</b></h1></center></p></div>
+        <div class="col-xs-6">
+        <div class="well" ng-model="sesdate">
+        {{sesdate | date: "yyyy-MM-dd"}}
+        </div>
+        </div>
+        <div class="col-xs-6">
+        <div class="well" ng-model="session">
+        Session {{session}}
+        </div>
+        </div>
+        <div class="col-xs-6">
+        <div class="well">
+        <a href="ReportGen.html">
+        <button type="button" class="btn btn-danger" ng-Click="closeday(sesdate,session)">Close Day</button>
+        </a>
+        </div>
+        </div>
+        <div class="col-xs-6">
+        <div class="well">
+        <a href="view.html">
+        <button type="button" class="btn btn-info btn-lg"   ng-Click="closesession(sesdate,session)" >Close Session</button>
+        </a>
+        </div>
+        </div>
+        <!-- </div> -->
+        <div>
+        <!--    <a href="orderconfirmation.html" ng-click="confirmorder()"><button>Confirm Order</button> </a> -->
+        <a href="poscart1.html">
+        <button class="btn danger" ng-Click="loginsess(sesdate,session)">Login </button>
+        </a>
+        </div>
+        <!-- </div> -->
+        </div>
+        </div>
+        </div>
+</body>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+<script type="text/javascript" src="controllers/usercontroller.js"></script>
+</html>

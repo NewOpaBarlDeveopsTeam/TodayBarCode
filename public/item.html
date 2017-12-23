@@ -1,0 +1,315 @@
+<!DOCTYPE>
+<html ng-app="myApp">
+<head>
+
+ <title>Item</title>
+
+	<link rel="stylesheet" href="https://www.w3schools.com/lib/w3.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<!-- for -is -->
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
+<!--  for css global file -->
+<!-- <LINK rel="stylesheet" type="text/css" media="screen"
+      href="http://www.mysite.org/styles/general.css"> -->
+
+</head>
+<style type="text/css">
+.panel.panel-default
+{
+  /*height: 60%;
+  width: 100%;
+*/  border-style: solid;
+  border-color: black;
+}
+.csswork{
+height: 60%;
+  width: 100%;
+  /*border-style: solid;
+  border-color: black;
+*/}
+.csswork1{
+height: 15%;
+  width: 100%;
+  /*border-style: solid;
+  border-color: black;
+*/}
+
+form  { display: table;      }
+	p     { display: table-row;  }
+	label { display: table-cell; text-align: right}
+	input { display: table-cell; }
+	select { display: table-cell; }
+ #selectrow1:focus {
+    background-color: blue;
+}
+
+.selected {
+  background-color: blue;
+}
+
+#table-wrapper {
+  position:relative;
+}
+#tscroll {
+  height:90%;
+  overflow:auto;
+  margin-top:5%;
+}
+#table-wrapper table {
+  width:100%;
+}
+
+#table-wrapper table thead th .text {
+  position:absolute;
+  top:-5%;
+  /* margin-top:-20px;*/
+  height:5%;
+ /* width:35%;*/
+ }
+  #rate {
+  margin-left: 65%;
+/*  font-size: 15px;*/
+}
+</style>
+
+<body  ng-controller="ItemCntrl">
+<br>
+<div class="row">
+	<div class="col-sm-1">
+
+	</div>
+	<div class="col-sm-6">
+
+  Filter by Group:
+    <select ng-model="item1.filter"  ng-change ="filterchange()" >
+       <!-- <option ng-repeat="Type in itemtype1" >{{Type.invGroupName}}</option> -->
+       <option ng-repeat="SaleCategoryName in salescategorymaster1 | orderBy : 'SaleCategoryName'"> {{SaleCategoryName.SaleCategoryName}}</option>
+       </select>
+
+	</div>
+
+	<!-- <div class="col-sm-2">
+	 <button type="button" class="btn btn-danger" ng-click = "resetcall()">Reset</button>
+	</div> -->
+</div><br>
+
+
+<div class="row">
+<div class="col-sm-1">
+
+	</div>
+<div class="col-sm-6">
+
+ <div class="panel panel-default">
+        <div class="csswork">
+
+          <div id="table-wrapper">
+  <div id="tscroll">
+           <table class="table">
+
+    <thead>
+      <tr >
+             <th><span class="text">Item Name</span></th>
+             <th><span class="text">Group</span></th>
+             <th><span class="text">Sale Category</span></th>
+             <th><span class="text">Type</span></th>
+           </tr>
+    </thead>
+    <tbody >
+
+     <tr ng-repeat ="itemdetails1 in itemdetails | orderBy :
+     'itemType'" ng-click="selectrow(itemdetails1)" id="selectrow1" ng-class="{selected : itemdetails1 === idSelectedVote}">
+
+
+             <td>{{itemdetails1.name}}</td>
+             <td>{{itemdetails1.invGroupName}}</td>
+             <td>{{itemdetails1.saleCategory}}</td>
+             <td>{{itemdetails1.itemType}}</td>
+
+
+           </tr>
+
+       </tbody>
+       </table>
+       </div>
+       </div>
+       </div>
+       </div>
+
+       <button type="button" class="btn btn-primary" ng-click=edititem()>Edit</button>
+       <button type="button" class="btn btn-warning" ng-click=deleteitem()>Delete</button>
+       <button type="button" class="btn btn-info" ng-click="new()" >New</button>
+       <a href='rate.html'><button type="button"  id="rate" class="btn btn-info">Rate</button></a>
+        <div>
+       <!--  <h1>hello</h1> -->
+       <br>
+<!--       <div class="panel panel-default">-->
+
+<!--
+     <div align="center">
+      <button type="button" class="btn btn-primary" ng-click="saverate()">RateSave</button>
+        <button type="button" class="btn btn-danger" ng-click=cancelitem() ng-disabled="all">Cancel</button>
+        <button type="button" class="btn btn-info" >Close</button>
+       <a href='mainpage.html'><button type="button" class="btn btn-info"  >Close</button></a>
+
+
+    </div>
+-->
+
+       </div>
+       </div>
+       <div class="container">
+       <div class="col-sm-4">
+       <form>
+      <p>
+			<label>Name:</label>
+			<input  type="text" ng-model="item1.name" ng-disabled="all">
+		</p>
+
+		<br>
+
+         <p>
+			<label>ItemID:</label>
+			<input  type="text" ng-model="item1.id" ng-disabled="all">
+		</p>
+
+		<br>
+		<p>
+		 <label>Hsc:</label>
+		 <input type="text" ng-model="item1.hsc" ng-disabled="all" >
+		 </p>
+		<br>
+
+    <p>
+		 <label>Item Price:</label>
+		 <input type="text" ng-model="item1.section" ng-disabled="all" >
+		 </p>
+		<br>
+
+		<p> <label>Combo Item:</label><input type="checkbox" ng-model="item1.comboItem"  ng-disabled="all"></p><br>
+    <p> <label> Incl. in Margin Report: </label><input type="checkbox" ng-model="item1.marginReport"  ng-disabled="all"></p> <br>
+
+    <p>
+		 <label> Desc:</label>
+		 <input type="text" ng-model="item1.desc" ng-disabled="all">
+		 </p>
+		<br>
+
+		 <p>
+		 <label>Inventory Group:</label>
+   		<!-- <select ng-model="item1.inventory" ng-options="Group.GroupName for Group in inventorygroupmaster1" ng-disabled="all"> -->
+   		<!-- <select ng-model="item1.inventory" ng-options="Group.GroupName for Group in inventorygroupmaster1 track by G" ng-disabled="all"> -->
+   		 <td> <select ng-model="item1.invGroupName" ng-disabled="all">
+       <option ng-repeat="pure in inventorygroupmaster1" >{{pure.GroupName}}</option>
+       </select>
+       </td>
+   		</p>
+		<br>
+
+
+		 <p>
+		 <label> Item Type:</label>
+
+   		<!-- <option ng-repeat="TypeName in itemtype1">{{TypeName.TypeName}}</option>
+       </select>
+		</select></p> -->
+   <select ng-model="item1.itemType" ng-disabled="all">
+      <option ng-repeat="TypeNam in itemtype1 | orderBy : 'TypeName'" > {{TypeNam.TypeName}}</option>
+    </select></p>
+		<br>
+
+
+<!-- "item1.itemType" -->
+		 <p>
+		 <label> Sale category :</label>
+
+    <select ng-model="item1.saleCategory" ng-disabled="all" >
+      <option ng-repeat="SaleCategoryName in salescategorymaster1 | orderBy : 'SaleCategoryName'"> {{SaleCategoryName.SaleCategoryName}}</option>
+    </select></p>
+		<br>
+
+		 <!-- <ul>
+<li ng-repeat="x in cars | orderBy">{{x}}</li>
+</ul> -->
+		  <p>
+		 <label> With in state:</label>
+   		<select ng-model="item1.withinstate"  ng-disabled="all">
+   			<option ng-repeat="Percentage in withinstat">{{Percentage.taxname}}</option>
+
+		</select></p>
+		<br>
+
+		 <p>
+		 <label> Out of state:</label>
+   		<select ng-model="item1.outofstate" ng-disabled="all">
+
+   		<option ng-repeat="Percentage in outofstat">{{Percentage.taxname}}</option>
+   		<!-- "user.count as user.count for user in res -->
+		</select></p>
+		<br>
+
+         <p>
+		 <label>Taxable:</label>
+   		<select ng-model="item1.outofstate" ng-disabled="all">
+
+   		<option ng-repeat="Percentage in outofstat">{{Percentage.taxname}}</option>
+   		<!-- "user.count as user.count for user in res -->
+		</select></p>
+		<br>
+
+
+		<p>
+		 <label> Discount:</label>
+   		<select ng-model="item1.ChargeValue" ng-disabled="all">
+  			<option ng-repeat="discount in chargemaster">{{discount.Discount}}</option>
+		</select></p>
+		<br>
+         <p>
+		 <label>Charges:</label>
+   		<select ng-model="item1.ChargeName" ng-disabled="all">
+  			<option ng-repeat="charge in chargemaster">{{charge.Charge}}</option>
+		</select>
+    </p>
+		<br>
+    <p>
+     <label>Add to Frequent List:</label>
+     <select ng-model="item1.frequently" ng-disabled="all">
+       <option ng-repeat="fre in frequentadd">{{fre.addToFrequent}}</option>
+     </select>
+     </p>
+    <br>
+    <!-- <p>
+		 <label>Add to Frequent List:</label>
+		 <select type="text" ng-model="item1.frequently" ng-disabled="all" >
+		 </p>
+		<br> -->
+
+
+		</form>
+    <div align="center">
+     <button type="button" class="btn btn-primary" ng-click="saveitem()" ng-disabled="all">Save</button>
+       <button type="button" class="btn btn-danger" ng-click=cancelitem() ng-disabled="all">Cancel</button>
+      <!--  <button type="button" class="btn btn-info" >Close</button>-->
+       <a href='poslogin.html'><button type="button" class="btn btn-info"  >Close</button></a>
+
+
+        </div>
+
+       </div>
+
+
+       </div>
+
+       </div>
+
+
+
+
+</body>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+<script type="text/javascript" src="controllers/itemcontroller.js"></script>
+</html>
+
+<!-- <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+<script type="text/javascript" src="controller/controller.js"></script>   -->

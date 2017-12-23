@@ -1,0 +1,162 @@
+<!DOCTYPE>
+<html ng-app="myApp">
+<head>
+<meta charset="utf-8">
+<!--<meta http-equiv="refresh" content="10">-->
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Cart Page</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+</head>
+<style type="text/css">
+hr { 
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 3px;
+} 
+hr1 { 
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 1px;
+    background: red;
+} 
+    #heading1{
+        height: 50px;
+        background-color: lightgrey;
+    }
+    #heading2{
+        height: 200px;
+        background-color: grey;
+    }
+    button{
+        border-radius: 10px;
+        background-color: orange;
+        height: 40px;
+        width: 150px;
+    }
+    .row{
+        margin-left: 250px;
+    }
+    #heading3{
+    background-color: grey;
+    height: 40px;
+    }
+    #p1{
+    margin-left: 30px;
+    }
+    input[type="text"]
+    {
+        width: 100%;
+    }
+    #first {
+    /*width: 100px;*/
+    float:left; 
+    margin-left: 380px;
+    /* add this */
+}
+
+    
+    /*#wrapper{
+      display: flex;
+      width: 100%;
+      justify-content: space-between;
+    }*/
+</style>
+<body ng-controller="FirstCntrl">
+    <div class="container">
+       
+    <div class="panel-heading" id="heading1">{{restname}}</div>
+         <p id="restname">{{mp}}</p>
+    <input type="text" name="" placeholder="Select Delivery Method"><br>
+ <input type="text" name="" placeholder="Select Payment Option"><br>
+ <input type="text" name="" placeholder="Enter Coupon Code"><br><br><br>
+ <div class="panel-heading mypanel" id="heading2">
+
+ <h3 align="center"><font color="white"></font></h3>
+<table id="t1" cellspacing="5" cellpadding="5" width="100%">
+  <thead>
+    <tr>
+    <th></th>
+    <th></th>
+    </tr>
+  </thead>
+  <tbody>
+  <tr>
+  <td><b>Sub-Total Price</b></td>
+  <td><b>₹{{subtol}}</b></td>
+  </tr>
+  <tr>
+  <tr>
+      <td><i>Delivery Charges&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+      <td><i>₹0</i></td>
+  </tr>
+      <tr>
+      <td><i>Service fee(10%)</i></td>
+      <td><i>₹{{serchar}}</i></td>
+</tr>
+  <tr>
+      <td><i>Cgst</i></td>
+      <td><i>₹{{sercharc}}</i></td>
+</tr>
+      <tr>
+      <td><i>Sgst</i></td>
+      <td><i>₹{{serchars}}</i></td>
+</tr>
+  <tr>
+      <td><i>Totalgst</i></td>
+      <td><i>₹{{totGst}}</i></td>
+</tr>
+  
+      
+      
+  <tr>
+      <td><b>Final Price</b></td>
+      <td><b>₹{{total}}</b></td>
+  </tr>
+  </tbody>
+</table>
+</div>
+ <br>
+ <hr>
+ <br>
+<!-- <div align="center"> -->
+ <div id="wrapper">
+ <div id="first">
+ <a href="menu.html"><button>Add Another</button>  </a>  
+ </div>
+ <div id="second">
+ <a href="orderconfirmation.html" ng-click="confirmorder()"><button>Confirm Order</button> </a> 
+ </div>
+ </div>
+ <hr>
+<div class="panel-heading" id="heading3">
+<p id="p1">Selected Items in Cart</p>
+</div>
+ <div ng-repeat="item in list">
+<!--  <h1><font color="black">{{item.name}}</h1> -->
+ <p><font color="orange">{{item.quan}} Plate(s) of {{item.name}}</font></p>
+ <font color="black">₹{{item.total}}</font></div>
+
+
+    </div>
+<!--
+    <ul ng-repeat="data in data  ">
+      <li>{{data.data}}</li>      
+        </ul>
+-->
+</body>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/ngstorage/0.3.6/ngStorage.min.js"></script> 
+    <script type="text/javascript" src="controllers/usercontroller.js"></script> 
+</html>                                   

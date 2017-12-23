@@ -1,0 +1,329 @@
+<!DOCTYPE>
+<html ng-app="myApp">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<script type="text/javascript" src="libs/angular-bootstrap/ui-bootstrap-tpis.js"></script>
+<!-- Optional theme -->
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous"> -->
+<title>ERP Diagnostic</title>
+
+<style>
+#button{
+  background: pink;
+}
+hr { 
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 2px;
+} 
+.centerize { 
+    text-align: center;
+}
+.panel-default> #heading1 
+{
+  background:black;
+  height:08%;
+}
+.panel-default> #heading2 
+{
+  /*background:grey;*/
+  height:150px%;
+}
+.tab {
+  margin-top: 10px;
+  margin-left:0px;
+  font-family: Latha; 
+}
+p{
+  font-size: 35;
+}
+#footer {
+position: fixed;
+bottom: 40px;
+height: 50px;
+width: 50%;
+background-color: white;
+}
+#search {
+   height: 3em; width: 20em;
+    background: green;
+  }
+  #search1 {
+   height: 3em; width: 10em;
+    background: green;
+  }
+
+#container{width:100%;}
+#left{float:left;width:100px;}
+#right{float:right;width:100px;margin-bottom: 10px;}
+#center{margin:0 auto;width:100px;}
+</style>
+<!-- <SCRIPT type="text/javascript">
+    window.history.forward();
+    function noBack() { window.history.forward(); }
+</SCRIPT> -->
+</head>
+<body>
+<div ng-controller="FirstCntrl">
+<div class="panel panel-default">
+ <div class="panel-heading" id="heading1">
+ 
+  <div class="tab">
+  <a href="quantity.html"><img src="http://downloadicons.net/sites/default/files/left-arrow-icon-35895.png" height="80" width="80"></a> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+
+  
+  <a href="index.html"><font color="white" size="50">CART DETAILS </font></a>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+
+  
+
+ <!-- <a href="index.html"><img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcToGffelO4KGK5bQVr6PYa_WxYETfuaMF27NrFxTn8Zg_Fz_w2ZO2a9KA" height="80" width="80"></a> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;   -->
+
+ <!-- <a href="index.html"><img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR6jaf2B2-LQqLJBZtEq1GK3w7fRyRAfXMV-0MzWlrNNDb9W4LpvYyCTcbu" height="100" width="100"></a> &nbsp;&nbsp; &nbsp;&nbsp;  -->
+  
+ 
+  <!-- <span><a href="index.html"><font color="white" size="08"><b>Thanks</a></font></span> -->
+  
+
+  <!-- <span><a href="#"><font color="white" size="05"><b>Tracks & Sessions</a></font></span>
+  
+
+  <span><a href="part.html"><font color="white" size="05"><b>Participants</a></font></span>
+    
+
+  <span><a href="RegisterPage.html"><font color="white" size="05"><b>Register</a></font></span> -->
+  </div>
+    </div>
+ </div>
+ 
+ <div> 
+ <div style="text-align:left;float:left;margin-left:10px;"><font size="08" color="black">Your Order</div> 
+<a href="edit.html"><div style="text-align:right;float:right;"><font color="green">Edit order</div> </font></a>
+&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+
+<!-- <h1 ng-repeat="item in itemlist">{{item.name}}</h1> -->
+<!-- <div ng-repeat="item in itemlist">hi..{{item.name}}</div> -->
+ <div ng-repeat="item in itemlist">
+<h1 align="center">{{item.name}}</h1>
+<p ng-repeat="name in item.item">{{name.quan}}x{{name.name}}&nbsp;{{name.total}}
+<!-- <div ng-repeat="rest in item.rest">{{.name}} -->
+<!-- {{item.quan}}x{{item.name}}
+ --><!-- <div style="text-align:left;float:left;margin-left:10px;"><font size="08" color="black">{{item.item}}x {{item.name}}</div>  -->
+<div style="text-align:right;float:right;"><font color="green">Rs {{name.total}}</div></font>
+<!-- Rs {{item.subtol}} -->
+
+<hr> <<!-- div class="w3-panel w3-padding-16 w3-orange"></div> -->
+</div>
+<!-- <div ng-repeat="item in itemlist"><font size="08"></font></div> -->
+<!-- &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp; -->
+ <p ng-show="!itemlist.length">No Orders to Display</p>
+
+   <a href="menu.html"><p align="center"><font color="green" size="08">Add Items</p></font></a></p></a>
+
+    
+<div style="text-align:left;float:left;margin-left:30px;"><font size="08" color="grey">Subtotal</div> 
+<div style="text-align:right;float:right;">Rs.{{item.subtol}}</div> </font><br>
+<div style="text-align:left;float:left;margin-left:30px;"><font size="08" color="grey">Service fee(10%)</div> 
+<div style="text-align:right;float:right;">Rs.{{item.servchar}}</div> </font><br><br><br>
+<!-- <div style="text-align:left;float:left;margin-left:30px;"><font size="08" color="grey">Delivery Fee</div> 
+<div style="text-align:right;float:right;">Rs.44</div> </font><br><br><br> -->
+<div style="text-align:left;float:left;margin-left:10px;"><font size="08" color="black">Total</div> 
+<div style="text-align:right;float:right;">Rs.{{item.total}}</div> </font>
+
+&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  
+<button type="text" id="search" ng-click="login()"><font color="white">Proceed to Checkout -></button></font></button>
+<!--  -->
+</div>
+</body>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/ngstorage/0.3.6/ngStorage.min.js"></script> 
+    <script type="text/javascript" src="controllers/usercontroller.js"></script> 
+</html>
+
+//second copy
+<!DOCTYPE>
+<html ng-app="myApp">
+<head>
+
+<link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<script type="text/javascript" src="libs/angular-bootstrap/ui-bootstrap-tpis.js"></script>
+<title>Order food online</title>
+
+<style>
+hr { 
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 2px;
+} 
+.centerize { 
+    text-align: center;
+}
+#heading3{
+  background: green;
+  
+}
+.panel-default> #heading1 
+{
+  /*width: 100px;*/
+  background:black;
+  /*height:130px;*/
+}
+.tab {
+  margin-top: 10px;
+  margin-left:0px;
+  font-family: Latha; 
+}
+/*p{
+  font-size: 35;
+}*/
+#search {
+   height: 3em; width: 20em;
+    background: green;
+  }
+</style>
+<!-- <SCRIPT type="text/javascript">
+    window.history.forward();
+    function noBack() { window.history.forward(); }
+</SCRIPT> -->
+</head>
+<body>
+<div ng-controller="FirstCntrl">
+<div class="panel panel-default">
+ <div class="panel-heading" id="heading1">
+ 
+    <div class="tab">
+    <a href="quantity.html"><img src="http://downloadicons.net/sites/default/files/left-arrow-icon-35895.png" height="80" width="80"> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; 
+   
+    <a href="index.html"><font color="white" size="10">CART DETAILS </font></a>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+  
+  </div>
+   </div>
+  </div></a></a></a></span></a>
+<!-- <div class="w3-panel w3-padding-16 w3-orange">
+  <h4>w3-padding-16</h4>
+  <p>I have 16px top and bottom padding</p>
+</div> -->
+<div> 
+ <div style="text-align:left;float:left;margin-left:10px;"><font size="08" color="black">Your Order</div> 
+<a href="edit.html"><div style="text-align:right;float:right;"><font color="green">Edit order</div> </font></a>
+&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+<!-- <div class="panel panel-default">
+ <div class="panel-heading" id="heading1"> -->
+<div  ng-repeat="item in itemlist">
+<h1 align="center"><font size="08" color="orange">{{item.name}}</h1></font>
+<div class="panel-heading" id="heading3">
+<div  ng-repeat="name in item.item" >
+<div style="text-align:left;float:left;margin-left;"><font size="08" color="black"> {{name.quan}}x{{name.name}}</font></div>
+<div style="text-align:right;float:right;margin-right:22px;"><font color="green">{{name.total}}</div></font><br><hr>
+</div><br>
+<div class="row">
+<div class="col-sm-11">
+<h1><font size="08" color="grey">Subtotal :</h1>
+<h1>Service fee(10%):</h1>
+<h1>Total:</h1></font>
+</div>
+<div class="col-sm-0">
+<h1><font color="green">{{item.subtol}}</h1>
+<h1>{{item.servchar}}</h1>
+<h1>{{item.total}}</h1></font>
+</div>
+
+</div></div>
+</div>
+
+<p class="w3-panel w3-padding-16" ng-show="!itemlist.length">No Orders to Display</p>
+
+   <a href="resttype.html"><p align="center"><font color="green" size="08">Add Items</p></font></a></p></a>
+   <!-- <div style="text-align:left;float:left;margin-left:10px;"><font size="08" color="black">Total</div> 
+<div style="text-align:right;float:right;">Rs.{{item.total}}</div> </font> -->
+
+&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  
+<button type="text" id="search" ng-click="login()"><font color="white">Proceed to Checkout -></button></font></button>
+</div>
+</body>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/ngstorage/0.3.6/ngStorage.min.js"></script> 
+    <script type="text/javascript" src="controllers/usercontroller.js"></script> 
+</html>
+responsive design page code
+
+<div class="navbar-header">
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#navbarCollapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="#">Tutorial Republic</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="navbarCollapse">
+            <ul class="nav navbar-nav">
+                <li class="active"><a href="http://www.tutorialrepublic.com" target="_blank">Home</a></li>
+                <li><a href="http://www.tutorialrepublic.com/about-us.php" target="_blank">About</a></li>
+                <li><a href="http://www.tutorialrepublic.com/contact-us.php" target="_blank">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+</nav>
+<div class="container">
+    <div class="jumbotron">
+        <h1>Learn to Create Websites</h1>
+        <p>In today's world internet is the most popular way of connecting with the people. At <a href="http://www.tutorialrepublic.com" target="_blank">tutorialrepublic.com</a> you will learn the essential of web development technologies along with real life practice example, so that you can create your own website to connect with the people around the world.</p>
+        <p><a href="http://www.tutorialrepublic.com" target="_blank" class="btn btn-success btn-lg">Get started today</a></p>
+    </div>
+    <div class="row">
+        <div class="col-sm-6 col-md-4 col-lg-2">
+            <h2>HTML</h2>
+            <p>HTML is a markup language that is used for creating web pages. The HTML tutorial section will help you understand the basics of HTML, so that you can create your own web pages or website.</p>
+            <p><a href="http://www.tutorialrepublic.com/html-tutorial/" target="_blank" class="btn btn-success">Learn More &raquo;</a></p>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-2">
+            <h2>CSS</h2>
+            <p>CSS is used for describing the presentation of web pages. The CSS tutorial section will help you learn the essentials of CSS, so that you can fine control the style and layout of your HTML document.</p>
+            <p><a href="http://www.tutorialrepublic.com/css-tutorial/" target="_blank" class="btn btn-success">Learn More &raquo;</a></p>
+        </div>
+        <div class="clearfix visible-sm-block"></div>
+        <div class="col-sm-6 col-md-4 col-lg-2">
+            <h2>Bootstrap</h2>
+            <p>Bootstrap is a powerful front-end framework for faster and easier web development. The Bootstrap tutorial section will help you learn the techniques of Bootstrap so that you can create web your own website with much less efforts.</p>
+            <p><a href="http://www.tutorialrepublic.com/twitter-bootstrap-tutorial/" target="_blank" class="btn btn-success">Learn More &raquo;</a></p>
+        </div>
+        <div class="clearfix visible-md-block"></div>
+        <div class="col-sm-6 col-md-4 col-lg-2">
+            <h2>References</h2>
+            <p>The references section outlines all the standard HTML tags and CSS properties along with other useful references such as color names and values, symbols and character entities, web safe fonts, language codes, HTTP messages and much more.</p>
+            <p><a href="http://www.tutorialrepublic.com/twitter-bootstrap-tutorial/" target="_blank" class="btn btn-success">Learn More &raquo;</a></p>
+        </div>
+        <div class="clearfix visible-sm-block"></div>
+        <div class="col-sm-6 col-md-4 col-lg-2">
+            <h2>Examples</h2>
+            <p>The examples section encloses an extensive collection of examples on various topic that you can try and test yourself using online HTML editor.</p>
+            <p><a href="http://www.tutorialrepublic.com/twitter-bootstrap-tutorial/" target="_blank" class="btn btn-success">Learn More &raquo;</a></p>
+        </div>
+        <div class="col-sm-6 col-md-4 col-lg-2">
+            <h2>FAQ</h2>
+            <p>The collection of Frequently Asked Questions (FAQ) provides brief answers to many common questions related to web design and development.</p>
+            <p><a href="http://www.tutorialrepublic.com/twitter-bootstrap-tutorial/" target="_blank" class="btn btn-success">Learn More &raquo;</a></p>
+        </div>
+    </div>
+    <hr>
+    <div class="row">
+        <div class="col-sm-12">
+            <footer>
+                <p>© Copyright 2013 Tutorial Republic</p>
+            </footer>
+        </div>
+    </div> 

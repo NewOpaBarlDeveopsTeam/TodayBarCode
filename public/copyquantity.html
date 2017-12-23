@@ -1,0 +1,150 @@
+<!DOCTYPE>
+<html ng-app="myApp">
+<head>
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<script type="text/javascript" src="libs/angular-bootstrap/ui-bootstrap-tpis.js"></script>
+<!-- Optional theme -->
+<!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap-theme.min.css" integrity="sha384-fLW2N01lMqjakBkx3l/M9EahuwpSfeNvV63J5ezn3uZzapT0u7EYsXMjQV+0En5r" crossorigin="anonymous"> -->
+<title>ERP Diagnostic</title>
+
+<style>
+@media (max-width: 1200px) {
+#img4{
+  background: black;
+}
+#button{
+  background: pink;
+}
+hr { 
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 2px;
+} 
+.centerize { 
+    text-align: center;
+}
+@media (max-width: 1200px) {
+.panel-default> #heading1 
+{
+  background:black;
+  display: block; 
+  width: 100%; 
+  height: auto; 
+}
+}
+#index {
+  background: black;
+  height: 130px;
+}
+.panel-default> #heading2 
+{
+  /*background:grey;*/
+  height:150px;
+}
+.tab {
+  margin-top: 10px;
+  margin-left:0px;
+  font-family: Latha; 
+}
+p{
+  font-size: 35;
+}
+#footer {
+position: fixed;
+bottom: 40px;
+height: 50px;
+width: 50%;
+background-color: white;
+}
+#search {
+  margin-left: 17%;
+   height: 3em; width: 13em;
+    background: black;
+  }
+  /*#search1 {
+   height: 3em; width: 10em;
+    background: green;
+  }*/
+#container{width:100%;}
+#left{float:left;width:100px;}
+#right{float:right;width:100px;margin-bottom: 10px;}
+#center{margin:0 auto;width:100px;}
+}
+</style>
+<!-- <SCRIPT type="text/javascript">
+    window.history.forward();
+    function noBack() { window.history.forward(); }
+</SCRIPT> -->
+</head>
+<body>
+<div ng-controller="FirstCntrl">
+<div data-role="page" id="index" data-theme="b">
+            <div data-theme="a" data-role="header">
+ 
+  <div class="tab">
+  <a href="order.html"><img src="http://downloadicons.net/sites/default/files/left-arrow-icon-35895.png" height="80" width="80"></a> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; 
+  
+  <a href="index.html"><font color="white" size="50">Dosa Counter </font></a>&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+  
+
+ <!-- <a href="index.html"><img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcToGffelO4KGK5bQVr6PYa_WxYETfuaMF27NrFxTn8Zg_Fz_w2ZO2a9KA" height="80" width="80"></a> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;
+ -->
+ <a href="cart.html"><img src="cartr.png" height="100" width="100" id="img4"></a> &nbsp;&nbsp; &nbsp;&nbsp; 
+  </div>
+    </div>
+ </div> 
+<div ng-repeat="item in test"><font size="08" style="margin-left:20px;">{{item}}</font></div>
+  <img src="dosa.jpg" id="img" height="400" width="970">&nbsp;&nbsp; <h1><font size="10">{{name}}</font><br><br><font size="08" color="black">Basic Price 
+<div style="text-align:right;float:right;margin-right:20px;">Rs.{{Rs}}</div> </font><br><br>
+<font color="grey" style="margin-left:30px;"> A {{name}} is made by stuffing a dosa with lightly &nbsp;&nbsp;&nbsp; cooked potatoes, onions, green chilli and spices.</font>
+ <div style="text-align:left;float:left;margin-left:20px;">
+<br><br><br>
+   <div style="text-align:left;float:left;"><font size="08" color="black">Quantity</div>
+
+     <!-- <div class="panel-body" id="heading2"> -->
+ <!-- <li ng-repeat="test in test">{{test}}</li> -->
+ &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  
+ <div class="panel panel-default">
+ <div class="panel-heading" id="heading2">   
+ <div class="tab">
+  <img id="hello" src="https://cdn0.iconfinder.com/data/icons/ie_Bright/128/minus_remove_green.png" height="100" width="100" ng-click="count1($event)"></a> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+ 
+  <font color="black">{{count}}</font> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;
+
+  <img id="hi" src="http://jabaali.in/wp-content/uploads/2016/09/plus-green.png" height="100" width="100" data-ng-click="count1($event)"></a> &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;</div>
+<!--   <div id="container">
+  <div id="left"><img  src="https://cdn0.iconfinder.com/data/icons/ie_Bright/482/plus_add_minus.png" height="50px" width="50px" /></div>
+  <div id="center">hello</div>
+  <div id="right"><img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Plus_blue.svg/1000px-Plus_blue.svg.png" height="50" width="50"></div>
+</div> --></div></div>
+<div style="text-align:left;float:left;margin-left:10px;"><font size="08" color="black">Total</div> 
+<div style="text-align:right;float:right;margin-right:20px;">Rs.{{cal}}</div> </font>
+&nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp; &nbsp;&nbsp;  &nbsp;&nbsp; &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+<label>Comment</label>
+<textarea ng-model="txt.comment" placeholder="Your Comment" style='width:850px' type="text"></textarea><br><br>
+                    <!-- <button ng-click='btn_add();' style='margin-top:10px;'>Post Comment</button> <br><br> -->
+<div id="row">
+<!-- <h1>{{count}}<h1> -->
+ <button id="search" ng-click="additems(txt.comment)"><font color="white">Add to cart</button></font></button>
+ <!-- <a href="placeorder.html"><button type="text" id="search1" ng-click="placeorder()"><font color="white">Place Order</button></font></button> -->
+</div>
+<div ng-repeat="item in test"> 
+   1x {{test}}</div>
+</div>
+</body>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/ngstorage/0.3.6/ngStorage.min.js"></script> 
+    <script type="text/javascript" src="controllers/usercontroller.js"></script> 
+</html>
+ <!-- <button type="text" id="search" ng-click="login()"><font color="white">Proceed to Checkout -></button></font></button>
+ <div>
+  <a href="dosa.html"><p align="center"><font color="green" size="08">Add Items</p></font></a></p></a></div>
+  #search {
+   height: 3em; width: 20em;
+    background: green;
+  } -->

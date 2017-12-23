@@ -1,0 +1,102 @@
+<!DOCTYPE>
+<html ng-app="myApp">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+ <title>Oder food online</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<style>
+.rating {
+	/*font-size: 100px;*/
+    color: #a9a9a9;
+    margin: 0;
+    padding: 0;
+}
+ul.rating {
+    display: inline-block;
+
+}
+.rating li {
+    list-style-type: none;
+    display: inline-block;
+    padding: 1px;
+    text-align: center;
+    font-weight: bold;
+    cursor: pointer;
+    /*font-size: 100px;*/
+}
+.rating .filled {
+    color: green;
+    
+}
+.panel-default> #heading1 
+{
+  /*width: 100px;*/
+  background:lightgrey;
+  height:50px;
+}
+input[type="text"]
+{
+  width: 100%;
+}
+#stars
+{
+	font-size: 30px;
+}
+button
+{
+	text-align: center;
+    height: 40px;
+    width: 200px;
+    font-size: 20;
+}
+input[type="text"]
+{
+	border-top:0;
+}
+</style>
+</head>
+<body>
+
+
+<div ng-controller="StarCtrl">
+<div class="panel panel-default">
+ <div class="panel-heading" id="heading1">
+ <p>Feedback</p>
+ </div></div>
+ <!--  <span ng-repeat="rating in ratings">
+        <div star-rating rating-value="rating.current" max="rating.max" on-rating-selected="getSelectedRating(rating)">
+        </div>
+        </span> -->
+        <table>
+        	<thead>
+        		<tr>
+        			<th></th>
+        			<th></th>
+        		</tr>
+        	</thead>
+        	<tbody >
+        		<tr ng-repeat="item in feeddes">
+        			<td><font color="green" size="05">{{item.Des}}</font></td><br>
+        			<td id="stars" star-rating rating-value="item.current" max="item.max" ng-click="starrating(item.Fid,item.current)"></td>
+        			
+               		</tr><br><br>
+
+        	</tbody>
+        </table><br>
+        <p><font color="green" size="05">Tell us in 100 words</font></p><br><br>
+        <input type="text" name=""><br><br><br>
+        <div align="center">
+        <a href="loginpage.html"><button class="btn-success">Submit</button>
+        </div>
+</div>
+ </body>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+  <script type="text/javascript" src="https://cdn.jsdelivr.net/ngstorage/0.3.6/ngStorage.min.js"></script> 
+  <script type="text/javascript" src="controllers/usercontroller.js"></script> 
+</html>

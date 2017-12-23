@@ -1,0 +1,265 @@
+<!DOCTYPE html>
+<html ng-app="myApp">
+<head>
+  <meta charset="utf-8"/>
+  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://www.w3schools.com/lib/w3.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<!-- Optional theme -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js">
+    </script>
+<title>Purchase</title>
+</head>
+  <style>
+    .btn{
+      width:100px;
+      margin: 20px;
+    }
+    .container-fluid{
+      background-color: gainsboro;
+/*      background-color: #505050*/
+      border: 2px solid black;
+    }
+    .container{
+      border: 2px solid black;
+      height:90%;
+      
+    }
+    #idid{
+      width:85px;
+    }
+    .padding-0{
+      padding-left: -50;
+      padding-right: -50;
+    }
+    #rate {
+	margin-left: 10px;
+}
+    #table1{
+      height: 70%;
+      background-color: aqua;
+    }
+    .outer{
+		border:2px solid;
+		height: 300px;
+		width: 1100px;
+		margin-left:05px;
+		margin-top: 5px;
+		background-color: white; 
+	      }
+      .inner{
+		border:2px solid;
+		height: 200px;
+		width: 400px;
+		margin-left:05px;
+		margin-top: 5px;
+		background-color: white;
+	      }
+       .sider{
+		border:2px solid;
+		height: 200px;
+		width: 400px;
+		margin-left:410px;
+		margin-top: -200px;
+		background-color: white;
+	      }
+
+  </style>
+
+  <body ng-controller="purchaseCntrl">
+    <div class = "container-fluid">
+      <label><h3 style="background-color: white"><b>Main Transaction</b></h3></label>
+      <button type="button" class="btn btn-default">List</button>
+      <div class = "container">
+         <br>
+          <div class ="row1">
+            <div class = "col-sm-2 padding-0" style="margin-left: 0">
+            <label>Date:</label><input type = "date" style="width:120px" ng-model="date2.date1">
+            </div>
+            
+            <div class = "col-sm-3 padding-0" style="margin-left: 0">
+            <label>Transaction:</label>
+              <select ng-model = "transactiontype">
+                <option></option>
+                <option ng-repeat = "transaction in transactionType " id="idid">{{transaction.transactionType}}</option>
+              </select>
+            </div>
+            
+            <div class = "col-sm-2 padding-0">
+            <label>Voch_No:</label><input type = "number" id="idid" ng-model="vouchernumber1">
+            </div>
+            <div class = "col-sm-3 padding-0">
+            <label>Ref.Date:</label><input type = "date" ng-disabled="all">
+            </div>
+            <div class = "col-sm-2 padding-0">
+            <label>Ref.No:<input type = "number" id="idid" ng-disabled="all" ></label>
+            </div>
+            </div>
+        <div class="clearfix"></div>
+        <br>
+        
+        <div class ="row2">
+           <div class ="col-sm-3 padding-0">
+            <label>Stock Point:
+              <select>
+                <option></option>
+                   <option ng-repeat = "stockpoint in stockpointname">{{stockpoint.Type}}</option>
+              </select>
+            </label>
+            </div>
+          
+            <div class = "col-sm-2 padding-0">
+            <label>To:
+              <select>
+                <option></option>
+                   <option ng-repeat="party in partyname" >{{party.partyName}}</option>
+              </select>
+            </label>
+            </div>
+             
+            <div class = "col-sm-3 padding-0" style="margin-left: 0">
+            <label>Party:
+              <select ng-model="party" ng-change="partyid(party)">
+                <option></option>
+                   <option ng-repeat="party in partyname" >{{party.partyName}}</option>
+              </select>
+            </label>
+              <button type="button" class=" btn-default" id="idid">New</button>
+            </div>
+          
+          <div class = "col-sm-2" id="section">
+            <label>Section:
+              <select ng-disabled="all">
+                <option></option>
+                  <option ng-repeat="section in sectioname" ng-disabled="all" >{{section.SectionName}}</option>
+              </select>
+            </label>
+          </div>
+          
+          <div class = "col-sm-2">
+            <span id ="rate" >
+              <label pull-left>Rate:<input type = "text" id="idid" style="height: 40px;width: 100px;color:blue;font-size: 30px" ng-model="purchaserate" ng-blur = "rate()"></label>
+              </span>
+          </div>
+          
+        </div>
+        <div class="clearfix"></div>
+         <br>
+<!--        <select ng-model="getcharge" ng-change="sale(getcharge)">-->
+        <div class ="row3">
+           <div class ="col-sm-5 padding-0 row">
+              <label>Item Code:</label>
+             <b><input list="itemname" name="itemname" id="idid" ng-model="itemcode" ng-blur="itemdetailsfetch(itemcode)"></b>
+              <datalist id = "itemname">
+                <select>
+                  <option ng-repeat="item in itemdetails" ng-model="itemcode">{{item.ItemCode}}</option>
+                 </select>
+                 </datalist>
+             <span style="font-size: 20px;color: blue">{{skuitemname}}</span>
+             </div> 
+          
+            <div class = "col-sm-2 padding-0">
+            <label>Pieces:<input type = "Number" id="idid" ng-model="pieceNo"></label>
+            </div>
+             
+            <div class = "col-sm-2 padding-0">
+            <label>UOM:
+              <select ng-model="umosize" ng-change="ratecalc(umosize)">
+<!--                <option></option>-->
+                   <option ng-repeat="uomsize in umosizefound">{{uomsize.UOM}}</option>
+              </select>
+               </label>
+            </div>
+             
+            <div class = "col-sm-3 padding-0" ng-disabled="all">
+            <label>Discount:
+              <select ng-disabled="all">
+                <option></option>
+                   <option ng-disabled="all">Discount</option>
+              </select>
+               </label>
+              <input type = "text" id="idid" ng-model = "discountname" ng-disabled="all">
+            </div> 
+    
+<!--
+          <div class = "col-sm-2">
+            <span id ="rate">
+              <label pull-left>Rate:<input type = "text" id="idid" style="height: 40px;width: 100px;color:blue;font-size: 30px" ng-model="purchaserate"></label>
+              </span>
+          </div>
+-->
+          
+        </div>
+        <br><br>
+        <div class="outer">
+            <table class="table table-bordered">
+              <thead style="font-size: 15px">
+	    		<tr>
+	    			<th>Sl No</th>
+	    			<th>Item</th>
+	    			<th>Qty</th>
+	    			<th>Pieces</th>
+	    			<th>UOM</th>
+	    			<th>Rate</th>
+	    			<th>Disc Rate</th>
+	    			<th>Disc Type</th>
+	    			<th>Value</th>
+	    		</tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat = "purchase in purchaseitem1">
+                  <td>{{$index+1}}</td>
+                  <td ng-model="purchase.item">{{purchase.item}}</td>
+                  <td ng-model="purchase.quantity">{{purchase.quantity}}</td>
+                  <td ng-model="purchase.pieces">{{purchase.pieces}}</td>
+                  <td ng-model="purchase.umo">{{purchase.umo}}</td>
+                  <td ng-model="purchase.Rate">{{purchase.Rate}}</td>
+                  <td ng-model="purchase.discrate">{{purchase.discrate}}</td>
+                  <td ng-model="purchase">{{}}</td>
+                  <td ng-model="purchase.value">{{purchase.value}}</td>
+                </tr>
+              </tbody>
+	    	</table>
+	    	</div>
+        <div class="inner">
+             	<table class="table table-bordered">
+                <thead style="font-size: 15px">
+                <tr>
+                <th>Name</th>
+                <th>Method</th>
+                <th>Value</th>
+                <th>Amount</th>
+                </tr>
+                </thead>
+                <tbody>
+                </tbody>
+                </table>
+          </div>
+        <div class="sider">
+        </div>
+        <br>
+        <div>
+        <button type="button" class=" btn-default" id="idid">Delete</button>
+        <span style="margin-left: 100px">
+        <label>Remarks:<input type = "text" style="width:300px"></label>
+        </span>
+        </div>
+      </div>
+      <br>
+      <div>
+        <span style="margin-left: 70px">
+        <button type="button" class=" btn-default" id="idid">Export</button>
+        </span>
+        <span style="margin-left: 350px">
+        <button type="button" class=" btn-default" id="idid" ng-click="stockdetailsave(vouchernumber,date2.date1,itemid);stockbooksave(vouchernumber,date2.date1)">Save</button>
+        <button type="button" class=" btn-default" id="idid">Cancel</button>
+        <button type="button" class=" btn-default" id="idid">Close</button>
+        </span>
+      </div>
+      </div>
+  </body>
+  <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+  <script type="text/javascript" src="controllers/purchasecntrl.js"></script>
+  </html>

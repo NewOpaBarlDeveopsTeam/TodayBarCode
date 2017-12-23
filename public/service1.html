@@ -1,0 +1,170 @@
+<!DOCTYPE>
+<html ng-app="myApp">
+<head>
+  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<title>Taxation</title>
+</head>
+
+ <!-- <script src="https://cdn.jsdelivr.net/ngstorage/0.3.6/ngStorage.min.js"></script> -->
+   <script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
+    <!-- for -is -->
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
+
+<link href="tax.css" rel="stylesheet">
+  <style>
+  body {
+  background-color:#DEECF9;
+}
+    
+    #table {
+  background-color: #F6F6F6;
+}
+   tbody {
+  background-color: white;
+}
+  </style>
+  <body>
+    <div class="container" ng-controller="ServiceCtrl">
+      <center><h1>Charges Defination</h1></center>
+     <div class="panel-group">    
+            <!--Panel 1 Start-->   
+        <div class="panel panel-default">
+            <div class="panel panel-default">  
+              <div class="panel-heading"><h1>Voucher Class</h1></div> 
+                <div class="panel-body">
+<!--                   <legend>Voucher Class</legend> -->
+                  <form>
+      <fieldset>
+        <ui ng-repeat="charge in chargeitem">
+          <li>{{charge.chargename}}</li>
+
+          </ui>
+        
+        
+      </fieldset>
+    </form> 
+                  </div> 
+          </div>
+              <center>
+            <button type="button" class="btn btn-default" ng-click="disable()">New</button>
+            <button type="button" class="btn btn-default" ng-click="edit(itname._id)">Edit</button>
+            <button type="button" class="btn btn-default" ng-click="disable()">Delete</button>
+             <button type="button" class="btn btn-default" ng-click="disable()">Close</button>
+           </center>
+         <div class="dropdown">
+    
+    <label>Voucher Class:
+      <select ng-model="charge.chargename" ng-change="chargename(charge.chargename)">
+       <option ng-repeat="charge in chargeitem">{{charge.chargename}}</option>
+       </select>
+           </label>
+</div>
+            </div>    
+            <!--Panel 1 End-->    
+            <!--Panel 2 Start--> 
+       <div class="panel panel-default">
+            <div class="panel panel-default">    
+                
+                <div class="panel-body" id="table">
+              <div class="table-responsive">
+   
+      <table class="table table-bordered" id="tax5">
+  <thead>
+    <tr>
+    <!-- here is my require ment  eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee   -->
+      
+      <th id="thwidth">SINO</th>
+      <th id="thwidth">Charge Name</th>
+      <th id="thwidth">Account Name</th>
+      <th id="thwidth">Add / Sub</th>
+      <th id="thwidth1">Value</th>
+      <th id="thwidth">Valuation In</th>
+      <th id="thwidth">Editable</th>
+       <th id="thwidth">Taxable</th>
+    </tr>
+  </thead>
+  <tbody>
+  
+   <!--  <tr> -->
+   <tr ng-repeat="itname in itname" ng-click="selUser(itname)">
+     
+     
+ <td id="thwidth" ng-model="itname._id">{{$index+1}}</td>
+
+<!--     <td>{{itname.ChargeName}}</td>-->
+     
+      <td id="thwidth" ng-model="user.ChargeName">
+      
+        {{itname.ChargeName}}
+        
+      </td>
+       
+      
+      
+
+     <td id="thwidth">
+     <select class="form-control" ng-model="user.ChargeName">
+<option ng-repeat="itnam in itnamee">{{itnam.ChargeName}}</option>
+</select></td>
+
+     
+
+    <td id="thwidth">
+      <select class="form-control">
+        <option ng-repeat="it in itnamee">{{it.Add/Sub}}</option>
+        
+      </select></td>    
+<!--      <input type="text" class="form-control" ng-model="pur1.Rate">-->
+<td id="thwidth">{{itname.ChargeValue}}</td>
+    
+ <td id="thwidth"><select class="form-control" ng-model="user.ChargeMethod">
+        <option ng-repeat="user in itnamee">
+        {{user.ChargeMethod}}</option>
+        
+      </select></td>
+     
+
+     <td id="thwidth1"> 
+     <input type="checkbox" value="user.Editable" ng-model="checked" ng-change="taxable(checked)" ng-true-value="'{{country.name}}'" ng-false-value="''"></td>
+       
+   <td id="thwidth1"> 
+     <input type="checkbox" value="" ng-model="checked" ng-click="num()" ></td>
+     
+
+     
+     
+      
+
+
+     
+
+    
+      </tr>
+  </tbody>
+</table>
+                  </div>
+                
+                 <center>
+            <button type="button" class="btn btn-default" ng-click="disable()">Save</button>
+            <button type="button" class="btn btn-default" ng-click="disable()">Cancel</button>           
+           </center>
+          <button type="button" class="btn btn-default" ng-click="disable()">Delete</button> 
+                
+                
+                
+           </div>
+              </div>    
+            </div>    
+            
+        </div>    
+    </div>
+  </body>
+   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>    
+     <script type="text/javascript" src="controllers/usercontroller.js"></script>  
+</html>

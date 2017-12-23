@@ -1,0 +1,108 @@
+<html ng-app="myApp">
+<head>
+	<title>manager Report</title>
+	 <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+	<style>
+  }
+#search
+  {
+  margin-top: 20px;
+  }
+#text {
+      height: 50px;
+      width:400px;
+      }
+input {
+     border-radius:5px;
+     border:1 1 1 1;
+
+      }
+th, td
+      {
+    width: 140px;
+    /*border: none;*/
+    text-align: center;
+    padding: 8px;
+    overflow: hidden;
+      }
+      th{
+        color:red;
+      }
+
+   .alter
+   {
+	border:2px solid;
+	width:40%;
+  height: auto;
+
+}
+ a{
+  border:1px solid white;
+  background-color: white;
+ }
+ .an{
+  border:2px solid black;
+  height:400px;
+  margin-top:50px;
+  width:40%;
+ }
+
+</style>
+
+
+	</head>
+<body ng-controller="ReportCntrl2">
+<div>
+
+<!--    <div>
+    sssss:
+  <select ng-model="session">
+    <option ng-repeat = "ss in ses">{{ss.session1}}</option>
+    <option ng-repeat = "ss in ses">{{ss.session2}}</option>
+    <option ng-repeat = "ss in ses">{{ss.session3}}</option>
+    <option ng-repeat = "ss in ses">{{ss.session4}}</option>
+  </select>
+</div>  -->
+
+ <pre>  From <input type="date" ng-model="bit1.date2" > TO <input type="date" ng-model="bit2.date1" >  session:<select ng-model="session"><option ng-repeat = "ss in ses" selected = {{ss.session0}}>{{ss.session0}}</option><option ng-repeat = "ss in ses">{{ss.session1}}</option><option ng-repeat = "ss in ses">{{ss.session2}}</option><option ng-repeat = "ss in ses">{{ss.session3}}</option> <option ng-repeat = "ss in ses">{{ss.session4}}</option></select>      REPORT<select><option></option><option>ItemWise</option> <option>Day Wise</option></select>   <button ng-click="dateSearch(session)" id="search" >Search</button>      <a href="ReportGen.html">Report </a></pre>
+
+</div>
+
+<div class="alter">
+	<table>
+	<tr>
+		<td>Category</td>
+		<td>Items</td>
+		<td>Qty</td>
+		<td>Amount</td>
+	</tr>
+
+      <tr ng-repeat="re in repo" >
+
+       <td >{{re.category}}</td>
+       <td >{{re.name }}</td>
+       <td >{{re.quantity}}</td>
+       <td >{{re.itemTotal}}</td>
+</table>
+</div>
+<div>
+  <table>
+  <tr>
+  <td></td>
+  <td>NO. items: {{qty}}</td>
+  <!-- <td></td> -->
+  <td>Total :{{itemTotal}}</td>
+  </tr>
+  </table>
+</div>
+<div>
+  </div>
+
+</body>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+<script type="text/javascript" src="controllers/reportcntrl2.js"></script>
+</html>

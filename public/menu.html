@@ -1,0 +1,226 @@
+<!DOCTYPE>
+<html ng-app="myApp">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+ <title>Oder food online</title>
+ <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<style>
+hr { 
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 2px;
+    background: DeepPink;
+} 
+.centerize { 
+    text-align: center;
+}
+ #heading1 
+{
+  /*width: 100px;*/
+  background:lightgrey;
+  height:50px;
+  width: 100%
+}
+.tab {
+  margin-top: 10px;
+  margin-left:0px;
+  font-family: Latha; 
+}
+p{
+  font-size: 35;
+}
+body
+{
+  /*background: orange;*/
+}
+#restname
+{
+  font-size: 20px;
+}
+#checkout{
+  font-size: 30px;
+}
+#cart{
+  font-size: 15px;
+  margin-left: 10px;
+}
+#img1{
+  margin-left: 05px;
+ /* margin-top: 2px;*/
+}
+#check{
+  
+}
+input[type="checkbox"]{
+  /*margin-top: 100px;*/
+  width: 60px; 
+  height:60px; 
+  color: black;
+  margin-left: 50px;
+  /*margin-top: 10px;*/
+
+}
+/*#divider{
+    position:absolute;
+    left:20%;
+    top:10%;
+    right: 10%;
+    border-left:1px solid Deeppink;
+}*/
+/*.flex-item{
+  display: inline-block;
+  margin-left: 10px;
+   margin-top:5px;
+}*/
+.flex-container
+{
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  overflow-x: scroll;
+ /* height: 10px;*/
+}
+#img2{
+margin-left:10px; 
+}
+#img3{
+  margin-left:30px; 
+}
+#img4{
+  margin-left: 30px;
+ /* margin-top: 10px;*/
+}
+/*#wrapper
+{
+  display: inline-flex;*/
+  /*width: 100%;*/
+  /*justify-content: space-between;*/
+
+#first {
+    width: 100px;
+    float:left; /* add this */
+}
+#second {
+    overflow: hidden; /* if you don't want #second to wrap below #first */
+}
+
+/*#img{
+  width:200px; 
+       height:200px; 
+       background-image: url(locationoftheimage);
+  (http://previews.123rf.com/images/elnur/elnur1107/elnur110701089/10058204-Shopping-cart-against-the-white-background-Stock-Photo-grocery.jpg)
+}*/
+</style>
+<!-- <SCRIPT type="text/javascript">
+    window.history.forward();
+    function noBack() { window.history.forward(); }
+</SCRIPT> -->
+</head>
+<body ng-controller="MenuCntrl">
+
+ <div class="panel-heading" id="heading1">
+ <p id="restname">{{resname}}</p>
+ </div>
+<div class="flex-container">
+  <div class="flex-item">
+   <h1 id="cart">Cart</h1>
+   <!--  <img id="img" src="http://previews.123rf.com/images/elnur/elnur1107/elnur110701089/10058204-Shopping-cart-against-the-white-background-Stock-Photo-grocery.jpg" height="120px" width="120px" align="middle"> -->
+  </div>
+  <div class="flex-item" id="divider">
+   <h1 id="cart" >Favorites</h1>
+   <!-- <img id="img1" src="http://previews.123rf.com/images/valentint/valentint1504/valentint150401632/38467125-Add-to-favorites-icon-Internet-button-on-white-background--Stock-Photo.jpg" height="120px" width="120px" align="middle"> --></div>
+  <div class="flex-item" id="divider">
+   <h1 id="cart">Filter</h1>
+  <!--  <img src="http://iconizer.net/files/Plastic_XP/orig/filter_data.png" height="120px" width="120px"> -->
+  </div> 
+  <div class="flex-item" id="divider">
+   <h1 id="cart" >Search</h1>
+   <!-- <img src="http://www.iconarchive.com/download/i62658/ampeross/qetto-2/search.ico" height="100px" width="100px"> -->
+  </div>
+  <div class="flex-item" >
+   <h1 id="cart" >Restaurants</h1>
+   <!-- <input type="checkbox" name="" id="check"> -->
+  </div>
+  <div class="flex-item">
+    <h1 id="cart">Track Your Order</h1>
+  </div>
+</div>
+<div class="flex-container">
+<div class="flex-item">
+<a href="cart.html"><img id="img" src="http://previews.123rf.com/images/elnur/elnur1107/elnur110701089/10058204-Shopping-cart-against-the-white-background-Stock-Photo-grocery.jpg" height="50px" width="50px" align="middle"></a>
+</div>
+<div class="flex-item">
+<img id="img" src="http://previews.123rf.com/images/valentint/valentint1504/valentint150401632/38467125-Add-to-favorites-icon-Internet-button-on-white-background--Stock-Photo.jpg" height="50px" width="50px" align="middle">
+</div>
+<div class="flex-item">
+<img src="http://iconizer.net/files/Plastic_XP/orig/filter_data.png" height="50px" width="50px" align="middle" id="img1">
+</div>
+<div class="flex-item">
+<img src="http://www.iconarchive.com/download/i62658/ampeross/qetto-2/search.ico" height="50px" width="50px" align="middle" id="img2">
+</div>
+
+<div class="flex-item">
+<a href="resttype.html"><img src="https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcTmRWz3cOT9RtaexK4EBk316K4roZQ8S_eQCJfh3HnF1v16n306XOihkA" height="50px" width="50px" align="middle" id="img3"></a>
+</div>
+<div class="flex-item">
+<a href="orderstatus.html"><img src="https://cdn.shopify.com/s/files/1/1233/3378/files/shipping-icons-30_large.png?v=1482924171" height="50px" width="50px" align="middle" id="img4"></a>
+</div> 
+</div>
+
+<!-- <div class="row">
+ <div class="col-sm-2">
+ <h1 id="cart">Cart</h1>
+ <img id="img" src="http://previews.123rf.com/images/elnur/elnur1107/elnur110701089/10058204-Shopping-cart-against-the-white-background-Stock-Photo-grocery.jpg" height="120px" width="120px" align="middle">
+</div>
+<div class="col-sm-2" >
+<h1 id="cart" class="verticalLine">Favorites</h1>
+<img id="img1" src="http://previews.123rf.com/images/valentint/valentint1504/valentint150401632/38467125-Add-to-favorites-icon-Internet-button-on-white-background--Stock-Photo.jpg" height="120px" width="120px" align="middle">
+</div>
+<div class="col-sm-2" >
+<h1 id="cart" class="verticalLine">Filter</h1>
+<img src="http://iconizer.net/files/Plastic_XP/orig/filter_data.png" height="120px" width="120px">
+</div>
+<div class="col-sm-2" id="verticalLine">
+<h1 id="cart" class="verticalLine">Search</h1>
+<img src="http://www.iconarchive.com/download/i62658/ampeross/qetto-2/search.ico" height="100px" width="100px">
+  </div>
+  <div class="col-sm-1" >
+  <h1 id="cart" class="verticalLine">Quick Add</h1>
+  <input type="checkbox" name="" id="check">
+  </div>
+  </div> -->
+  <hr>
+  <!-- <img src="dosa.jpg" id="img" height="100" width="100">&nbsp;&nbsp; 
+  <font color="black" size="08">Hotel</font> -->
+ <!--  Items:<input type="text" ng-model="name"> -->
+ <div id="wrapper">
+ <div id="first">
+ <div ng-repeat="img in imgdata">
+ 
+  <img ng-src="{{img.image}}" height="50px" width="50px" class="w3-circle"><br><br><br><br>
+ </div>
+ </div>
+
+ <div id="second">
+   <div ng-repeat="cat in category">
+   <a href="menucopy.html" ng-click="catName(cat.SaleCategoryName)"><font size="05" color="DeepPink"><b><h4 ng-model="cat.SaleCategoryName">{{cat.SaleCategoryName}}</h4></b></font>
+<!--   <h4>Price per Plate:₹{{cat.price}}</h4>-->
+   <!-- <h3>{{cat.Des}}</h3> --><br><br></a></div></div>&nbsp;&nbsp; 
+</div>
+
+</body>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/ngstorage/0.3.6/ngStorage.min.js"></script> 
+    <script type="text/javascript" src="controllers/usercontroller.js"></script> 
+</html>

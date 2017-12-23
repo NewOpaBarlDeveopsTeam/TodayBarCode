@@ -1,0 +1,188 @@
+<!DOCTYPE>
+<html ng-app="myApp">
+<head>
+  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+
+<!-- Optional theme -->
+
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+<title>Taxation</title>
+</head>
+
+ <!-- <script src="https://cdn.jsdelivr.net/ngstorage/0.3.6/ngStorage.min.js"></script> -->
+   <script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
+    <!-- for -is -->
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
+
+<link href="tax.css" rel="stylesheet">
+<style>
+
+
+.panel.panel-default {
+  height: 60%;
+  background-color: thistle;
+  border-style: solid;
+  border-color: black;
+
+  padding: 9px;
+
+}
+  #firstpanel{
+    height: 70%;
+  }
+.table.table-condensed {
+    /*background-color: yellow;*/
+    /*border: 1px solid ;*/
+    border-collapse: collapse;
+    border-spacing: 0;
+    width: 100%;
+    height: 100%;
+}
+#tax > thead, tbody {
+   /* border: medium none;*/
+    text-align: left;
+    padding: 0px;
+  }
+  #tax > tbody {
+  height: 80%;
+  /*background-color: green;*/
+ /* margin-bottom: 5px;*/
+}
+
+  label {
+  font-size: 14px;
+  margin-left: 21px;
+}
+</style>
+
+
+<body>
+  <div class="container" ng-controller="ServiceCtrl">
+<center><h1>Charges Defination</h1></center>
+
+
+<!--  Content Area-->
+  <div class="coloumn content" >
+    <div class="col-md-12" background-color: #00ff00;>
+         <div class="panel panel-default" id="fristpanel">
+         <div class="panel panel-default" id="fullcontent">
+
+           <div class="panel panel-default">
+             <form>
+      <fieldset>
+        <legend>Voucher Class</legend>
+        <p>
+          <label>Jornal</label>
+
+        </p>
+        <p>
+          <label>Purchase</label>
+
+        </p>
+        <p>
+          <label>Sale</label>
+
+        </p>
+
+
+      </fieldset>
+    </form>
+           </div>
+           <center>
+            <button type="button" class="btn btn-default" ng-click="disable()">New</button>
+            <button type="button" class="btn btn-default" ng-click="disable()">Edit</button>
+            <button type="button" class="btn btn-default" ng-click="disable()">Delete</button>
+             <button type="button" class="btn btn-default" ng-click="disable()">Close</button>
+           </center>
+         <div class="dropdown">
+
+    <label>Voucher Class:
+      <select ng-model="item1.filter"  ng-change ="filterchange()" >
+       <option ng-repeat="Type in itemtype1" >{{Type.TypeName}}</option>
+       </select>
+           </label>
+</div>
+</div>
+           <div class="panel panel-default" id="fristpaneltab">
+           <div class="table-responsive">
+
+      <table class="table" id="tax5">
+  <thead>
+    <tr>
+    <!-- here is my require ment  eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee   -->
+
+      <th id="thwidth">SINO</th>
+      <th id="thwidth">Charge Name</th>
+      <th id="thwidth">Account Name</th>
+      <th id="thwidth">Add / Sub</th>
+      <th id="thwidth1">Value</th>
+      <th id="thwidth">Valuation In</th>
+      <th id="thwidth">Editable</th>
+       <th id="thwidth">Taxable</th>
+    </tr>
+  </thead>
+  <tbody>
+
+   <!--  <tr> -->
+   <tr ng-repeat=" pur1 in pur1" >
+
+      <td id="thwidth"><select class="form-control"   ng-model="pur1.name">
+        <option ng-repeat="user in taxnamedetails">
+        {{user.name}}</option>
+
+      </select></td>
+
+
+      <td id="thwidth"><select class="form-control" ng-model="pur1.PurchaseAc">
+              <option ng-repeat = "pur in taxp">
+        {{pur.PurchaseAc}}</option>
+
+      </select></td>
+
+    <td id="thwidth"><select class="form-control" ng-model="pur1.SaleAc">
+        <option ng-repeat= "pur in taxp">{{pur.SaleAc}}</option>
+
+      </select></td>
+
+       <td id="thwidth1"> <input type="checkbox" value="" ng-model="checked" ng-click="num()" ></td>
+
+<!-- <td> <select class="form-control" ng-model="pur.Rate">
+        <option ng-repeat= "pur in taxp">{{pur.Rate}}</option>
+
+      </select></td> -->
+     <!-- <td id="thwidth"> <input type="text" class="form-control" ng-model="pur.Rate"></td> -->
+         <td id="thwidth"> <input type="text" class="form-control" ng-model="pur1.Rate"></td>
+
+<td id="thwidth"><select class="form-control" ng-model="pur1.CessOn">
+<option ng-repeat= "pur in taxp">{{pur.CessOn}}</option>
+
+      </select></td>
+
+
+
+      <td id="thwidth1"> <button class="material-icons"  ng-click="addrow1()" >library_add</button> </td>
+
+
+      </tr>
+  </tbody>
+</table>
+           </div>
+           </div>
+           <center>
+            <button type="button" class="btn btn-default" ng-click="disable()">Save</button>
+            <button type="button" class="btn btn-default" ng-click="disable()">Cancel</button>
+           </center>
+          <button type="button" class="btn btn-default" ng-click="disable()">Delete</button>
+
+    </div>
+<!--   -->
+  </div>
+  </div>
+  </div>
+</body>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+<script type="text/javascript" src="controllers/taxationcontroller.js"></script>
+<!-- <script type="text/javascript" src="controller/taxationcontroller1.js"></script> -->
+</html>

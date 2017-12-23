@@ -1,0 +1,149 @@
+<!DOCTYPE>
+<!DOCTYPE>
+<html ng-app="myApp">
+<head>
+<meta charset="utf-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Point of Sale Counter</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <!-- Angular -->
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.2/angular.min.js"></script>
+
+  
+    <style>  
+#heading2
+{
+  background:orange;
+  
+}
+       .container {
+  background-color: #C4C4C4;
+  border-color: white;
+  border-style: double;
+  width: 55%;
+}
+      body {
+        background-color: #C4C4C4;
+/*
+     background-image: url(restaurant22.jpg);
+        background-size: auto 100%;
+        background-repeat: no-repeat;
+        background-position: left top;
+*/
+
+      }
+      
+      table{
+        background-color: aliceblue;
+        
+      }
+      #heading{
+        background-color: aliceblue;
+      }
+    </style>
+    </head>
+    <body ng-controller="PosCntrl" background="rest.jpeg">
+          <div class="container">
+        <div id="heading">
+        <h3><i>{{rest12222}} &nbsp Session:{{session}}</i></h3>
+          </div>
+ <div class="panel-heading mypanel" id="heading3">
+    <table class='table borderless'>
+    <thead>
+    <tr>
+    <th>SL NO</th> 
+    <th>Mobile No</th>
+    <th>Cancel Order</th>    
+    <tr>
+    </thead>
+    <tbody ng-repeat="order in orderlist">
+    <tr>
+    <td>{{$index+1}}</td>
+    <td><a class="btn btn-primary custom " ng-click="Payment(order.mobile)" data-toggle="modal" data-target=".modal ">{{order.mobile}}</a></td>{{order.restaurant}}
+    <td><a class="btn btn-primary custom " ng-click="cancelorder(order.mobile)" >Yes</a></td>
+    </tr>
+    </tbody>
+    </table>
+ </div>
+ <div class="modal fade">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+             <div class="modal-body">
+             <h1 align="center">Payment</h1>
+             <div id="printarea" style="border:1px solid black">
+             <h4 align="left" ng-model="partyname">Mobile No: {{mobble}}</h4>
+             <h3 align="center" ng-model="partyname">Order Details</h3>
+             <table class="table table-striped">
+               <thead>
+                 <tr>
+                   <!-- <th>PartyName</th> -->
+                   <th>SL NO</th>
+                   <th>Item Name</th>
+                   <th>Quantity</th>
+                   <th>Value</th>
+                 </tr>
+               </thead>
+               <tbody>
+                 <tr ng-repeat="item in restnammmm">
+                  <!-- <td>{{total.partyname}}</td> -->
+                  <td>{{$index+1}}</td>
+                  <td>{{item.name}}</td>
+                  <td>{{item.quantity}}</td>
+                  <td>{{item.itemtotal}}</td>
+                  </tr>
+               </tbody>
+             </table>
+                                                         </div>
+ </div>
+                                                         
+ <div style="border:1px solid black;">
+             <h3 align="center">Payment Collection</h3>
+              <table class="table table-striped">
+               <thead>
+                 <tr>
+                   <!-- <th>PartyName</th> -->
+                   <th>SL NO</th>
+                   <th>Value</th>
+                    <th>Service Tax</th>
+                 <th>CGST Tax</th>
+                    <th>SGST Charge</th>
+                   <th>GST</th>
+                   <th>Total Amount</th>
+                   <th>Payment Mode</th>
+                   <th>Confirm</th>
+                 </tr>
+               </thead>
+               <tbody>
+                 <tr>
+                  <!-- <td>{{total.partyname}}</td> -->
+                  <td>{{$index+1}}</td>
+                  <td>{{subtol}}</td>
+                    <td>{{serchar}}</td>       serchar             
+                  <td>{{sercharc}}</td>
+                   <td>{{serchars}}</td>
+                    <td>{{totGst}}</td>
+                  <td>{{total}}</td>
+                  <td>
+<!--                    ng-change="restfieldsadding(cashmode)"-->
+                     <select ng-model="cashmode" class="selectpicker"  ng-change="alert('something')">
+                     <option >Cash</option>
+                     </select></td>
+                  <td><a class="btn btn-primary custom" ng-click="confirmpaid(mobble,sesdate,session,sercharc,serchars,totGst,total)">Paid</a></td>   
+                  </tr>
+               </tbody>
+             </table>
+                                                                          {{sesdate}} Session:{{session}}
+ </div>  
+      </div>
+   </div>
+      </div>
+      </div>
+ </body>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>    
+     <script type="text/javascript" src="controllers/usercontroller.js"></script>   
+</html>

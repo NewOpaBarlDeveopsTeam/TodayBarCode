@@ -1,0 +1,100 @@
+<!DOCTYPE>
+<html ng-app="myApp">
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+ <title>Oder food online</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<style>
+hr { 
+    display: block;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+    margin-left: auto;
+    margin-right: auto;
+    border-style: inset;
+    border-width: 2px;
+} 
+ #coupon{
+	 border:2px solid DeepPink;
+	 text-align:center;
+	 color: DeepPink ;
+	 border-radius: 15px;
+	 padding: 25px;
+}
+.row{
+	margin-left: 20px;
+	font-weight: bold;
+}
+.img
+{ 
+	margin-left: 5px;
+}
+#wrapper{
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+}
+#flex-container
+{
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+}
+</style>
+</head>
+<body ng-controller="FirstCntrl" class="">
+<h2>WELCOME TO {{restnamecaps}}</h2>
+<img src="https://s-media-cache-ak0.pinimg.com/originals/f8/e4/9a/f8e49a129f61c31b1aea36b3ef8224d3.png" height="30%" width="100%"><br><br>
+<div id="coupon">
+Download new version fro playstore.Apply coupon code swad.Keep watxing this space for exciting offers,discounts and Cashbacks to your Swad Kitchen digital wallet!!!
+</div><br>
+<div id="coupon">
+Download new version fro playstore.Apply coupon code swad.Keep watxing this space for exciting offers,discounts and Cashbacks to your Swad Kitchen digital wallet!!!
+</div><br>
+<div id="wrapper">
+<div class="flex-item">
+<a href="menu.html"><img class="img" src="https://image.shutterstock.com/z/stock-photo-two-crossed-wooden-spoons-isolated-over-white-162134552.jpg" height="50px" width="50px"></a><br>
+<!-- <font color="DeepPink">
+<p>Select Dish</p> -->
+</div>
+<div class="flex-item">
+<a href="cart.html"><img class="img" src="http://www.allwhitebackground.com/images/1/Shopping-Cart-9.png" height="50px" width="50px"></a><br>
+<!-- <p>Place Order</p> -->
+</div>
+<div class="flex-item">
+<img class="img" src="http://3.bp.blogspot.com/-zo46EOPDReQ/T5qq754t9vI/AAAAAAAAAQ8/Ed3WFvnHZi0/s1600/Spotlight-Icon.png" height="50px" width="50px"><br>
+<!-- <p>Past Orders</p> -->
+</div>
+<div class="flex-item">
+<a href="feedback.html"><img class="img" src="http://gregorybknapp.com/wp-content/uploads/2016/08/Feedback-withMartijn.jpg" height="30px" width="50px"><br></a>
+<!-- <p><font color="DeepPink">Feedback</p></font></a>
+ --></div>
+</div>
+<div id="flex-container">
+<div id="flex-item">
+<p>Select Dish</p>
+</div>
+<div id="flex-item">
+<p>Place Order</p>
+</div>
+<div id="flex-item">
+<p>Past Orders</p>
+</div>
+<div id="flex-item">
+<p>Feedback</p>
+</div>
+</div>
+<hr>
+<h3 align="center">Miscellaneous Contents</h3><br>
+<img src="http://images.indianexpress.com/2017/03/happy-holi-lead_thinkstock_759.jpg" height="50%" width="100%">
+</body>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/ngstorage/0.3.6/ngStorage.min.js"></script> 
+    <script type="text/javascript" src="controllers/usercontroller.js"></script> 
+</html>

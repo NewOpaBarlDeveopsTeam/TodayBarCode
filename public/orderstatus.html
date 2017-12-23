@@ -1,0 +1,89 @@
+<!DOCTYPE>
+<html ng-app="myApp">
+<head>
+<meta charset="utf-8">
+
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta http-equiv="refresh" content="10">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Order Status Tracking</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+<style>
+#inline
+{
+	display: inline-flex;
+	margin-left: 50px;
+}
+#heading1
+{
+	height: 50px;
+	background:lightgrey;
+}
+#heading2
+{
+	background-color: lightpink;
+}
+</style>
+</head>
+<body ng-controller="FirstCntrl" class="container">
+<div class="panel-heading" id="heading1">
+<p>Track Your Order</p>
+</div>
+<!-- <p ng-repeat="data in orderst">{{data.name}}</p> -->
+<!-- <h1 ng-repeat="name in orderst"><font color="black">{{name.mobile}}
+<p ng-repeat="status in name.item">{{status.name}}</p></h1> -->
+
+<!-- <div ng-repeat="name in orderst"> -->
+<div class="panel-heading" id="heading2">
+<!-- <div ng-repeat="status in orderst"> -->
+<table class='table borderless'>
+    <thead>
+    <tr>
+    <th>Mobile No</th>
+      <th>Order Details</th>
+      <th>Order Status</th>
+      </tr>
+    </thead>
+    <tbody ng-repeat="order in orderst">
+    <!-- <tr ng-repeat="item in phno.item" ng-hide="istatus=='Delivered'" > -->
+    <tr>
+    <td>{{order.mobile}}</td>    
+    <td>
+    <table class='table borderless' >
+    <thead>
+    <tr>
+    <th>Item Name</th>
+    <th>Quantity</th>  
+    </tr>
+    </thead>
+    <tbody ng-repeat="items in order.item">
+    <!-- <tr ng-repeat="item in phno.item" ng-hide="istatus=='Delivered'" > -->
+    <tr>
+    <td>{{items.name}}</td>
+    <td>{{items.quan}}</td>
+    </tr>
+    </tbody>
+    </table>
+    </td>
+    <td>{{order.orderstatus}}</td>
+       
+    <!-- <td><select ng-model="istatus" ng-change="itemstatus($index,phno.mobile,istatus,item.name)" >
+       <option ng-repeat="status in status" >{{status}}</option>
+       </select></td> -->
+		    </tr>
+    </tbody>
+    </table>
+
+	<div style="text-align:left;float:left;margin-left:10px;"><font size="03">{{status.name}}</font></div><br>
+<div style="text-align:right;float:right;margin-right:10px;">{{status.status}}</div>
+	</div>
+<!-- </div> -->
+</body>
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/ngstorage/0.3.6/ngStorage.min.js"></script> 
+    <script type="text/javascript" src="controllers/usercontroller.js"></script> 
+</html>
