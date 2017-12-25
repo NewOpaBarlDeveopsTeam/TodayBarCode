@@ -103,6 +103,7 @@ function($scope,$http,$window,$filter){
   
 $scope.transactioncall = function (transactiontype)
  {
+  $scope.netquantity=0
     alert(transactiontype)
     if(transactiontype == "Purchase")
     {
@@ -111,6 +112,7 @@ $scope.transactioncall = function (transactiontype)
           $scope.stockinward = "Yes";
           $scope.SaleRate=0;
           $scope.sectionid=0;
+//          $scope.netquantity=0
           $scope.itemdetailsfetchfun = function(itemcode)
           {
           $scope.pieceNo = 1;
@@ -168,6 +170,21 @@ $scope.transactioncall = function (transactiontype)
             })//purchaseratefetch 
           }//if
         })//skuitemnamefetch
+     $http.get("/itemquantityfetch"+itemnew).success(function(result1){
+      console.log(result1)
+      if(result1 != 0)
+      {
+      for(t=0;t<result1.length;t++)
+        {
+              console.log(result1[t].NetPieces)
+              $scope.netquantity += result1[t].NetPieces;
+        }
+      }//if
+      else{
+          $scope.netquantity = 0
+          alert("Sorry")
+          }
+            })//itemquantityfetch
       }//end of itemdetailsfetch
     }//end of purchase
      
@@ -254,20 +271,55 @@ $scope.transactioncall = function (transactiontype)
               }//getsection
             })//purchaseratefetch      
           }//if
-        })//skuitemnamefetch     
+        })//skuitemnamefetch   
+      $http.get("/itemquantityfetch"+itemnew).success(function(result1){
+      console.log(result1)
+      if(result1 != 0)
+      {
+      for(t=0;t<result1.length;t++)
+        {
+              console.log(result1[t].NetPieces)
+              $scope.netquantity += result1[t].NetPieces;
+        }
+      }//if
+      else{
+          $scope.netquantity = 0
+          alert("Sorry")
+          }
+          })//itemquantityfetch
+               
       }//end of itemdetailsfetch  
     }//end of sale
+  if( transactiontype == "Stock Transfer")
+    {
+      alert("Hai Iam Stock Transfer");
+      $scope.itemdetailsfetchfun = function(itemcode)
+      {
+      alert(itemcode)
+        var itemnwenew = parseInt(itemcode);
+        console.log(typeof(itemnwenew));
+         $http.get("/itemquantityfetch"+itemnwenew).success(function(result1){
+      console.log(result1)
+      if(result1 != 0)
+      {
+      for(t=0;t<result1.length;t++)
+        {
+              console.log(result1[t].NetPieces)
+              $scope.netquantity += result1[t].NetPieces;
+        }
+      }//if
+      else{
+          $scope.netquantity = 0
+          alert("Sorry")
+          }
+          })
+      }//itemdetailsfetchfun
+    }//Stock Transfer
  }//end of transactioncall
+
 $scope.itemtaxfun= function()
 {
-    //alert($scope.itemcode+"second function call")
-  console.log($scope.purchaseitem1);
-  for(var x1=0;x1<$scope.purchaseitem1.length;x1++)
-  {
-    console.log($scope.purchaseitem1[x1].itemcode);
-    $scope.newfinalrate = $scope.purchaseitem1[x1].Rate;
-    var itemcode = parseInt($scope.purchaseitem1[x1].itemcode);
-    $http.get("/itemidfind"+itemcode).success(function(res){
+    $http.get("/itemidfind"+$scope.itemcode).success(function(res){
         console.log(res)
         var itemposname = res[0].POSName;
         var itemid = res[0].itemId;
@@ -289,13 +341,14 @@ $scope.itemtaxfun= function()
                 console.log($scope.taxgst[0].Rate)
                 $scope.taxcgst = $scope.taxgst[0].Rate;
                 $scope.taxsgst = $scope.taxgst[1].Rate;
-                $scope.calculation();            
-              }//if
-            })//postaxs
-        })//itemtaxfind
-    })//itemidfind 
-  }//for
+                alert("calculationcalculationcalculation");
+                $scope.calculation();  
+           }//if
+         })//postaxs
+       })//itemtaxfind
+     })//itemidfind 
 }//itemtaxfun
+
   $scope.calculation=function(){
     alert("i got calculation calll");
     var sgst=0;
@@ -316,55 +369,65 @@ $scope.itemtaxfun= function()
     tot = cgst+sgst;
     totgstper = tot/100;
     console.log(totgstper);
-    total = $scope.newfinalrate;
+    total = $scope.finalrate;
+//    total = $scope.newfinalrate;
     console.log(total);
     $scope.hiddenvale = total/(1+totgstper);
     console.log($scope.hiddenvale);
     console.log(typeof($scope.hiddenvale))
     $scope.itemvalue = total-$scope.hiddenvale;
     console.log(typeof($scope.itemvalue))
-//    var subtotal = ($scope.hiddenval) + ($scope.itemvalue)
-//    console.log(subtotal)
     $scope.number = $scope.hiddenvale+$scope.itemvalue;
     console.log($scope.number)
     console.log($scope.itemvalue)
     var  taxcgst = $scope.itemvalue/2;
     console.log(taxcgst)
+    $scope.fintaxcgst = taxcgst;
     var  taxsgst = $scope.itemvalue/2;
     console.log(taxsgst);
+    $scope.fintaxsgst = taxsgst;
+//    $scope.discount = 0;
+//    $scope.charges=0;
+//    $scope.adjustment=0;
+//    obj9["taxablevalue"]=$scope.hiddenvale;
+//    obj9["tax"]=$scope.itemvalue;
+//    obj9["discount"]=$scope.discount;
+//    obj9["subtotal"]=$scope.number;
+//    obj9["charges"]=$scope.charges;
+//    obj9["invoicevalue"]=$scope.number;
+//    obj9["adjustment"]=$scope.adjustment;
+//    taxdefinition.push(obj9);
+//    $scope.taxdefinition1 = taxdefinition;
+//    console.log($scope.taxdefinition1)
+//    $scope.subtotal1=0;
+//    $scope.taxablevalue1=0;
+//    $scope.tax1=0;
+//    $scope.invoicevalue1=0;
+//    
+//    for(var t=0;t<$scope.taxdefinition1.length;t++)
+//      {
+//        $scope.subtotal1=$scope.subtotal1+$scope.taxdefinition1[t].subtotal;
+//        $scope.taxablevalue1=$scope.taxablevalue1+$scope.taxdefinition1[t].taxablevalue;
+//        $scope.tax1=$scope.tax1+$scope.taxdefinition1[t].tax;
+//        $scope.invoicevalue1=$scope.invoicevalue1+$scope.taxdefinition1[t].invoicevalue;
+//        
+//      }
+//    $scope.itemcode = null;
+//    $scope.itemdetail = null;
+//    $scope.pieceNo = null;
+//    $scope.umosize = null;
+//    $scope.finalrate = null;
+//    $scope.sectionnames=null;
+    $scope.rate();
+  }//$scope.calculation=function
+
+   $scope.rate = function(){  
+    alert("haiiii")
+    var obj = {};
+    $scope.discountrate=0;
     $scope.discount = 0;
     $scope.charges=0;
     $scope.adjustment=0;
-    obj9["taxablevalue"]=$scope.hiddenvale;
-    obj9["tax"]=$scope.itemvalue;
-    obj9["discount"]=$scope.discount;
-    obj9["subtotal"]=$scope.number;
-    obj9["charges"]=$scope.charges;
-    obj9["invoicevalue"]=$scope.number;
-    obj9["adjustment"]=$scope.adjustment;
-    taxdefinition.push(obj9);
-    $scope.taxdefinition1 = taxdefinition;
-    console.log($scope.taxdefinition1)
-    $scope.subtotal1=0;
-    $scope.taxablevalue1=0;
-    $scope.tax1=0;
-    $scope.invoicevalue1=0;
-    
-    for(var t=0;t<$scope.taxdefinition1.length;t++)
-      {
-        $scope.subtotal1=$scope.subtotal1+$scope.taxdefinition1[t].subtotal;
-        $scope.taxablevalue1=$scope.taxablevalue1+$scope.taxdefinition1[t].taxablevalue;
-        $scope.tax1=$scope.tax1+$scope.taxdefinition1[t].tax;
-        $scope.invoicevalue1=$scope.invoicevalue1+$scope.taxdefinition1[t].invoicevalue;
-        
-      }
-  }
-
-  $scope.rate = function(){
-    
-    alert("haiiii")
-    var obj = {};
-    $scope.discountrate=0
     //$scope.type=Standard
     console.log($scope.pieceNo+"pieces")
     console.log($scope.finalrate+"rate")
@@ -372,44 +435,61 @@ $scope.itemtaxfun= function()
     console.log($scope.finalrate+"value")
     console.log($scope.umosize+"umo")
     console.log($scope.uomid)
-    
-    obj["item"]=$scope.skuitemname+$scope.uomsize;
-    obj["itemid"]= $scope.itemidd;
-    obj["quantity"]=$scope.umoqty;
-    obj["pieces"]=$scope.pieceNo;
-    obj["umo"]=$scope.umosize;
-    obj["Rate"]=$scope.finalrate;
-    obj["discrate"] = $scope.discountrate;
-    obj["disctype"] = $scope.type;
-    obj["value"]= $scope.finalrate;
-    obj["stockpointid"]= $scope.stockidfound;
-    obj["uomid"] = $scope.uomid;
-    obj["uomsizemasterid"]=$scope.uomsizemasterid;
-    obj["salerate"]=$scope.SaleRate;
-    obj["purchaserate"]=$scope.purchaserate;
-    obj["itemcode"]=$scope.itemcode;
-    purchaseitem.push(obj);
-    $scope.purchaseitem1 = purchaseitem;
-    console.log($scope.purchaseitem1) 
-    $scope.totalitems=$scope.purchaseitem1.length
-    $scope.finalvalue=0;
-    $scope.piece=0;
-    for(var s=0;s<$scope.purchaseitem1.length;s++)
+   
+      obj["item"]=$scope.skuitemname+$scope.uomsize;
+      obj["itemid"]= $scope.itemidd;
+      obj["quantity"]=$scope.umoqty;
+      obj["pieces"]=$scope.pieceNo;
+      obj["umo"]=$scope.umosize;
+      obj["Rate"]=$scope.finalrate;
+      obj["discrate"] = $scope.discountrate;
+      obj["disctype"] = $scope.type;
+      obj["value"]= $scope.finalrate;
+      obj["stockpointid"]= $scope.stockidfound;
+      obj["uomid"] = $scope.uomid;
+      obj["uomsizemasterid"]=$scope.uomsizemasterid;
+      obj["salerate"]=$scope.SaleRate;
+      obj["purchaserate"]=$scope.purchaserate;
+      obj["itemcode"]=$scope.itemcode;
+      obj["taxablevalue"]=$scope.hiddenvale;
+      obj["cgst"]= $scope.fintaxcgst;
+      obj["sgst"]=$scope.fintaxsgst;
+      obj["tax"]=$scope.itemvalue;
+      obj["discount"]=$scope.discount;
+      obj["subtotal"]=$scope.number;
+      obj["charges"]=$scope.charges;
+      obj["invoicevalue"]=$scope.number;
+      obj["adjustment"]=$scope.adjustment;
+      purchaseitem.push(obj);
+      $scope.purchaseitem1 = purchaseitem;
+      console.log($scope.purchaseitem1) 
+      $scope.totalitems=$scope.purchaseitem1.length
+      $scope.finalvalue=0;
+      $scope.piece=0;
+      $scope.subtotal1=0;
+      $scope.taxablevalue1=0;
+      $scope.tax1=0;
+      $scope.invoicevalue1=0;
+      for(var s=0;s<$scope.purchaseitem1.length;s++)
     {
       
       console.log($scope.purchaseitem1[s].value);
       console.log($scope.purchaseitem1[s].pieces);
-
-      $scope.finalvalue=$scope.finalvalue+$scope.purchaseitem1[s].value;
-      $scope.piece=$scope.piece+$scope.purchaseitem1[s].pieces;
+      $scope.finalvalue+=$scope.purchaseitem1[s].value;
+      $scope.piece+=$scope.purchaseitem1[s].pieces;
+      $scope.subtotal1+=$scope.purchaseitem1[s].subtotal;
+      $scope.taxablevalue1+=$scope.purchaseitem1[s].taxablevalue;
+      $scope.tax1+=$scope.purchaseitem1[s].tax;
+      $scope.invoicevalue1+=$scope.purchaseitem1[s].invoicevalue;
     }
-    alert($scope.piece)
+//    alert($scope.piece)
     $scope.itemcode = null;
     $scope.itemdetail = null;
     $scope.pieceNo = null;
     $scope.umosize = null;
     $scope.finalrate = null;
     $scope.sectionnames=null;
+    $scope.netquantity=null;
   }
   
   $http.get("/findcount").success(function(res){
@@ -443,7 +523,6 @@ $scope.itemtaxfun= function()
     console.log(purchaseitem1[n].itemid);
     console.log(purchaseitem1[n].stockpointid)
     console.log(purchaseitem1[n].uomid)
-    //$scope.entryrowno = purchaseitem1[n].length;
 
     var isCompositable = "undefined";
     var isSplittable = "undefined";
@@ -459,7 +538,7 @@ $scope.itemtaxfun= function()
     var allincluvalue = (purchaseitem1[n].pieces*purchaseitem1[n].Rate)
     console.log(allincluvalue);
     //alert($scope.stockbookid)
-    var purchasetran = vouchernumber+","+purchaseitem1[n].itemid+","+posname+","+isCompositable+","+isSplittable+","+$scope.stockinward+","+parentstock+","+accno+","+posid1+","+dates+","+purchaseitem1[n].pieces+","+purchaseitem1[n].Rate+","+purchaseitem1[n].quantity+","+allincluvalue+","+purchaseitem1[n].uomsizemasterid+","+$scope.referenceno+","+purchaseitem1[n].stockpointid+","+purchaseitem1[n].uomid+","+$scope.invgroupname+","+$scope.stockbookid+","+$scope.newentryrowno+","+purchaseitem1[n].salerate+","+purchaseitem1[n].purchaserate;
+    var purchasetran = vouchernumber+","+purchaseitem1[n].itemid+","+posname+","+isCompositable+","+isSplittable+","+$scope.stockinward+","+parentstock+","+accno+","+posid1+","+dates+","+purchaseitem1[n].pieces+","+purchaseitem1[n].Rate+","+purchaseitem1[n].quantity+","+allincluvalue+","+purchaseitem1[n].uomsizemasterid+","+$scope.referenceno+","+purchaseitem1[n].stockpointid+","+purchaseitem1[n].uomid+","+$scope.invgroupname+","+$scope.stockbookid+","+$scope.newentryrowno+","+purchaseitem1[n].salerate+","+purchaseitem1[n].purchaserate+","+purchaseitem1[n].taxablevalue+","+purchaseitem1[n].cgst+","+purchaseitem1[n].sgst+","+purchaseitem1[n].tax+","+purchaseitem1[n].itemcode;
      console.log(purchasetran);
     
       $http.post('/purchasepost'+purchasetran).success(function(response){

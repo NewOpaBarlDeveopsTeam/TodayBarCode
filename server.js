@@ -553,6 +553,7 @@ app.put('/orderstatus:edit',function(req,res){
         console.log(req.params.kotnum+"newkottttttttttttttttttttttttt")
         var kotnum = req.params.kotnum;
         var kotnum1 = ''+kotnum;
+          
         console.log(kotnum1);
         db.invoiceSequence.find({"SaleCategoryName" : kotnum1},function(err,doc){
           console.log(doc)
@@ -3631,6 +3632,15 @@ app.get('/skuitemnamefetch:purchaserate',function(req,res)
          res.json(doc1);
       })   
     })
+//    {$and:[{"POSName": itemposname },{"id" : itemiddd}] }
+     app.get('/itemquantityfetch:itemcodefind',function(req,res){
+      var itemcodefind1 = parseInt(req.params.itemcodefind);
+       db.stockBookDetail.find({$and:[{"ItemCode":itemcodefind1},{"stockInWord":"Yes"}]},function(err,doc1){
+         console.log(doc1[0]); 
+         res.json(doc1);
+      })   
+    })
+
     
     app.get('/itemuomqtyfetch:uomsize',function(req,res){
       var uomsize1 = parseInt(req.params.uomsize);
@@ -3749,10 +3759,25 @@ app.post('/purchasepost:purchasetran',function(req,res){
     console.log(salerate)
     var purchaserate= str_array[22];
     purchaserate = parseInt(purchaserate);
-    console.log(purchaserate)
+    console.log(purchaserate);
+    var taxablevalue= str_array[23];
+    taxablevalue =parseFloat(taxablevalue);
+    console.log(taxablevalue)
+    var cgst= str_array[24];
+    cgst = parseFloat(cgst);
+    console.log(cgst)
+    var sgst= str_array[25];
+    sgst = parseFloat(sgst);
+    console.log(sgst)
+    var finaltax= str_array[26];
+    finaltax = parseFloat(finaltax);
+    console.log(finaltax)
+    var itemcode= str_array[27];
+    itemcode = parseInt(itemcode);
+    console.log(itemcode)
   
 
-    db.stockBookDetail.insert({"VocherId" : voucherid,"ItemId":itemid,"ParentStock":parentstock,"IsComposite":composite,"IsSplittable":splittable,"stockInWord":stockinward,"AccN0":accno,"PosID":posid,"StockBookId":stockid,"EntryRowNo":entryrowno,"VocherDate":voucherdate,"NetQty":umosize,"NetPieces":netpieces,"PurchaseRate":purchaserate,SaleRate:salerate,Rate:finalrate,"ChargeableUnits":netpieces,"AllIncluValue":allincluvalue,"UOMSizeMasterId":uomsizemasterid,"ReferenceNo":referenceno,"StockPointId":stockpointid,"UOMId":uomid,"InvGroupName":invgroupname},function(err,doc){
+    db.stockBookDetail.insert({"VocherId" : voucherid,"ItemId":itemid,"ItemCode":itemcode,"ParentStock":parentstock,"stockInWord":stockinward,"AccN0":accno,"PosID":posid,"StockBookId":stockid,"EntryRowNo":entryrowno,"VocherDate":voucherdate,"NetQty":umosize,"NetPieces":netpieces,"PurchaseRate":purchaserate,"SaleRate":salerate,"TaxableValue":taxablevalue,"CGST":cgst,"SGST":sgst,"TotTaxAmt":finaltax,"Rate":finalrate,"ChargeableUnits":netpieces,"AllIncluValue":allincluvalue,"UOMSizeMasterId":uomsizemasterid,"ReferenceNo":referenceno,"StockPointId":stockpointid,"UOMId":uomid,"InvGroupName":invgroupname},function(err,doc){
     res.json(doc)
      console.log(doc.VocherId+"voucherrrrrrrr")
      console.log(typeof(doc.VocherId)+"doc.VocherIddoc.VocherId")

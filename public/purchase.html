@@ -149,7 +149,7 @@
           
           <div class = "col-sm-2">
             <span id ="rate" >
-              <label pull-left>Rate:<input type = "text" id="idid" style="height: 40px;width: 100px;color:blue;font-size: 30px" ng-model="finalrate" ng-blur = "rate();itemtaxfun()"></label>
+              <label pull-left>Rate:<input type = "text" id="idid" style="height: 40px;width: 100px;color:blue;font-size: 30px" ng-model="finalrate" ng-blur = "itemtaxfun()"></label>
               </span>
           </div>
           
@@ -166,7 +166,7 @@
                   <option ng-repeat="item in itemdetails" ng-model="itemcode">{{item.ItemCode}}</option>
                  </select>
                  </datalist>
-             <span style="font-size: 20px;color: blue">{{skuitemname}}&nbsp;{{uomsize}}</span>
+             <span style="font-size: 20px;color: blue">{{skuitemname}}&nbsp;{{uomsize}}&nbsp;Qty:{{netquantity}}</span>
              </div> 
           
             <div class = "col-sm-2 padding-0">
@@ -289,7 +289,7 @@
         </div>
         <br>
         <div class=" col-md-5">
-        <span style="font-size: 19px">  item disc Total:00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;final Item Value: {{finalvalue}} </span>
+        <span style="font-size: 19px">Item Disc Total:00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Final Item Value: {{finalvalue}} </span>
         <p style="font-size:30px">Items:{{totalitems}}</p>
         <p style="font-size:30px">Pieces:{{piece}}</p>
         <p style="font-size:30px;color:blue"> Nett:{{finalvalue}} </p>
