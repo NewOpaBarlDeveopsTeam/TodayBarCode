@@ -3650,6 +3650,13 @@ app.get('/skuitemnamefetch:purchaserate',function(req,res)
       })   
     })
     
+    app.get('/getuommid:getuommvalue',function(req,res){
+      var newuomvalue = req.params.getuommvalue;
+       db.UOM.find({"UOM":newuomvalue},function(err,doc1){
+         res.json(doc1);
+      })
+    })
+    
     app.get('/stockpurchrate:stockpurchrate',function(req,res){
       var stockpurchrate1 = req.params.stockpurchrate;
       var str_array=stockpurchrate1.split(",");

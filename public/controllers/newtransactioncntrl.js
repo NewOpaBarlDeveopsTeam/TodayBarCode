@@ -52,10 +52,8 @@ function($scope,$http,$window,$filter){
   
    $http.get('/umosizefetch').success(function(response){
    console.log(response);
-   
-   
-     $scope.umosizefound = response;
-     console.log($scope.umosizefound)
+      $scope.umosizefound = response;
+      console.log($scope.umosizefound)
      $scope.ratecalc = function(umosize){
      //alert("haiii")
      alert(umosize)
@@ -71,8 +69,7 @@ function($scope,$http,$window,$filter){
         console.log($scope.uomid)
         }
          
-    }
-       
+    }      
   }
   })
   
@@ -173,9 +170,56 @@ $scope.transactioncall = function (transactiontype)
           $http.get("/purchaseratefetch"+newpurchaseratefind).success(function(res){
             console.log(res);
             console.log(res[0].UOMId)
+            if(res[0].UOMId == 2)
+              {
+                alert("bottle")
+                console.log(res[0].PurchaseRate)
+                $scope.finalrate2 = res[0].PurchaseRate;
+              }
+            else if(res[0].UOMId == 3){
+              alert("case");
+              $scope.finalrate2 = res[0].PurchaseRate;  
+            }
             console.log(res[0].PurchaseRate)
             $scope.purchaserate =res[0].PurchaseRate;
-            $scope.finalrate=res[0].PurchaseRate;
+            $scope.ratecalc = function(umosize)
+            {
+             alert(umosize)
+             $scope.umosize =umosize;
+             console.log($scope.umosize)
+              var Case = "Case";
+              var Bottle = "Bottle";
+            $http.get('/getuommid'+$scope.umosize).success(function(response){
+              console.log(response);
+              console.log(response[0].UOMID)
+              $scope.uomid=response[0].UOMID; 
+              console.log(response[0].UOM)
+              console.log($scope.uomid);
+              if(res[0].UOMId == response[0].UOMID){
+                $scope.finalrate = $scope.finalrate2;
+              }
+              else if($scope.umosize == Case)
+                {
+                  alert("case")
+                  $scope.finalrate = $scope.finalrate2*10;
+                }
+              else if($scope.umosize == Bottle)
+                {
+                  $scope.finalrate = $scope.finalrate2/10;
+                }
+            })
+           
+            
+//            for(x = 0;x<response.length;x++){
+//            if($scope.umosize ==response[x].UOM ){
+//            console.log(response[x].UOMID)  
+//            $scope.uomid = response[x].UOMID
+//            console.log($scope.uomid)
+//        }
+//         
+//    }      
+  }//ratecalc
+            //$scope.finalrate=res[0].PurchaseRate;
             })//purchaseratefetch 
           }//if
         })//skuitemnamefetch
@@ -632,9 +676,11 @@ $scope.itemtaxfun= function()
     //alert($scope.stockbookid)
     var purchasetran = vouchernumber+","+purchaseitem1[n].itemid+","+posname+","+isCompositable+","+isSplittable+","+$scope.stockinward+","+parentstock+","+accno+","+posid1+","+date+","+purchaseitem1[n].pieces+","+purchaseitem1[n].Rate+","+purchaseitem1[n].quantity+","+allincluvalue+","+purchaseitem1[n].uomsizemasterid+","+$scope.referenceno+","+purchaseitem1[n].stockpointid+","+purchaseitem1[n].uomid+","+$scope.invgroupname+","+$scope.stockbookid+","+$scope.newentryrowno+","+purchaseitem1[n].salerate+","+purchaseitem1[n].purchaserate+","+purchaseitem1[n].taxablevalue+","+purchaseitem1[n].cgst+","+purchaseitem1[n].sgst+","+purchaseitem1[n].tax+","+purchaseitem1[n].itemcode+","+$scope.transactiontype;
      console.log(purchasetran);
-      var getstockdetail = $scope.transactiontype+","+purchaseitem1[n].itemcode+","+purchaseitem1[n].stockpointid;
+      $scope.onlyopeningstock = "Opening Stock";
+      var getstockdetail = $scope.onlyopeningstock+","+purchaseitem1[n].itemcode+","+purchaseitem1[n].stockpointid;
       console.log(getstockdetail);
       alert("yashwanthoutside get");
+          
      $http.get('/getstockbookdetail'+getstockdetail).success(function(result){
          console.log(result);
          alert("first")
