@@ -4,7 +4,9 @@ myApp.controller('purchaseCntrl',['$scope','$http','$window','$filter',
 function($scope,$http,$window,$filter){ 
   var purchaseitem = [];
   var taxdefinition =[];
+  $scope.transaction;
   $scope.all = true;
+  $scope.qty = "Qty:";
   $scope.date2 = {date1:new Date()}
    
   $http.get('/transactionfetch').success(function(result){
@@ -61,7 +63,7 @@ function($scope,$http,$window,$filter){
      $scope.pieceNo;
      alert($scope.pieceNo);
      alert($scope.finalrate);
-     $scope.finalrate = $scope.pieceNo * $scope.finalrate;
+     //$scope.finalrate = $scope.pieceNo * $scope.finalrate;
      for(x = 0;x<response.length;x++){
       if($scope.umosize ==response[x].UOM ){
        console.log(response[x].UOMID)  
@@ -315,6 +317,70 @@ $scope.transactioncall = function (transactiontype)
           })
       }//itemdetailsfetchfun
     }//Stock Transfer
+  
+  if( transactiontype == "Opening Stock")
+    {
+       $scope.pieceNo = 1;
+       $scope.stockinward = "Yes";
+       $scope.SaleRate=0;
+       $scope.referenceno=0;
+       $scope.sectionid=0;
+       alert("hai i am Stock Transfer")
+       $scope.itemdetailsfetchfun=function(itemcode){
+        alert(itemcode)
+        var itemmnew = parseInt(itemcode);
+         $http.get("/skuitemnamefetch"+itemmnew).success(function(result){
+          console.log(result[0]);
+          console.log(result[0].itemId);
+          $scope.itemidd = result[0].itemId;
+          console.log(result[0].ItemName)
+          $scope.skuitemname = result[0].ItemName;
+          console.log($scope.skuitemname)
+          console.log(result[0].UOMSize); 
+          var umosize = parseInt(result[0].UOMSize);
+          console.log(typeof(umosize))
+          console.log(umosize);
+          $http.get("/itemuomqtyfetch"+umosize).success(function(res){
+          console.log(res);
+          console.log(res[0].UOMID);
+//          var stduomid = parseInt(res[0].UOMID);
+//          $http.get("/StdUOMID"+stduomid).success(function(result){
+//          console.log(result[0].StdUOMID);
+//          //$scope.displayuomid = result[0].StdUOMID;
+//          $http.get("/Displayuomfetch"+$scope.displayuomid).success(function(res){
+//          console.log(res)
+//          console.log(res[0].UOM);
+//          console.log(res[0].UOMID)
+//          $scope.uomid = res[0].UOMID
+//          $scope.umosize = res[0].UOM; 
+//          })//Displayuomfetch
+//
+//          })//StdUOMID 
+          console.log(res[0].UOMSize);
+          $scope.uomsize = res[0].UOMSize
+          console.log(res[0].Qty);
+          $scope.umoqty = res[0].Qty;
+          console.log(res[0].UOMSizeMasterID);
+          $scope.uomsizemasterid = res[0].UOMSizeMasterID
+          })
+//          console.log(result.length)
+//          if(result.length != 0)
+//          {
+//            console.log(result[0].ItemSKUID)
+//            var skuidfind = result[0].ItemSKUID;
+//            console.log(skuidfind)
+//            $http.get("/purchaseratefetch"+skuidfind).success(function(res){
+//            console.log(res[0])
+//            console.log(res[0].PurchaseRate)
+//            $scope.purchaserate = res[0].PurchaseRate;
+//            //$scope.finalrate = res[0].PurchaseRate
+//            })//purchaseratefetch 
+//          }//if
+        })//skuitemnamefetch
+        
+        
+      }//itemdetailsfetchfun
+    }//Opening Stock
  }//end of transactioncall
 
 $scope.itemtaxfun= function()
@@ -369,8 +435,10 @@ $scope.itemtaxfun= function()
     tot = cgst+sgst;
     totgstper = tot/100;
     console.log(totgstper);
-    total = $scope.finalrate;
-//    total = $scope.newfinalrate;
+    //total = $scope.finalrate;
+    //total = $scope.newfinalrate;
+    $scope.newfinalvalue = $scope.pieceNo*$scope.finalrate;
+    total = $scope.newfinalvalue;
     console.log(total);
     $scope.hiddenvale = total/(1+totgstper);
     console.log($scope.hiddenvale);
@@ -421,8 +489,10 @@ $scope.itemtaxfun= function()
     $scope.rate();
   }//$scope.calculation=function
 
-   $scope.rate = function(){  
+    $scope.rate = function(finalrate){  
     alert("haiiii")
+    console.log(parseInt($scope.finalrate));
+    $scope.purchaserate = $scope.finalrate;
     var obj = {};
     $scope.discountrate=0;
     $scope.discount = 0;
@@ -444,7 +514,8 @@ $scope.itemtaxfun= function()
       obj["Rate"]=$scope.finalrate;
       obj["discrate"] = $scope.discountrate;
       obj["disctype"] = $scope.type;
-      obj["value"]= $scope.finalrate;
+//      $scope.newfinalvalue = $scope.pieceNo*$scope.finalrate;
+      obj["value"]= $scope.newfinalvalue;
       obj["stockpointid"]= $scope.stockidfound;
       obj["uomid"] = $scope.uomid;
       obj["uomsizemasterid"]=$scope.uomsizemasterid;
@@ -473,7 +544,7 @@ $scope.itemtaxfun= function()
       for(var s=0;s<$scope.purchaseitem1.length;s++)
     {
       
-      console.log($scope.purchaseitem1[s].value);
+      console.log(parseInt($scope.purchaseitem1[s].value));
       console.log($scope.purchaseitem1[s].pieces);
       $scope.finalvalue+=$scope.purchaseitem1[s].value;
       $scope.piece+=$scope.purchaseitem1[s].pieces;
@@ -490,6 +561,8 @@ $scope.itemtaxfun= function()
     $scope.finalrate = null;
     $scope.sectionnames=null;
     $scope.netquantity=null;
+    $scope.skuitemname=null;
+    $scope.uomsize=null;
   }
   
   $http.get("/findcount").success(function(res){
@@ -538,12 +611,32 @@ $scope.itemtaxfun= function()
     var allincluvalue = (purchaseitem1[n].pieces*purchaseitem1[n].Rate)
     console.log(allincluvalue);
     //alert($scope.stockbookid)
-    var purchasetran = vouchernumber+","+purchaseitem1[n].itemid+","+posname+","+isCompositable+","+isSplittable+","+$scope.stockinward+","+parentstock+","+accno+","+posid1+","+dates+","+purchaseitem1[n].pieces+","+purchaseitem1[n].Rate+","+purchaseitem1[n].quantity+","+allincluvalue+","+purchaseitem1[n].uomsizemasterid+","+$scope.referenceno+","+purchaseitem1[n].stockpointid+","+purchaseitem1[n].uomid+","+$scope.invgroupname+","+$scope.stockbookid+","+$scope.newentryrowno+","+purchaseitem1[n].salerate+","+purchaseitem1[n].purchaserate+","+purchaseitem1[n].taxablevalue+","+purchaseitem1[n].cgst+","+purchaseitem1[n].sgst+","+purchaseitem1[n].tax+","+purchaseitem1[n].itemcode;
+    var purchasetran = vouchernumber+","+purchaseitem1[n].itemid+","+posname+","+isCompositable+","+isSplittable+","+$scope.stockinward+","+parentstock+","+accno+","+posid1+","+dates+","+purchaseitem1[n].pieces+","+purchaseitem1[n].Rate+","+purchaseitem1[n].quantity+","+allincluvalue+","+purchaseitem1[n].uomsizemasterid+","+$scope.referenceno+","+purchaseitem1[n].stockpointid+","+purchaseitem1[n].uomid+","+$scope.invgroupname+","+$scope.stockbookid+","+$scope.newentryrowno+","+purchaseitem1[n].salerate+","+purchaseitem1[n].purchaserate+","+purchaseitem1[n].taxablevalue+","+purchaseitem1[n].cgst+","+purchaseitem1[n].sgst+","+purchaseitem1[n].tax+","+purchaseitem1[n].itemcode+","+$scope.transactiontype;
      console.log(purchasetran);
+      var getstockdetail = $scope.transactiontype+","+purchaseitem1[n].itemcode+","+purchaseitem1[n].stockpointid;
+      $http.get('getstockbookdetail'+getstockdetail).success(function(result){
+      console.log(result);
+        if(result.length==1)
+        {
+          alert("item alredy exist")
+          console.log(result[0]._id);
+          console.log(purchasetran);
+          var purchasetranupdate =purchasetran+","+result[0]._id;
+          console.log(purchasetranupdate);
+          $http.put('/purchasetranupdate'+purchasetranupdate).success(function(response){
+              console.log(response);
+          })
+          
+        }
+        else
+        {
+          alert("item not exist")
+        }
+      })
     
-      $http.post('/purchasepost'+purchasetran).success(function(response){
-      console.log(response);
-      }) 
+//      $http.post('/purchasepost'+purchasetran).success(function(response){
+//      console.log(response);
+//      }) 
       //$scope.stockbookid++;
 //      $scope.stockbookid++;
 //      console.log($scope.stockbookid)
@@ -564,9 +657,9 @@ $scope.itemtaxfun= function()
         console.log($scope.hhmmsstt)
         
         var stockbookheadre = vouchernumber+","+dates+","+$scope.partyidfound+","+$scope.transactiontype+","+$scope.hhmmsstt+","+accclosed+","+$scope.sectionid 
-     $http.post('/stockbookheadresave'+stockbookheadre).success(function(response){
-       console.log(response)
-             })
+//     $http.post('/stockbookheadresave'+stockbookheadre).success(function(response){
+//       console.log(response)
+//             })
       
     }
       

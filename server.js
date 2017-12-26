@@ -1659,7 +1659,7 @@ app.put('/editeditem',function(req,res){
       //  console.log(id.);
        console.log(id+"iddddddddddddddd");
        console.log(req.body.saleCategory+"saleeeeeeeeeee");
-     db.itemdata.update({_id:mongojs.ObjectId(id)},{$set:{"name":req.body.name,"desc":req.body.desc ,"hsc":req.body.hsc ,"invGroupName":req.body.invGroupName,
+         db.itemdata.update({_id:mongojs.ObjectId(id)},{$set:{"name":req.body.name,"desc":req.body.desc ,"hsc":req.body.hsc ,"invGroupName":req.body.invGroupName,
          "outofstate":req.body.outofstate ,"withinstate":req.body.withinstate,"salesTax":req.body.salesTax,"comboItem":req.body.comboItem,"section":req.body.section,"frequently":req.body.frequently,"marginReport":req.body.marginReport,"itemType":req.body.itemType,"saleCategory":req.body.saleCategory,"ChargeName":req.body.ChargeName,"ChargeValue":req.body.ChargeValue}},function(err,doc)
         {
             res.json(doc);
@@ -3691,11 +3691,116 @@ app.get('/skuitemnamefetch:purchaserate',function(req,res)
         res.json(doc);
       })   
     })
-        
+ //check for stockbootdetail exits       
 
+app.get('/getstockbookdetail:stockbookdetail',function(req,res){
+        var stockbookdetail1 = req.params.stockbookdetail;
+        var str_array=stockbookdetail1.split(",");
+        var transactiontype=str_array[0];
+        console.log(transactiontype+"transactiontype");
+        var stockdetailitemcode=str_array[1];
+        stockdetailitemcode = parseInt(stockdetailitemcode);
+        console.log(stockdetailitemcode+"stockdetailitemcode");
+        var stockdetailpoint=str_array[2];
+        stockdetailpoint=parseInt(stockdetailpoint);
+        console.log(stockdetailpoint+"stockdetailpoint");
+         db.stockBookDetail.find({"ItemCode":stockdetailitemcode,"StockPointId":stockdetailpoint,"VoucherType":transactiontype},function(err,doc1){
+         res.json(doc1);
+      })   
+    })
+
+
+//exisiting update purchasetranupdate
+
+app.put('/purchasetranupdate:purchasetranupdate',function(req,res){
+  var purchasetranupdate1 = req.params.purchasetranupdate;
+  var str_array=purchasetranupdate1.split(",");
+    var voucherid=str_array[0];
+    console.log(voucherid+"voucherid");
+    var itemid=str_array[1];
+    console.log(itemid+"itemid");
+    var posname=str_array[2];
+    console.log(posname+"posname");
+    var composite=str_array[3];
+    console.log(composite+"composite");
+    var splittable=str_array[4];
+    console.log(splittable+"splittable");
+    var stockinward=str_array[5];
+    console.log(stockinward+"stockinward");
+    var parentstock=str_array[6];
+    parentstock = parseInt(parentstock)
+    console.log(parentstock+"parentstock");
+    var accno=str_array[7];
+    accno = parseInt(accno);
+    console.log(accno+"accno")
+    var posid=str_array[8];
+    console.log(posid+"posid");
+    var voucherdate=str_array[9];
+    console.log(voucherdate+"voucherdate");
+    var netpieces = str_array[10];
+    netpieces = parseInt(netpieces);
+    console.log(netpieces)
+    var finalrate= str_array[11];
+    finalrate = parseInt(finalrate);
+    console.log(finalrate)
+    var umosize= str_array[12];
+    //purchaserate = parseInt(purchaserate);
+    console.log(umosize)
+    var allincluvalue= str_array[13];
+    allincluvalue = parseInt(allincluvalue);
+    console.log(allincluvalue)
+    var uomsizemasterid= str_array[14];
+    uomsizemasterid = parseInt(uomsizemasterid);
+    console.log(uomsizemasterid);
+    var referenceno= str_array[15];
+    referenceno = parseInt(referenceno);
+    console.log(referenceno)
+    var stockpointid= str_array[16];
+    stockpointid = parseInt(stockpointid);
+    console.log(stockpointid)
+    var uomid= str_array[17];
+    uomid = parseInt(uomid);
+    console.log(uomid)
+    var invgroupname= str_array[18];
+    console.log(invgroupname)
+    var stockid= str_array[19];
+    stockid = parseInt(stockid);
+    console.log(stockid)
+    var entryrowno= str_array[20];
+    entryrowno = parseInt(entryrowno);
+    console.log(entryrowno)
+    var salerate= str_array[21];
+    salerate = parseInt(salerate);
+    console.log(salerate)
+    var purchaserate= str_array[22];
+    purchaserate = parseInt(purchaserate);
+    console.log(purchaserate);
+    var taxablevalue= str_array[23];
+    taxablevalue =parseFloat(taxablevalue);
+    console.log(taxablevalue)
+    var cgst= str_array[24];
+    cgst = parseFloat(cgst);
+    console.log(cgst)
+    var sgst= str_array[25];
+    sgst = parseFloat(sgst);
+    console.log(sgst)
+    var finaltax= str_array[26];
+    finaltax = parseFloat(finaltax);
+    console.log(finaltax)
+    var itemcode= str_array[27];
+    itemcode = parseInt(itemcode);
+    console.log(itemcode);
+    var vouchertype= str_array[28];
+    console.log(vouchertype);
+    var mongoidfind= str_array[29];
+    console.log(mongoidfind+"mongoidfindmongoidfindmongoidfindmongoidfind");
+    db.stockBookDetail.update({_id: mongojs.ObjectId(mongoidfind)},{ $inc: { "NetPieces":netpieces,"TaxableValue":taxablevalue,"CGST":cgst,"SGST":sgst,"TotTaxAmt":finaltax }},function(err,doc){
+    res.json(doc) })
+  
+    })
 // for purchasesave item
    //var entryrowno = 0;
-app.post('/purchasepost:purchasetran',function(req,res){
+ app.post('/purchasepost:purchasetran',function(req,res){
     //entryrowno++;
     var purchasetran1 = req.params.purchasetran;
     console.log(purchasetran1);
@@ -3774,10 +3879,12 @@ app.post('/purchasepost:purchasetran',function(req,res){
     console.log(finaltax)
     var itemcode= str_array[27];
     itemcode = parseInt(itemcode);
-    console.log(itemcode)
+    console.log(itemcode);
+    var vouchertype= str_array[28];
+    console.log(vouchertype)
   
 
-    db.stockBookDetail.insert({"VocherId" : voucherid,"ItemId":itemid,"ItemCode":itemcode,"ParentStock":parentstock,"stockInWord":stockinward,"AccN0":accno,"PosID":posid,"StockBookId":stockid,"EntryRowNo":entryrowno,"VocherDate":voucherdate,"NetQty":umosize,"NetPieces":netpieces,"PurchaseRate":purchaserate,"SaleRate":salerate,"TaxableValue":taxablevalue,"CGST":cgst,"SGST":sgst,"TotTaxAmt":finaltax,"Rate":finalrate,"ChargeableUnits":netpieces,"AllIncluValue":allincluvalue,"UOMSizeMasterId":uomsizemasterid,"ReferenceNo":referenceno,"StockPointId":stockpointid,"UOMId":uomid,"InvGroupName":invgroupname},function(err,doc){
+    db.stockBookDetail.insert({"VocherId" : voucherid,"ItemId":itemid,"ItemCode":itemcode,"ParentStock":parentstock,"stockInWord":stockinward,"AccN0":accno,"PosID":posid,"StockBookId":stockid,"EntryRowNo":entryrowno,"VocherDate":voucherdate,"NetQty":umosize,"NetPieces":netpieces,"PurchaseRate":purchaserate,"SaleRate":salerate,"TaxableValue":taxablevalue,"CGST":cgst,"SGST":sgst,"TotTaxAmt":finaltax,"Rate":finalrate,"ChargeableUnits":netpieces,"AllIncluValue":allincluvalue,"UOMSizeMasterId":uomsizemasterid,"ReferenceNo":referenceno,"StockPointId":stockpointid,"UOMId":uomid,"InvGroupName":invgroupname,"VoucherType":vouchertype},function(err,doc){
     res.json(doc)
      console.log(doc.VocherId+"voucherrrrrrrr")
      console.log(typeof(doc.VocherId)+"doc.VocherIddoc.VocherId")

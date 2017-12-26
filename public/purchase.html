@@ -97,12 +97,13 @@
             </div>
             
             <div class = "col-sm-2 padding-0">
-            <label>Voch_No:</label><input type = "number" id="idid" ng-model="vouchernumber1">
+            <label>Voch_No:</label><input type = "number" id="idid" ng-model="vouchernumber1" readonly>
             </div>
-            <div class = "col-sm-3 padding-0">
-            <label>Ref.Date:</label><input type = "date" ng-disabled="all">
+<!--               <td> <select ng-model="item.AccNo" ng-show="transaction != 'Issue Voucher'&&transaction != 'Receipt Voucher'">-->
+            <div class = "col-sm-3 padding-0" ng-hide="transactiontype == 'Opening Stock'">
+            <label>Ref.Date:</label><input type = "date">
             </div>
-            <div class = "col-sm-2 padding-0">
+            <div class = "col-sm-2 padding-0"  ng-hide="transactiontype == 'Opening Stock'">
             <label>Ref.No:<input type = "number" id="idid" ng-model="referenceno"></label>
             </div>
             </div>
@@ -119,7 +120,7 @@
             </label>
             </div>
           
-            <div class = "col-sm-2 padding-0">
+            <div class = "col-sm-2 padding-0"  ng-hide="transactiontype == 'Opening Stock'">
             <label>To:
               <select>
                 <option></option>
@@ -128,7 +129,7 @@
             </label>
             </div>
              
-            <div class = "col-sm-3 padding-0" style="margin-left: 0">
+            <div class = "col-sm-3 padding-0" style="margin-left: 0"  ng-hide="transactiontype == 'Opening Stock'">
             <label>Party:
               <select ng-model="party" ng-change="partyid(party)">
                 <option></option>
@@ -138,7 +139,7 @@
               <button type="button" class=" btn-default" id="idid">New</button>
             </div>
           
-          <div class = "col-sm-2" id="section">
+          <div class = "col-sm-2" id="section"  ng-hide="transactiontype == 'Opening Stock'">
             <label>Section:
               <select ng-model="sectionnames" ng-change="getsection(sectionnames)" ng-disabled="all">
                 <option></option>
@@ -166,7 +167,7 @@
                   <option ng-repeat="item in itemdetails" ng-model="itemcode">{{item.ItemCode}}</option>
                  </select>
                  </datalist>
-             <span style="font-size: 20px;color: blue">{{skuitemname}}&nbsp;{{uomsize}}&nbsp;Qty:{{netquantity}}</span>
+             <span style="font-size: 20px;color: blue">{{skuitemname}}&nbsp;{{uomsize}}&nbsp;{{qty}}{{netquantity}}</span>
              </div> 
           
             <div class = "col-sm-2 padding-0">
@@ -181,14 +182,14 @@
                </label>
             </div>
              
-            <div class = "col-sm-3 padding-0" ng-disabled="all">
+            <div class = "col-sm-3 padding-0" ng-disabled="all"  ng-hide="transactiontype == 'Opening Stock'">
             <label>Discount:
               <select ng-disabled="all">
                 <option></option>
                    <option ng-disabled="all">Discount</option>
               </select>
                </label>
-              <input type = "text" id="idid" ng-model = "discountname" ng-disabled="all">
+              <input type = "text" id="idid" ng-model = "discountname" ng-disabled="transactiontype == 'Purchase'">
             </div> 
     
 <!--
