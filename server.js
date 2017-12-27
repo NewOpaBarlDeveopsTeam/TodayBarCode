@@ -3623,11 +3623,42 @@ app.get('/skuitemnamefetch:purchaserate',function(req,res)
       })
 })
 
-    app.get('/purchaseratefetch:skuidfind',function(req,res){
-      var skuidfind1 = parseInt(req.params.skuidfind);
-      console.log(skuidfind1+"skuidfind1skuidfind1skuidfind1");
-      console.log(typeof(skuidfind1))
-        db.ItemSKURate.find({"ItemSKUID":skuidfind1},function(err,doc1){
+    app.get('/purchaseratefetch:newpurchaserate',function(req,res){
+      var newpurchaserate1 = req.params.newpurchaserate;
+      var str_array=newpurchaserate1.split(",");
+      var purchasetran=str_array[0];
+      console.log(purchasetran+"purchasetran");
+      var purchaseitemcode = str_array[1];
+      purchaseitemcode = parseInt(purchaseitemcode);
+      console.log(purchaseitemcode)
+      var voucherdate = str_array[2];
+      //purchaseitemcode = parseInt(purchaseitemcode);
+      console.log(voucherdate)
+      db.stockBookDetail.find({"ItemCode":purchaseitemcode,"VoucherType":purchasetran,"VocherDate":{$lt:voucherdate}}).sort({_id:-1}).limit(1,function(err,doc1){
+      console.log(doc1.length+"purchasedociii");
+        if(doc1.length==0)
+        {
+          var trantype = "Opening Stock";
+  db.stockBookDetail.find({"ItemCode":purchaseitemcode,"VoucherType":trantype}).sort({_id:-1}).limit(1,function(err,doc){
+         console.log(doc[0]); 
+         res.json(doc);
+        })
+        }//if
+        else{
+          res.json(doc1)
+        }
+      })   
+    })
+    
+    app.get('/stockpurchrate:stockpurchrate',function(req,res){
+      var stockpurchrate1 = req.params.stockpurchrate;
+      var str_array=stockpurchrate1.split(",");
+      var stocktran=str_array[0];
+      console.log(stocktran+"stocktran");
+      var stockitemcode = str_array[1];
+      stockitemcode = parseInt(stockitemcode);
+      console.log(stockitemcode)
+      db.stockBookDetail.find({"ItemCode":stockitemcode,"VoucherType":stocktran}).sort({_id:-1}).limit(1,function(err,doc1){
          console.log(doc1[0]); 
          res.json(doc1);
       })   
@@ -3694,6 +3725,7 @@ app.get('/skuitemnamefetch:purchaserate',function(req,res)
  //check for stockbootdetail exits       
 
 app.get('/getstockbookdetail:stockbookdetail',function(req,res){
+        console.log("yashwanth")
         var stockbookdetail1 = req.params.stockbookdetail;
         var str_array=stockbookdetail1.split(",");
         var transactiontype=str_array[0];
@@ -3881,10 +3913,16 @@ app.put('/purchasetranupdate:purchasetranupdate',function(req,res){
     itemcode = parseInt(itemcode);
     console.log(itemcode);
     var vouchertype= str_array[28];
-    console.log(vouchertype)
+    console.log(vouchertype);
+    var finalentryrow= str_array[29];
+    finalentryrow = parseInt(finalentryrow);
+    console.log(finalentryrow);
+    var finalstockbookid= str_array[30];
+    finalstockbookid = parseInt(finalstockbookid);
+    console.log(finalstockbookid);
   
 
-    db.stockBookDetail.insert({"VocherId" : voucherid,"ItemId":itemid,"ItemCode":itemcode,"ParentStock":parentstock,"stockInWord":stockinward,"AccN0":accno,"PosID":posid,"StockBookId":stockid,"EntryRowNo":entryrowno,"VocherDate":voucherdate,"NetQty":umosize,"NetPieces":netpieces,"PurchaseRate":purchaserate,"SaleRate":salerate,"TaxableValue":taxablevalue,"CGST":cgst,"SGST":sgst,"TotTaxAmt":finaltax,"Rate":finalrate,"ChargeableUnits":netpieces,"AllIncluValue":allincluvalue,"UOMSizeMasterId":uomsizemasterid,"ReferenceNo":referenceno,"StockPointId":stockpointid,"UOMId":uomid,"InvGroupName":invgroupname,"VoucherType":vouchertype},function(err,doc){
+    db.stockBookDetail.insert({"VocherId" : voucherid,"ItemId":itemid,"ItemCode":itemcode,"ParentStock":parentstock,"stockInWord":stockinward,"AccN0":accno,"PosID":posid,"StockBookId":finalstockbookid,"EntryRowNo":finalentryrow,"VocherDate":voucherdate,"NetQty":umosize,"NetPieces":netpieces,"PurchaseRate":purchaserate,"SaleRate":salerate,"TaxableValue":taxablevalue,"CGST":cgst,"SGST":sgst,"TotTaxAmt":finaltax,"Rate":finalrate,"ChargeableUnits":netpieces,"AllIncluValue":allincluvalue,"UOMSizeMasterId":uomsizemasterid,"ReferenceNo":referenceno,"StockPointId":stockpointid,"UOMId":uomid,"InvGroupName":invgroupname,"VoucherType":vouchertype},function(err,doc){
     res.json(doc)
      console.log(doc.VocherId+"voucherrrrrrrr")
      console.log(typeof(doc.VocherId)+"doc.VocherIddoc.VocherId")

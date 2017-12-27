@@ -1189,7 +1189,7 @@ $http.get('/roundOffConfiguration').success(function(response){
                  var sgst = gst/2;
                  //console.log(mobile,catitem1,subtol,totquant,serchar,sercharc,serchars,gst,total,myVar,$scope.change,session,sesdate);
                  var rschange = $scope.change;
-                 //console.log(catitem1.length)
+                 console.log(catitem1.length)
                  var catlen = catitem1.length
                  var lenCheck = 0 ;
                  console.log(catitem1)

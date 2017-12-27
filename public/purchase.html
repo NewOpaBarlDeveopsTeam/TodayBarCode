@@ -10,7 +10,7 @@
   <script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
     <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js">
     </script>
-<title>Purchase</title>
+<title>Transaction</title>
 </head>
   <style>
     .btn{
@@ -100,11 +100,11 @@
             <label>Voch_No:</label><input type = "number" id="idid" ng-model="vouchernumber1" readonly>
             </div>
 <!--               <td> <select ng-model="item.AccNo" ng-show="transaction != 'Issue Voucher'&&transaction != 'Receipt Voucher'">-->
-            <div class = "col-sm-3 padding-0" ng-hide="transactiontype == 'Opening Stock'">
-            <label>Ref.Date:</label><input type = "date">
+            <div class = "col-sm-3 padding-0">
+            <label>Ref.Date:</label><input type = "date" ng-disabled="transactiontype == 'Opening Stock'||transactiontype == 'Purchase'">
             </div>
-            <div class = "col-sm-2 padding-0"  ng-hide="transactiontype == 'Opening Stock'">
-            <label>Ref.No:<input type = "number" id="idid" ng-model="referenceno"></label>
+            <div class = "col-sm-2 padding-0">
+            <label>Ref.No:<input type = "number" id="idid" ng-model="referenceno" ng-disabled="transactiontype == 'Opening Stock'"></label>
             </div>
             </div>
         <div class="clearfix"></div>
@@ -120,28 +120,28 @@
             </label>
             </div>
           
-            <div class = "col-sm-2 padding-0"  ng-hide="transactiontype == 'Opening Stock'">
+            <div class = "col-sm-2 padding-0">
             <label>To:
-              <select>
+              <select ng-disabled="transactiontype == 'Opening Stock'||transactiontype == 'Purchase'" >
                 <option></option>
-                   <option ng-repeat="party in partyname" >{{party.partyName}}</option>
+                   <option ng-repeat="party in partyname">{{party.partyName}}</option>
               </select>
             </label>
             </div>
              
-            <div class = "col-sm-3 padding-0" style="margin-left: 0"  ng-hide="transactiontype == 'Opening Stock'">
+            <div class = "col-sm-3 padding-0" style="margin-left: 0">
             <label>Party:
-              <select ng-model="party" ng-change="partyid(party)">
+              <select ng-model="party" ng-change="partyid(party)" ng-disabled="transactiontype == 'Opening Stock'">
                 <option></option>
-                   <option ng-repeat="party in partyname" >{{party.partyName}}</option>
+                   <option ng-repeat="party in partyname">{{party.partyName}}</option>
               </select>
             </label>
-              <button type="button" class=" btn-default" id="idid">New</button>
+              <button type="button" class=" btn-default" id="idid" ng-disabled="transactiontype == 'Opening Stock'||transactiontype == 'Purchase'" >New</button>
             </div>
           
-          <div class = "col-sm-2" id="section"  ng-hide="transactiontype == 'Opening Stock'">
+          <div class = "col-sm-2" id="section">
             <label>Section:
-              <select ng-model="sectionnames" ng-change="getsection(sectionnames)" ng-disabled="all">
+              <select ng-model="sectionnames" ng-change="getsection(sectionnames)" ng-disabled="transactiontype == 'Opening Stock'||transactiontype == 'Purchase'">
                 <option></option>
                   <option ng-repeat="section in sectioname">{{section.SectionName}}</option>
               </select>
@@ -161,7 +161,7 @@
         <div class ="row3">
            <div class ="col-sm-5 padding-0 row">
               <label>Item Code:</label>
-             <b><input list="itemname" name="itemname" id="idid" ng-model="itemcode" ng-blur="itemdetailsfetchfun(itemcode)"></b>
+             <b><input list="itemname" name="itemname" id="idid" ng-model="itemcode" ng-blur="itemdetailsfetchfun(itemcode,date2.date1)"></b>
               <datalist id = "itemname">
                 <select>
                   <option ng-repeat="item in itemdetails" ng-model="itemcode">{{item.ItemCode}}</option>
@@ -182,14 +182,14 @@
                </label>
             </div>
              
-            <div class = "col-sm-3 padding-0" ng-disabled="all"  ng-hide="transactiontype == 'Opening Stock'">
+            <div class = "col-sm-3 padding-0">
             <label>Discount:
-              <select ng-disabled="all">
+              <select ng-disabled="transactiontype == 'Opening Stock'||transactiontype == 'Purchase'">
                 <option></option>
-                   <option ng-disabled="all">Discount</option>
+                   <option>Discount</option>
               </select>
                </label>
-              <input type = "text" id="idid" ng-model = "discountname" ng-disabled="transactiontype == 'Purchase'">
+              <input type = "text" id="idid" ng-model = "discountname" ng-disabled="transactiontype == 'Opening Stock'||transactiontype == 'Purchase'">
             </div> 
     
 <!--
@@ -311,7 +311,7 @@
         <button type="button" class=" btn-default" id="idid">Export</button>
         </span>
         <span style="margin-left: 350px">
-        <button type="button" class=" btn-default" id="idid" ng-click="stockdetailsave(vouchernumber,date2.date1,purchaseitem1,referenceno,index);stockbooksave(vouchernumber,date2.date1)">Save</button>
+        <button type="button" class=" btn-default" id="idid" ng-click="stockdetailsave(vouchernumber,date2.date1,purchaseitem1,referenceno,index);stockbooksave(vouchernumber1)">Save</button>
         <button type="button" class=" btn-default" id="idid">Cancel</button>
         <button type="button" class=" btn-default" id="idid">Close</button>
         </span>
@@ -319,5 +319,5 @@
       </div>
   </body>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
-  <script type="text/javascript" src="controllers/purchasecntrl.js"></script>
+  <script type="text/javascript" src="controllers/newtransactioncntrl.js"></script>
   </html>
