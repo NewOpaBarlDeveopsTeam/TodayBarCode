@@ -3730,7 +3730,7 @@ app.get('/skuitemnamefetch:purchaserate',function(req,res)
       })   
     })
  //check for stockbootdetail exits       
-
+//{$and:[{"POSName": frefetch1 },{"frequently" : "Yes"}] }
 app.get('/getstockbookdetail:stockbookdetail',function(req,res){
         console.log("yashwanth")
         var stockbookdetail1 = req.params.stockbookdetail;
@@ -3742,8 +3742,9 @@ app.get('/getstockbookdetail:stockbookdetail',function(req,res){
         console.log(stockdetailitemcode+"stockdetailitemcode");
         var stockdetailpoint=str_array[2];
         stockdetailpoint=parseInt(stockdetailpoint);
+        //var transactiontype = "Opening Stock";
         console.log(stockdetailpoint+"stockdetailpoint");
-         db.stockBookDetail.find({"ItemCode":stockdetailitemcode,"StockPointId":stockdetailpoint,"VoucherType":transactiontype},function(err,doc1){
+         db.stockBookDetail.find({$and:[{"ItemCode":stockdetailitemcode,"StockPointId":stockdetailpoint,"VoucherType":transactiontype}]},function(err,doc1){
          res.json(doc1);
       })   
     })

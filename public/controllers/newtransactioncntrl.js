@@ -4,6 +4,12 @@ myApp.controller('purchaseCntrl',['$scope','$http','$window','$filter',
 function($scope,$http,$window,$filter){ 
   var purchaseitem = [];
   var taxdefinition =[];
+  $scope.openingstockdate = "2017/12/23";
+  console.log($scope.openingstockdate)
+  var  dates  = new Date(((new Date().toISOString().slice(0, 23))+"-05:30")).toISOString();
+            var a = dates.split("T");
+             $scope.date = a[0];
+             console.log($scope.date)
   $scope.transaction;
   $scope.all = true;
   $scope.qty = "Qty:";
@@ -77,7 +83,7 @@ function($scope,$http,$window,$filter){
    console.log(response);
      $scope.stockpointname = response;
      console.log(response[0].StockPointName);
-     $scope.stockpointid = function(stockid){
+     $scope.stockpointfrom = function(stockid){
      alert("stockid call");
      console.log(stockid);
      $scope.stockid = stockid; 
@@ -89,7 +95,17 @@ function($scope,$http,$window,$filter){
        }
      }
     
-    //console.log(res[0].partyId);
+   $scope.stockpointto = function(newstockid){
+     alert("stockid call");
+     console.log(newstockid);
+     $scope.newstockid = newstockid; 
+      for(var m=0;m<response.length;m++){
+       if($scope.newstockid == response[m].StockPointName){
+        console.log(response[m].StockPointID)
+        $scope.stockidfound = response[m].StockPointID;
+        }
+       }
+     }
     
   })
 //  +$scope.loginresname
@@ -351,6 +367,29 @@ $scope.transactioncall = function (transactiontype)
       alert(itemcode)
         var itemnwenew = parseInt(itemcode);
         console.log(typeof(itemnwenew));
+        $http.get("/skuitemnamefetch"+itemnwenew).success(function(result){
+          console.log(result[0]);
+          console.log(result[0].itemId);
+          $scope.itemidd = result[0].itemId;
+          console.log(result[0].ItemName);
+          $scope.skuitemname = result[0].ItemName;
+          console.log($scope.skuitemname)
+          console.log(result[0].UOMSize); 
+          var umosize = parseInt(result[0].UOMSize);
+          console.log(typeof(umosize))
+          console.log(umosize);
+          $http.get("/itemuomqtyfetch"+umosize).success(function(res){
+          console.log(res);
+          console.log(res[0].UOMID);
+          //var stduomid = parseInt(res[0].UOMID);
+          console.log(res[0].UOMSize);
+          $scope.uomsize = res[0].UOMSize
+          console.log(res[0].Qty);
+          $scope.umoqty = res[0].Qty;
+          console.log(res[0].UOMSizeMasterID);
+          $scope.uomsizemasterid = res[0].UOMSizeMasterID
+          })
+          })
          $http.get("/itemquantityfetch"+itemnwenew).success(function(result1){
       console.log(result1)
       if(result1 != 0)
@@ -369,13 +408,14 @@ $scope.transactioncall = function (transactiontype)
       }//itemdetailsfetchfun
     }//Stock Transfer
   
-  if( transactiontype == "Opening Stock")
+  if( transactiontype == "Opening Stock" && $scope.openingstockdate >! $scope.date)
     {
        $scope.pieceNo = 1;
        $scope.stockinward = "Yes";
        $scope.SaleRate=0;
        $scope.referenceno=0;
        $scope.sectionid=0;
+       $scope.onlyopeningstock = "Opening Stock";
        alert("hai i am Stock Transfer")
        $scope.itemdetailsfetchfun=function(itemcode){
         alert(itemcode)
@@ -432,6 +472,10 @@ $scope.transactioncall = function (transactiontype)
         
       }//itemdetailsfetchfun
     }//Opening Stock
+  else if( transactiontype == "Opening Stock")
+  {
+    alert("Opening Stock is already done on"+" "+$scope.openingstockdate)
+  }
  }//end of transactioncall
 
 $scope.itemtaxfun= function()
@@ -676,7 +720,7 @@ $scope.itemtaxfun= function()
     //alert($scope.stockbookid)
     var purchasetran = vouchernumber+","+purchaseitem1[n].itemid+","+posname+","+isCompositable+","+isSplittable+","+$scope.stockinward+","+parentstock+","+accno+","+posid1+","+date+","+purchaseitem1[n].pieces+","+purchaseitem1[n].Rate+","+purchaseitem1[n].quantity+","+allincluvalue+","+purchaseitem1[n].uomsizemasterid+","+$scope.referenceno+","+purchaseitem1[n].stockpointid+","+purchaseitem1[n].uomid+","+$scope.invgroupname+","+$scope.stockbookid+","+$scope.newentryrowno+","+purchaseitem1[n].salerate+","+purchaseitem1[n].purchaserate+","+purchaseitem1[n].taxablevalue+","+purchaseitem1[n].cgst+","+purchaseitem1[n].sgst+","+purchaseitem1[n].tax+","+purchaseitem1[n].itemcode+","+$scope.transactiontype;
      console.log(purchasetran);
-      $scope.onlyopeningstock = "Opening Stock";
+//      $scope.onlyopeningstock = "Opening Stock";
       var getstockdetail = $scope.onlyopeningstock+","+purchaseitem1[n].itemcode+","+purchaseitem1[n].stockpointid;
       console.log(getstockdetail);
       alert("yashwanthoutside get");

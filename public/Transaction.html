@@ -84,11 +84,11 @@
       <div class = "container">
          <br>
           <div class ="row1">
-            <div class = "col-sm-2 padding-0" style="margin-left: 0">
-            <label>Date:</label><input type = "date" style="width:120px" ng-model="date2.date1">
-            </div>
+            <div class = "col-sm-5 padding-0" style="margin-left: 0">
+            <label>Date:</label><input type = "date" style="width:150px" ng-model="date2.date1">&nbsp;&nbsp;
+<!--            </div>-->
             
-            <div class = "col-sm-3 padding-0" style="margin-left: 0">
+<!--            <div class = "col-sm-3 padding-0" style="margin-left: 0">-->
             <label>Transaction:</label>
               <select ng-change ="transactioncall(transactiontype)" ng-model = "transactiontype">
                 <option></option>
@@ -101,10 +101,10 @@
             </div>
 <!--               <td> <select ng-model="item.AccNo" ng-show="transaction != 'Issue Voucher'&&transaction != 'Receipt Voucher'">-->
             <div class = "col-sm-3 padding-0">
-            <label>Ref.Date:</label><input type = "date" ng-disabled="transactiontype == 'Opening Stock'||transactiontype == 'Purchase'">
+            <label>Ref.Date:</label><input type = "date" ng-disabled="transactiontype == 'Opening Stock'||transactiontype == 'Purchase' ||transactiontype == 'Stock Transfer'">
             </div>
             <div class = "col-sm-2 padding-0">
-            <label>Ref.No:<input type = "number" id="idid" ng-model="referenceno" ng-disabled="transactiontype == 'Opening Stock'"></label>
+            <label>Ref.No:<input type = "number" id="idid" ng-model="referenceno" ng-disabled="transactiontype == 'Opening Stock' ||transactiontype == 'Stock Transfer'"></label>
             </div>
             </div>
         <div class="clearfix"></div>
@@ -113,7 +113,7 @@
         <div class ="row2">
            <div class ="col-sm-3 padding-0">
             <label>Stock Point:
-              <select ng-model="stockid" ng-change="stockpointid(stockid)">
+              <select ng-model="stockid" ng-change="stockpointfrom(stockid)">
                 <option></option>
                    <option ng-repeat = "stockpoint in stockpointname">{{stockpoint.StockPointName}}</option>
               </select>
@@ -122,26 +122,27 @@
           
             <div class = "col-sm-2 padding-0">
             <label>To:
-              <select ng-disabled="transactiontype == 'Opening Stock'||transactiontype == 'Purchase'" >
+              <select  ng-model="newstockid" ng-change="stockpointto(newstockid)" ng-disabled="transactiontype == 'Opening Stock'||transactiontype == 'Purchase'" >
                 <option></option>
-                   <option ng-repeat="party in partyname">{{party.partyName}}</option>
+<!--                   <option ng-repeat="party in partyname">{{party.partyName}}</option>-->
+                <option ng-repeat = "stockpoint in stockpointname">{{stockpoint.StockPointName}}</option>
               </select>
             </label>
             </div>
              
             <div class = "col-sm-3 padding-0" style="margin-left: 0">
             <label>Party:
-              <select ng-model="party" ng-change="partyid(party)" ng-disabled="transactiontype == 'Opening Stock'">
+              <select ng-model="party" ng-change="partyid(party)" ng-disabled="transactiontype == 'Opening Stock'||transactiontype == 'Stock Transfer'">
                 <option></option>
                    <option ng-repeat="party in partyname">{{party.partyName}}</option>
               </select>
             </label>
-              <button type="button" class=" btn-default" id="idid" ng-disabled="transactiontype == 'Opening Stock'||transactiontype == 'Purchase'" >New</button>
+              <button type="button" class=" btn-default" id="idid" ng-disabled="transactiontype == 'Opening Stock'||transactiontype == 'Purchase' ||transactiontype == 'Stock Transfer'" >New</button>
             </div>
           
           <div class = "col-sm-2" id="section">
             <label>Section:
-              <select ng-model="sectionnames" ng-change="getsection(sectionnames)" ng-disabled="transactiontype == 'Opening Stock'||transactiontype == 'Purchase'">
+              <select ng-model="sectionnames" ng-change="getsection(sectionnames)" ng-disabled="transactiontype == 'Opening Stock'||transactiontype == 'Purchase'||transactiontype == 'Stock Transfer'">
                 <option></option>
                   <option ng-repeat="section in sectioname">{{section.SectionName}}</option>
               </select>
@@ -159,7 +160,7 @@
          <br>
 <!--        <select ng-model="getcharge" ng-change="sale(getcharge)">-->
         <div class ="row3">
-           <div class ="col-sm-5 padding-0 row">
+           <div class ="col-sm-6 padding-0 row">
               <label>Item Code:</label>
              <b><input list="itemname" name="itemname" id="idid" ng-model="itemcode" ng-blur="itemdetailsfetchfun(itemcode,date2.date1)"></b>
               <datalist id = "itemname">
@@ -170,11 +171,11 @@
              <span style="font-size: 20px;color: blue">{{skuitemname}}&nbsp;{{uomsize}}&nbsp;{{qty}}{{netquantity}}</span>
              </div> 
           
-            <div class = "col-sm-2 padding-0">
-            <label>Pieces:<input type = "Number" id="idid" ng-model="pieceNo"></label>
-            </div>
+            <div class = "col-sm-3 padding-0">
+            <label>Pieces:<input type = "Number" id="idid" ng-model="pieceNo"></label>&nbsp;&nbsp;
+<!--            </div>-->
              
-            <div class = "col-sm-2 padding-0">
+<!--            <div class = "col-sm-2 padding-0">-->
             <label>UOM:
               <select ng-model="umosize" ng-change="ratecalc(umosize)">
                    <option ng-repeat="uomsize in umosizefound">{{uomsize.UOM}}</option>
@@ -184,12 +185,12 @@
              
             <div class = "col-sm-3 padding-0">
             <label>Discount:
-              <select ng-disabled="transactiontype == 'Opening Stock'||transactiontype == 'Purchase'">
+              <select ng-disabled="transactiontype == 'Opening Stock'||transactiontype == 'Purchase'||transactiontype == 'Stock Transfer'">
                 <option></option>
                    <option>Discount</option>
               </select>
                </label>
-              <input type = "text" id="idid" ng-model = "discountname" ng-disabled="transactiontype == 'Opening Stock'||transactiontype == 'Purchase'">
+              <input type = "text" id="idid" ng-model = "discountname" ng-disabled="transactiontype == 'Opening Stock'||transactiontype == 'Purchase'||transactiontype == 'Stock Transfer'">
             </div> 
     
 <!--
