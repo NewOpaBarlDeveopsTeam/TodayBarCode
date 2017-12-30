@@ -13,7 +13,7 @@ function($scope,$http,$window){
   
   $http.get('/chargeConfigure').success(function(res){
         console.log(res);
-        $scope.chargeConfigure = res;
+        $scope.chargeConfigure = res; 
         //  function.......
         $scope.selectrow = function(InvVoucherCla,index){
         alert(index+"indexxx");

@@ -3670,10 +3670,19 @@ app.get('/skuitemnamefetch:purchaserate',function(req,res)
          res.json(doc1);
       })   
     })
+//      var merge1 = req.params.merge;
+//      var str_array=merge1.split(",");
 //    {$and:[{"POSName": itemposname },{"id" : itemiddd}] }
      app.get('/itemquantityfetch:itemcodefind',function(req,res){
-      var itemcodefind1 = parseInt(req.params.itemcodefind);
-       db.stockBookDetail.find({$and:[{"ItemCode":itemcodefind1},{"stockInWord":"Yes"}]},function(err,doc1){
+       var itemcodefind1 = req.params.itemcodefind;
+       var str_array=itemcodefind1.split(",");
+       var itemstockcode=str_array[0];
+       itemstockcode = parseInt(itemstockcode);
+       console.log(typeof(itemstockcode+"itemstockcode"));
+       var fromstockid = str_array[1];
+       fromstockid = parseInt(fromstockid)
+       console.log(fromstockid+"fromstockidfromstockid");
+       db.stockBookDetail.find({$and:[{"ItemCode":itemstockcode},{"stockInWord":"Yes"},{"StockPointId":fromstockid}]},function(err,doc1){
          console.log(doc1[0]); 
          res.json(doc1);
       })   
@@ -3685,6 +3694,16 @@ app.get('/skuitemnamefetch:purchaserate',function(req,res)
         console.log(uomsize1+"skuidfind1skuidfind1skuidfind1");
         console.log(typeof(uomsize1))
         db.UOMSizeMaster.find({"UOMSizeMasterID":uomsize1},function(err,doc1){
+        //console.log(doc1[0]); 
+         res.json(doc1);
+      })   
+    })
+    
+    app.get('/stduomfetch:stduomid',function(req,res){
+      var stduomid1 = parseInt(req.params.stduomid);
+        console.log(stduomid1+"skuidfind1skuidfind1skuidfind1");
+        console.log(typeof(stduomid1))
+        db.UOMConversion.find({"UOMSizeMasterID":stduomid1},function(err,doc1){
         //console.log(doc1[0]); 
          res.json(doc1);
       })   

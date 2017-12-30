@@ -60,15 +60,14 @@ function($scope,$http,$window,$filter){
    console.log(response);
       $scope.umosizefound = response;
       console.log($scope.umosizefound)
-     $scope.ratecalc = function(umosize){
-     //alert("haiii")
-     alert(umosize)
-     $scope.umosize  =umosize;
-     $scope.pieceNo;
-     alert($scope.pieceNo);
-     alert($scope.finalrate);
-     //$scope.finalrate = $scope.pieceNo * $scope.finalrate;
-     for(x = 0;x<response.length;x++){
+     $scope.ratecalc = function(umosize)
+     {
+      alert(umosize)
+      $scope.umosize  =umosize;
+      $scope.pieceNo;
+      alert($scope.pieceNo);
+      alert($scope.finalrate);
+      for(x = 0;x<response.length;x++){
       if($scope.umosize ==response[x].UOM ){
        console.log(response[x].UOMID)  
         $scope.uomid = response[x].UOMID
@@ -76,7 +75,7 @@ function($scope,$http,$window,$filter){
         }
          
     }      
-  }
+     }
   })
   
   $http.get('/stockpointfetch'+$scope.loginresname).success(function(response){
@@ -90,7 +89,8 @@ function($scope,$http,$window,$filter){
       for(var m=0;m<response.length;m++){
        if($scope.stockid == response[m].StockPointName){
         console.log(response[m].StockPointID)
-        $scope.stockidfound = response[m].StockPointID;
+        $scope.fromstockidfound = response[m].StockPointID;
+         console.log($scope.fromstockidfound)
         }
        }
      }
@@ -99,10 +99,11 @@ function($scope,$http,$window,$filter){
      alert("stockid call");
      console.log(newstockid);
      $scope.newstockid = newstockid; 
-      for(var m=0;m<response.length;m++){
-       if($scope.newstockid == response[m].StockPointName){
-        console.log(response[m].StockPointID)
-        $scope.stockidfound = response[m].StockPointID;
+      for(var s=0;s<response.length;s++){
+       if($scope.newstockid == response[s].StockPointName){
+        console.log(response[s].StockPointID)
+        $scope.tostockidfound = response[s].StockPointID;
+         console.log($scope.tostockidfound)
         }
        }
      }
@@ -359,9 +360,12 @@ $scope.transactioncall = function (transactiontype)
                
       }//end of itemdetailsfetch  
     }//end of sale
+  
   if( transactiontype == "Stock Transfer")
     {
       alert("Hai Iam Stock Transfer");
+      $scope.bottleqty = 0;
+      $scope.caseqty = 0;
       $scope.itemdetailsfetchfun = function(itemcode)
       {
       alert(itemcode)
@@ -383,28 +387,73 @@ $scope.transactioncall = function (transactiontype)
           console.log(res[0].UOMID);
           //var stduomid = parseInt(res[0].UOMID);
           console.log(res[0].UOMSize);
-          $scope.uomsize = res[0].UOMSize
+          $scope.uomsize = res[0].UOMSize;
           console.log(res[0].Qty);
           $scope.umoqty = res[0].Qty;
           console.log(res[0].UOMSizeMasterID);
           $scope.uomsizemasterid = res[0].UOMSizeMasterID
           })
           })
-         $http.get("/itemquantityfetch"+itemnwenew).success(function(result1){
-      console.log(result1)
-      if(result1 != 0)
-      {
-      for(t=0;t<result1.length;t++)
-        {
-              console.log(result1[t].NetPieces)
-              $scope.netquantity += result1[t].NetPieces;
+         var itemnewstockid = itemnwenew+","+$scope.fromstockidfound;
+    $http.get("/itemquantityfetch"+itemnewstockid).success(function(result1){
+         console.log(result1)
+         console.log(result1[0].UOMSizeMasterId);
+           $scope.uomsizemasterid =result1[0].UOMSizeMasterId 
+      $http.get('/stduomfetch'+$scope.uomsizemasterid).success(function(res1){
+            console.log(res1[0])
+            $scope.packuoimid =res1[0].PackUMOID;
+            console.log($scope.packuoimid);
+            $scope.stduomid = res1[0].StdUOMID;
+            console.log($scope.stduomid);
+            $scope.packqty = res1[0].PackQty;
+            console.log($scope.packqty)
+            console.log(typeof(result1[0].UOMId))
+            //$scope.stduomid = result1[0].UOMSizeMasterId;
+           if(result1 != 0)
+           {
+            for(var t=0;t<result1.length;t++)
+             {
+              console.log(result1[t].UOMId);
+              if(result1[t].UOMId == $scope.stduomid)
+                {
+                  alert("stduomid")
+                  console.log(result1[t].NetPieces)
+                  $scope.bottleqty +=result1[t].NetPieces;
+                  console.log($scope.bottleqty)
+                }
+              else if(result1[t].UOMId == $scope.packuoimid)
+              {
+               alert("packuomid")
+               console.log($scope.packqty)
+               console.log(result1[t].NetPieces*$scope.packqty);
+               $scope.caseqty +=result1[t].NetPieces*$scope.packqty;
+                console.log($scope.caseqty)
+               }
         }
+             $scope.ratecalc=function(umosize)
+             {
+               $scope.netquantity= $scope.bottleqty+$scope.caseqty;
+               if(umosize == "Bottle")
+                 {
+                   alert("bottle")
+                  $scope.newnetquantity = $scope.netquantity;
+                 }
+               else if(umosize == "Case" && $scope.netquantity > $scope.packqty)
+                 {
+                   $scope.newnetquantity = $scope.netquantity/$scope.packqty;
+                 }
+               else{
+                 alert("Quantity is less than a case")
+                  $scope.newnetquantity = 0;
+               }
+             }
       }//if
       else{
           $scope.netquantity = 0
           alert("Sorry")
           }
-          })
+          })//stduomfetch
+        })//itemquantityfetch
       }//itemdetailsfetchfun
     }//Stock Transfer
   
