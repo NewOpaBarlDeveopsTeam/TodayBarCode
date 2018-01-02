@@ -3682,7 +3682,7 @@ app.get('/skuitemnamefetch:purchaserate',function(req,res)
        var fromstockid = str_array[1];
        fromstockid = parseInt(fromstockid)
        console.log(fromstockid+"fromstockidfromstockid");
-       db.stockBookDetail.find({$and:[{"ItemCode":itemstockcode},{"stockInWord":"Yes"},{"StockPointId":fromstockid}]},function(err,doc1){
+       db.stockBookDetail.find({$and:[{"ItemCode":itemstockcode},{"StockPointId":fromstockid}]},function(err,doc1){
          console.log(doc1[0]); 
          res.json(doc1);
       })   
@@ -3940,13 +3940,18 @@ app.put('/purchasetranupdate:purchasetranupdate',function(req,res){
     itemcode = parseInt(itemcode);
     console.log(itemcode);
     var vouchertype= str_array[28];
-    console.log(vouchertype);
+    console.log(vouchertype+"vouchertype");
     var finalentryrow= str_array[29];
     finalentryrow = parseInt(finalentryrow);
-    console.log(finalentryrow);
+    console.log(finalentryrow+"finalentryrow");
     var finalstockbookid= str_array[30];
     finalstockbookid = parseInt(finalstockbookid);
-    console.log(finalstockbookid);
+    console.log(finalstockbookid+"finalstockbookid");
+    var tostockpointid= str_array[31];
+    tostockpointid = parseInt(tostockpointid);
+    console.log(tostockpointid+"tostockpointid");
+    var tostockinword= str_array[32];
+    console.log(tostockinword+"tostockinword");
   
 
     db.stockBookDetail.insert({"VocherId" : voucherid,"ItemId":itemid,"ItemCode":itemcode,"ParentStock":parentstock,"stockInWord":stockinward,"AccN0":accno,"PosID":posid,"StockBookId":finalstockbookid,"EntryRowNo":finalentryrow,"VocherDate":voucherdate,"NetQty":umosize,"NetPieces":netpieces,"PurchaseRate":purchaserate,"SaleRate":salerate,"TaxableValue":taxablevalue,"CGST":cgst,"SGST":sgst,"TotTaxAmt":finaltax,"Rate":finalrate,"ChargeableUnits":netpieces,"AllIncluValue":allincluvalue,"UOMSizeMasterId":uomsizemasterid,"ReferenceNo":referenceno,"StockPointId":stockpointid,"UOMId":uomid,"InvGroupName":invgroupname,"VoucherType":vouchertype},function(err,doc){
@@ -3961,6 +3966,24 @@ app.put('/purchasetranupdate:purchasetranupdate',function(req,res){
        
       })
       })
+   if(vouchertype == "Stock Transfer")
+     {
+       //stockinward="Yes";
+       
+       console.log(vouchertype+"vouchertypevouchertypevouchertype");
+       db.stockBookDetail.insert({"VocherId" : voucherid,"ItemId":itemid,"ItemCode":itemcode,"ParentStock":parentstock,"stockInWord":tostockinword,"AccN0":accno,"PosID":posid,"StockBookId":finalstockbookid,"EntryRowNo":finalentryrow,"VocherDate":voucherdate,"NetQty":umosize,"NetPieces":netpieces,"PurchaseRate":purchaserate,"SaleRate":salerate,"TaxableValue":taxablevalue,"CGST":cgst,"SGST":sgst,"TotTaxAmt":finaltax,"Rate":finalrate,"ChargeableUnits":netpieces,"AllIncluValue":allincluvalue,"UOMSizeMasterId":uomsizemasterid,"ReferenceNo":referenceno,"StockPointId":tostockpointid,"UOMId":uomid,"InvGroupName":invgroupname,"VoucherType":vouchertype},function(err,doc){
+//       res.json(doc)
+//     console.log(doc.VocherId+"voucherrrrrrrr")
+//     console.log(typeof(doc.VocherId)+"doc.VocherIddoc.VocherId")
+//     var newvoucher = parseInt(doc.VocherId);
+//     console.log(typeof(newvoucher)+"doc.VocherIddoc.VocherId")
+     
+//     var voucher1 = newvoucher+1;
+//     db.invoiceDetails.update({"POSName":posname},{$set:{"invoiceNumber":voucher1}}, function(err,res){
+//       
+//      })
+      })
+     }
  })
 
 app.post('/stockbookheadresave:headresave',function(req,res){

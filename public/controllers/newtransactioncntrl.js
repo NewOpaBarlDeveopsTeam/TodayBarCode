@@ -12,7 +12,7 @@ function($scope,$http,$window,$filter){
              console.log($scope.date)
   $scope.transaction;
   $scope.all = true;
-  $scope.qty = "Qty:";
+//  $scope.qty = "Qty:";
   $scope.date2 = {date1:new Date()}
    
   $http.get('/transactionfetch').success(function(result){
@@ -68,7 +68,8 @@ function($scope,$http,$window,$filter){
       alert($scope.pieceNo);
       alert($scope.finalrate);
       for(x = 0;x<response.length;x++){
-      if($scope.umosize ==response[x].UOM ){
+      if($scope.umosize ==response[x].UOM )
+      {
        console.log(response[x].UOMID)  
         $scope.uomid = response[x].UOMID
         console.log($scope.uomid)
@@ -90,7 +91,8 @@ function($scope,$http,$window,$filter){
        if($scope.stockid == response[m].StockPointName){
         console.log(response[m].StockPointID)
         $scope.fromstockidfound = response[m].StockPointID;
-         console.log($scope.fromstockidfound)
+        console.log($scope.fromstockidfound)
+         $scope.stockidfound = $scope.fromstockidfound;
         }
        }
      }
@@ -364,10 +366,20 @@ $scope.transactioncall = function (transactiontype)
   if( transactiontype == "Stock Transfer")
     {
       alert("Hai Iam Stock Transfer");
-      $scope.bottleqty = 0;
-      $scope.caseqty = 0;
+      $scope.bottleqty=0;
+      $scope.caseqty=0;
+      $scope.partyidfound=0;
+      $scope.sectionid=0;
+      $scope.SaleRate=0;
+      $scope.purchaserate=0;
+      $scope.referenceno=0;
+      $scope.stockinward = "No";
+      $scope.tostockinward="Yes";
+      //$scope.finalrate=0;
       $scope.itemdetailsfetchfun = function(itemcode)
       {
+        $scope.qty = "Qty:";
+        $scope.finalrate=0;
       alert(itemcode)
         var itemnwenew = parseInt(itemcode);
         console.log(typeof(itemnwenew));
@@ -395,9 +407,10 @@ $scope.transactioncall = function (transactiontype)
           })
           })
          var itemnewstockid = itemnwenew+","+$scope.fromstockidfound;
+        console.log(itemnewstockid)
     $http.get("/itemquantityfetch"+itemnewstockid).success(function(result1){
-         console.log(result1)
-         console.log(result1[0].UOMSizeMasterId);
+            console.log(result1)
+           console.log(result1[0].UOMSizeMasterId);
            $scope.uomsizemasterid =result1[0].UOMSizeMasterId 
       $http.get('/stduomfetch'+$scope.uomsizemasterid).success(function(res1){
             console.log(res1[0])
@@ -424,10 +437,11 @@ $scope.transactioncall = function (transactiontype)
               else if(result1[t].UOMId == $scope.packuoimid)
               {
                alert("packuomid")
+               console.log(result1[t].NetPieces)
                console.log($scope.packqty)
                console.log(result1[t].NetPieces*$scope.packqty);
                $scope.caseqty +=result1[t].NetPieces*$scope.packqty;
-                console.log($scope.caseqty)
+               console.log($scope.caseqty)
                }
         }
              $scope.ratecalc=function(umosize)
@@ -436,11 +450,16 @@ $scope.transactioncall = function (transactiontype)
                if(umosize == "Bottle")
                  {
                    alert("bottle")
-                  $scope.newnetquantity = $scope.netquantity;
+                   $scope.newnetquantity = $scope.netquantity;
+                   $scope.uomid=2;
+                   alert($scope.uomid)
+                   
                  }
                else if(umosize == "Case" && $scope.netquantity > $scope.packqty)
                  {
                    $scope.newnetquantity = $scope.netquantity/$scope.packqty;
+                   $scope.uomid=3;
+                   alert($scope.uomid)
                  }
                else{
                  alert("Quantity is less than a case")
@@ -707,6 +726,11 @@ $scope.itemtaxfun= function()
     $scope.netquantity=null;
     $scope.skuitemname=null;
     $scope.uomsize=null;
+    $scope.qty=null;
+    $scope.newnetquantity=null;
+    $scope.netquantity=null;
+    $scope.bottleqty=null;
+    $scope.caseqty=null;
   }
   
   $http.get("/findcount").success(function(res){
@@ -789,10 +813,11 @@ $scope.itemtaxfun= function()
           })
           
         }//if
-       else{
+       else
+       {
              $scope.stockbookid++;
              $scope.newentryrowno++;
-             purchasetran=purchasetran+","+$scope.newentryrowno+","+$scope.stockbookid;
+             purchasetran=purchasetran+","+$scope.newentryrowno+","+$scope.stockbookid+","+$scope.tostockidfound+","+$scope.tostockinward;
              alert("item not exist");
           $http.post('/purchasepost'+purchasetran).success(function(response){
              console.log(response);

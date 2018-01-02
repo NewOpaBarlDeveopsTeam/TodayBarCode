@@ -168,7 +168,7 @@
                   <option ng-repeat="item in itemdetails" ng-model="itemcode">{{item.ItemCode}}</option>
                  </select>
                  </datalist>
-             <span style="font-size: 20px;color: blue">{{skuitemname}}&nbsp;{{uomsize}}&nbsp;{{qty}}{{newnetquantity}}</span>
+             <span style="font-size: 20px;color: blue">{{skuitemname}}&nbsp;{{uomsize}}&nbsp;{{qty}}{{newnetquantity | number : 3}}</span>
              </div> 
           
             <div class = "col-sm-3 padding-0">
