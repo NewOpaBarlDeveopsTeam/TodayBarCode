@@ -267,9 +267,15 @@ $scope.transactioncall = function (transactiontype)
              $scope.stockinward = "No";
              $scope.purchaserate=0;
              $scope.partyidfound=0;
-             $scope.referenceno=0
+             $scope.referenceno=0;
+             $scope.yesbottleqty=0;
+             $scope.yescaseqty=0;
+             $scope.nobottleqty=0;
+             $scope.nocaseqty=0;
+//             $scope.qty = "Qty:";
              $scope.itemdetailsfetchfun = function(itemcode)
              {
+             $scope.qty = "Qty:";
              $scope.pieceNo = 1;
              console.log($scope.pieces);
              console.log($scope.itemcode);
@@ -322,9 +328,9 @@ $scope.transactioncall = function (transactiontype)
              console.log(result[0].ItemSKUID)
              var skuidfind = result[0].ItemSKUID;
              console.log(skuidfind)
-             $http.get("/purchaseratefetch"+skuidfind).success(function(res1){
+             $http.get("/saleratefetch"+skuidfind).success(function(res1){
              console.log(res1)
-             console.log(res1[0].PurchaseRate)
+             //console.log(res1[0].PurchaseRate)
              $scope.getsection=function(sectionnames)
              {  
                 console.log($scope.sectionnames)
@@ -343,22 +349,121 @@ $scope.transactioncall = function (transactiontype)
               }//getsection
             })//purchaseratefetch      
           }//if
-        })//skuitemnamefetch   
-      $http.get("/itemquantityfetch"+itemnew).success(function(result1){
-      console.log(result1)
-      if(result1 != 0)
-      {
-      for(t=0;t<result1.length;t++)
-        {
-              console.log(result1[t].NetPieces)
-              $scope.netquantity += result1[t].NetPieces;
-        }
+        })//skuitemnamefetch 
+        var itemnewstockid = itemnew+","+$scope.fromstockidfound;
+        console.log(itemnewstockid)
+    $http.get("/itemquantityfetch"+itemnewstockid).success(function(result1){
+           console.log(result1)
+           //console.log(result1[0].stockInWord)
+           console.log(result1[0].UOMSizeMasterId);
+           $scope.uomsizemasterid =result1[0].UOMSizeMasterId;
+           $scope.stockinword = result1[0].stockInWord;
+           //console.log($scope.stockinword)
+      $http.get('/stduomfetch'+$scope.uomsizemasterid).success(function(res1){
+            console.log(res1[0])
+            $scope.packuoimid =res1[0].PackUMOID;
+            console.log($scope.packuoimid);
+            $scope.stduomid = res1[0].StdUOMID;
+            console.log($scope.stduomid);
+            $scope.packqty = res1[0].PackQty;
+            console.log($scope.packqty)
+            console.log(typeof(result1[0].UOMId))
+            //$scope.stduomid = result1[0].UOMSizeMasterId;
+           if(result1 != 0)
+           {
+            $scope.totqlquantity = function()
+             {
+            for(var t=0;t<result1.length;t++)
+             {
+               var yes = "Yes";
+               var No = "No"
+               if(result1[t].stockInWord == yes)
+               {
+               alert("yess")
+               
+              console.log(result1[t].UOMId);
+              if(result1[t].UOMId == $scope.stduomid)
+                {
+                  alert("stduomid")
+                  console.log(result1[t].NetPieces)
+                  $scope.yesbottleqty +=result1[t].NetPieces;
+                  console.log($scope.yesbottleqty)
+                }
+              else if(result1[t].UOMId == $scope.packuoimid)
+              {
+               alert("packuomid")
+               console.log(result1[t].NetPieces)
+               console.log($scope.packqty)
+               console.log(result1[t].NetPieces*$scope.packqty);
+               $scope.yescaseqty +=result1[t].NetPieces*$scope.packqty;
+               console.log($scope.yescaseqty)
+               }
+                 $scope.yesnetquantity = $scope.yesbottleqty+$scope.yescaseqty;
+                 console.log($scope.yesnetquantity)
+               }//yes
+               else if(result1[t].stockInWord == No)
+               {
+                 alert("Noo")
+                 console.log(result1[t].UOMId);
+              if(result1[t].UOMId == $scope.stduomid)
+                {
+                  alert("stduomid")
+                  console.log(result1[t].NetPieces)
+                  $scope.nobottleqty +=result1[t].NetPieces;
+                  console.log($scope.nobottleqty)
+                }
+              else if(result1[t].UOMId == $scope.packuoimid)
+              {
+               alert("packuomid")
+               console.log(result1[t].NetPieces)
+               console.log($scope.packqty)
+               console.log(result1[t].NetPieces*$scope.packqty);
+               $scope.nocaseqty +=result1[t].NetPieces*$scope.packqty;
+               console.log($scope.nocaseqty)
+               }
+                 $scope.nonetquantity=$scope.nobottleqty+$scope.nocaseqty;
+                 console.log($scope.nonetquantity);
+               }//no
+            }//for
+            $scope.newnetquantity=$scope.yesnetquantity-$scope.nonetquantity;
+          }//totqlquantity
+            $scope.totqlquantity();
+//             $scope.netquantity=$scope.yesnetquantity-$scope.nonetquantity;
+//             $scope.ratecalc=function(umosize)
+//             {
+//               $scope.netquantity=$scope.yesnetquantity-$scope.nonetquantity;
+//               if(umosize == "Bottle" && $scope.netquantity >0)
+//                 {
+//                   alert("bottle")
+//                   $scope.newnetquantity = $scope.netquantity;
+//                   $scope.uomid=2;
+//                   alert($scope.uomid)
+//                   
+//                 }
+//               else if (umosize == "Bottle")
+//                 {
+//                   alert("Quantity is Zero")
+//                    $scope.newnetquantity = 0;
+//                 }
+//               if(umosize == "Case" && $scope.netquantity > $scope.packqty)
+//                 {
+//                   $scope.newnetquantity = $scope.netquantity/$scope.packqty;
+//                   $scope.uomid=3;
+//                   alert($scope.uomid)
+//                 }
+//               else if(umosize == "Case")
+//               {
+//                 alert("Quantity is less than a case")
+//                  $scope.newnetquantity = 0;
+//               }
+//             }
       }//if
       else{
           $scope.netquantity = 0
           alert("Sorry")
           }
-          })//itemquantityfetch
+          })//stduomfetch
+        })//itemquantityfetch
                
       }//end of itemdetailsfetch  
     }//end of sale
@@ -366,13 +471,17 @@ $scope.transactioncall = function (transactiontype)
   if( transactiontype == "Stock Transfer")
     {
       alert("Hai Iam Stock Transfer");
-      $scope.bottleqty=0;
-      $scope.caseqty=0;
+      $scope.yesbottleqty=0;
+      $scope.yescaseqty=0;
+      $scope.nobottleqty=0;
+      $scope.nocaseqty=0;
       $scope.partyidfound=0;
       $scope.sectionid=0;
       $scope.SaleRate=0;
       $scope.purchaserate=0;
       $scope.referenceno=0;
+      $scope.yesnetquantity=0;
+      $scope.nonetquantity=0;
       $scope.stockinward = "No";
       $scope.tostockinward="Yes";
       //$scope.finalrate=0;
@@ -409,9 +518,12 @@ $scope.transactioncall = function (transactiontype)
          var itemnewstockid = itemnwenew+","+$scope.fromstockidfound;
         console.log(itemnewstockid)
     $http.get("/itemquantityfetch"+itemnewstockid).success(function(result1){
-            console.log(result1)
+           console.log(result1)
+           //console.log(result1[0].stockInWord)
            console.log(result1[0].UOMSizeMasterId);
-           $scope.uomsizemasterid =result1[0].UOMSizeMasterId 
+           $scope.uomsizemasterid =result1[0].UOMSizeMasterId;
+           $scope.stockinword = result1[0].stockInWord;
+           //console.log($scope.stockinword)
       $http.get('/stduomfetch'+$scope.uomsizemasterid).success(function(res1){
             console.log(res1[0])
             $scope.packuoimid =res1[0].PackUMOID;
@@ -424,15 +536,23 @@ $scope.transactioncall = function (transactiontype)
             //$scope.stduomid = result1[0].UOMSizeMasterId;
            if(result1 != 0)
            {
+            $scope.totqlquantity = function()
+             {
             for(var t=0;t<result1.length;t++)
              {
+               var yes = "Yes";
+               var No = "No"
+               if(result1[t].stockInWord == yes)
+               {
+               alert("yess")
+               
               console.log(result1[t].UOMId);
               if(result1[t].UOMId == $scope.stduomid)
                 {
                   alert("stduomid")
                   console.log(result1[t].NetPieces)
-                  $scope.bottleqty +=result1[t].NetPieces;
-                  console.log($scope.bottleqty)
+                  $scope.yesbottleqty +=result1[t].NetPieces;
+                  console.log($scope.yesbottleqty)
                 }
               else if(result1[t].UOMId == $scope.packuoimid)
               {
@@ -440,14 +560,42 @@ $scope.transactioncall = function (transactiontype)
                console.log(result1[t].NetPieces)
                console.log($scope.packqty)
                console.log(result1[t].NetPieces*$scope.packqty);
-               $scope.caseqty +=result1[t].NetPieces*$scope.packqty;
-               console.log($scope.caseqty)
+               $scope.yescaseqty +=result1[t].NetPieces*$scope.packqty;
+               console.log($scope.yescaseqty)
                }
-        }
+                 $scope.yesnetquantity = $scope.yesbottleqty+$scope.yescaseqty;
+                 console.log($scope.yesnetquantity)
+               }//yes
+               else if(result1[t].stockInWord == No)
+               {
+                 alert("Noo")
+                 console.log(result1[t].UOMId);
+              if(result1[t].UOMId == $scope.stduomid)
+                {
+                  alert("stduomid")
+                  console.log(result1[t].NetPieces)
+                  $scope.nobottleqty +=result1[t].NetPieces;
+                  console.log($scope.nobottleqty)
+                }
+              else if(result1[t].UOMId == $scope.packuoimid)
+              {
+               alert("packuomid")
+               console.log(result1[t].NetPieces)
+               console.log($scope.packqty)
+               console.log(result1[t].NetPieces*$scope.packqty);
+               $scope.nocaseqty +=result1[t].NetPieces*$scope.packqty;
+               console.log($scope.nocaseqty)
+               }
+                 $scope.nonetquantity=$scope.nobottleqty+$scope.nocaseqty;
+                 console.log($scope.nonetquantity);
+               }//no
+            }//for
+          }//totqlquantity
+            $scope.totqlquantity();
              $scope.ratecalc=function(umosize)
              {
-               $scope.netquantity= $scope.bottleqty+$scope.caseqty;
-               if(umosize == "Bottle")
+               $scope.netquantity=$scope.yesnetquantity-$scope.nonetquantity;
+               if(umosize == "Bottle" && $scope.netquantity >0)
                  {
                    alert("bottle")
                    $scope.newnetquantity = $scope.netquantity;
@@ -455,13 +603,19 @@ $scope.transactioncall = function (transactiontype)
                    alert($scope.uomid)
                    
                  }
-               else if(umosize == "Case" && $scope.netquantity > $scope.packqty)
+               else if (umosize == "Bottle")
+                 {
+                   alert("Quantity is Zero")
+                    $scope.newnetquantity = 0;
+                 }
+               if(umosize == "Case" && $scope.netquantity > $scope.packqty)
                  {
                    $scope.newnetquantity = $scope.netquantity/$scope.packqty;
                    $scope.uomid=3;
                    alert($scope.uomid)
                  }
-               else{
+               else if(umosize == "Case")
+               {
                  alert("Quantity is less than a case")
                   $scope.newnetquantity = 0;
                }

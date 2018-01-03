@@ -3649,6 +3649,17 @@ app.get('/skuitemnamefetch:purchaserate',function(req,res)
         }
       })   
     })
+
+app.get('/saleratefetch:saleskuid',function(req,res){
+  var saleskuid = parseInt(req.params.saleskuid);
+  console.log(typeof(saleskuid+"saleskuidsaleskuidsaleskuid"))
+  db.ItemSKURate.find({"ItemSKUID":saleskuid},function(err,doc){
+    
+      res.json(doc)
+  })
+})
+
+
     
     app.get('/getuommid:getuommvalue',function(req,res){
       var newuomvalue = req.params.getuommvalue;
@@ -3968,7 +3979,8 @@ app.put('/purchasetranupdate:purchasetranupdate',function(req,res){
       })
    if(vouchertype == "Stock Transfer")
      {
-       //stockinward="Yes";
+       finalentryrow++;
+       finalstockbookid++;
        
        console.log(vouchertype+"vouchertypevouchertypevouchertype");
        db.stockBookDetail.insert({"VocherId" : voucherid,"ItemId":itemid,"ItemCode":itemcode,"ParentStock":parentstock,"stockInWord":tostockinword,"AccN0":accno,"PosID":posid,"StockBookId":finalstockbookid,"EntryRowNo":finalentryrow,"VocherDate":voucherdate,"NetQty":umosize,"NetPieces":netpieces,"PurchaseRate":purchaserate,"SaleRate":salerate,"TaxableValue":taxablevalue,"CGST":cgst,"SGST":sgst,"TotTaxAmt":finaltax,"Rate":finalrate,"ChargeableUnits":netpieces,"AllIncluValue":allincluvalue,"UOMSizeMasterId":uomsizemasterid,"ReferenceNo":referenceno,"StockPointId":tostockpointid,"UOMId":uomid,"InvGroupName":invgroupname,"VoucherType":vouchertype},function(err,doc){
