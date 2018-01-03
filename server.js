@@ -15,10 +15,20 @@ var db=mongojs('restaurant',['images','feedbackmaster','orderfeedback','item','m
   'transactionSeriesInvoice','itemrate','item','menu','order','useritem','purity','uom','pct','labcal','useradj',
   'barcodesumm','stockpointmaster','configurations','inventorygroupmaster','salescategorymaster','itemtype','taxrate',
   'itemdata','tax','taxation','session','restaurantid','ChargesMaster','chargename','configurationmaster']);
+
 var bodyParser=require('body-parser');
 var fs = require('fs');
 var mongoose = require('mongoose');
 var Schema = mongoose.Schema;
+
+
+app.use(function (req, res, next) {
+    res.header("Access-Control-Allow-Origin", "*");
+    res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type,Accept");
+    res.header("Access-Control-Allow-Methods", "GET, POST, OPTIONS, PUT, DELETE");
+    next();
+});
+
 
 
 app.use(express.static('public'));
@@ -4215,6 +4225,120 @@ app.post('/saleheader:salereturn',function(req,res){
 
  })
 
-     
-app.listen(7000);
-console.log("server running on port 7000");
+////////////////////////////////////ABHISHEK/////////////////////////////////////////
+
+
+// app.get('/date', function (req, res) {
+
+//     console.log("this is '/abhi' path");
+
+//     db.stockBookDetail.find({'VocherD}, function (err, docs) {
+
+//         res.json(docs);
+//          console.log(docs);
+//     });
+
+// });
+
+app.get('/abhi', function (req, res) {
+
+    console.log("this is '/abhi' path");
+
+    db.StockPointMaster.find({"POSName" : "Bar"}, function (err, docs) {
+
+        res.json(docs);
+         console.log(docs);
+    });
+
+});
+
+
+app.get('/withincheck:arr', function (req, res) {
+
+    console.log("\n this is '/withincheck:at' path" + "\n");
+
+    var lll = req.params.arr;
+    console.log(typeof (lll));
+    console.log(lll);
+
+    var str=lll.split(",");
+
+    console.log(str)
+
+     var stockpointid=str[0];
+      stockpointid=parseInt(stockpointid)
+     console.log(stockpointid);
+
+     var date1=str[1];
+     console.log(date1);
+
+    // var jk = parseInt(str1);
+    // console.log(jk);
+
+    db.stockBookDetail.find({
+        'StockPointId':stockpointid,'VocherDate':date1
+    }, function (err, docs) {
+        //console.log(docs);
+        res.json(docs);
+        console.log(docs);
+    });
+});
+
+var str=[];
+// var sec=[];
+app.post('/tr:cat',function(req,res)
+{
+
+    console.log("this is '/tr:cat'");
+    var com12=req.params.cat;
+    console.log(com12);
+
+     var  sec=com12.split(',');
+
+    for(var m=0;m<sec.length;m++)
+    {
+       str[m]=sec[m];
+    }
+
+db.abhishek.insert({"VoucherId" :str[0] ,"VoucherClass":str[1],"VoucherType":str[2],"VoucherTime":str[3]},function(err,doc){
+    res.json(doc)
+
+    console.log(doc)
+ })
+ })
+
+
+app.get('/abhishek',function(req,res)
+{
+   console.log("this is "+req.path);
+
+
+   db.abhishek.find(function(err,docs)
+   {
+     res.json(docs);
+     console.log(docs);
+   })
+
+})
+
+app.post('/abhishek/pdata:a',function(req,res)
+{
+    console.log("this is   "+req.path);
+    
+
+    console.log(req.params.a);
+
+db.abhishek.insert({"VoucherId":req.params.a},function(err,docs)
+{
+    console.log(docs);
+    res.json(docs);
+    
+})
+
+
+})
+
+   
+var port=7000;  
+app.listen(port);
+console.log("server running on  "+port);

@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no, width=device-width">
+    <!--    <title></title>-->
+
+    <link rel="manifest" href="manifest.json">
+    <link href="lib/ionic/css/ionic.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    <script src="lib/ionic/js/ionic.bundle.js"></script>
+    <script src="cordova.js"></script>
+    <script src="lib/ion-datetime-picker/release/ion-datetime-picker.min.js"></script>
+    <link href="lib/ion-datetime-picker/release/ion-datetime-picker.min.css" rel="stylesheet">
+    <script src="js/app.js"></script>
+    <script src="js/myCtrl.js"></script>
+
+    <!-- <script src="controllers/myCtrl.js"></script> -->
+</head>
+
+<body ng-app="starter" ng-controller="myctrl" ng-cloak>
+
+    <title>Mobile_StockClosureTransactionUI</title>
+
+    <ion-pane>
+        <ion-header-bar class="bar-stable">
+            <h1 class="title" ><b><center>Enter Closing Stock</center>  </b></h1>
+        </ion-header-bar>
+        <ion-content>
+            
+
+<div id="id12" class="row">
+
+    <div id='id34' class="col-md-6">
+      <label id='date'>For:</label><input type='date' ng-model='date2.date1' style="margin-top: -30px">        
+        </div>
+                <div id="stockpointid">
+                    <label id="labelid1"> stock point: </label>
+                    <select ng-model='res147'>
+                        <option ng-repeat='stockname in stockpointname'>{{stockname.StockPointID}}</option>
+                        </select>
+
+                </div>
+            </div> 
+            
+            
+            <div class="row">
+                <div id="divedit"> <button id="viewbutton" style="margin-left:50px;width:10px" ion-button class="col button button-royal" ng-click="check(res147,date2.date1)">View</div>
+       </div>
+                    
+     
+      <div  id="panelid" class="panel panel-default">
+      
+     <table id="theadid" class="table table-fixed table table-bordered">
+      
+          <thead id="theadid1">
+               
+            <tr id="trid">
+<!--
+              <th><strong>VocherId</strong></th>
+              <th><strong>ItemId</strong></th>
+              <th><strong>ItemCode</strong></th>
+              <th><strong>VocherDate</strong></th>
+              <th><strong>PosID</strong></th>
+               <th><strong>SaleRate</strong></th>
+              <th><strong>NetPieces</strong></th>
+              <th><strong>Value</strong></th>
+              <th><strong>UOMSizeMasterId</strong></th>
+              <th><strong>UOMId</strong></th>
+              <th><strong>StockPointId</strong></th> 
+              <th><strong>stockInWord</strong></th>
+              <th><strong>AccN0</strong></th>
+-->
+                <th><strong>No</strong></th>
+              <th><strong>Itemid</strong></th>
+              <th><strong>NetQty</strong></th>
+<!--              <th><strong>Open</strong></th>-->
+              <th><strong>Pur</strong></th>
+               <th><strong>Trans</strong></th>
+              <th><strong>Issues</strong></th>
+              <th><strong>Book Qty</strong></th>
+              <th><strong>Physical Qty</strong></th>
+              <th><strong>Diff Qty</strong></th>
+              <th><strong>Sales</strong></th> 
+
+            </tr>
+              
+             <tr >
+             <td >{{$index+1}}</td>
+              <td><b>{{itemid}}</b></td>
+              <td><b>{{netquantity}}</b></td>
+<!--              <td><b>{{x.VocherDate}}</b></td>-->
+              <td><b>{{totalpieces}}</b></td>
+<!--
+              <td><b>{{x.SaleRate}}</b></td>
+              <td><b>{{x.NetPieces}}</b></td>
+              <td><b>{{x.Value}}</b></td>
+              <td><b>{{x.UOMSizeMasterId}}</b></td>
+              <td><b>{{x.UOMId}}</b></td>
+-->
+<!--              <td><b>{{x.StockPointId}}</b></td>-->
+<!--
+              <td><b>{{x.stockInWord}}</b></td>
+              <td><b>{{x.AccN0}}</b></td>
+-->
+                 
+                 
+            </tr>
+</thead>
+</table>
+          
+        
+      </div>
+</ion-content>
+    </ion-pane>
+
+  </body>
+</html>
