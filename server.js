@@ -3973,9 +3973,18 @@ app.put('/purchasetranupdate:purchasetranupdate',function(req,res){
     console.log(tostockpointid+"tostockpointid");
     var tostockinword= str_array[32];
     console.log(tostockinword+"tostockinword");
+    var base= str_array[33];
+    base =parseInt(base)
+    console.log(base+"base");
+    var standard= str_array[34];
+    standard =parseInt(standard)
+    console.log(tostockinword+"standard");
+    var pack = str_array[35];
+    pack =parseFloat(pack)
+    console.log(tostockinword+"pack");
   
 
-    db.stockBookDetail.insert({"VocherId" : voucherid,"ItemId":itemid,"ItemCode":itemcode,"ParentStock":parentstock,"stockInWord":stockinward,"AccN0":accno,"PosID":posid,"StockBookId":finalstockbookid,"EntryRowNo":finalentryrow,"VocherDate":voucherdate,"NetQty":umosize,"NetPieces":netpieces,"PurchaseRate":purchaserate,"SaleRate":salerate,"TaxableValue":taxablevalue,"CGST":cgst,"SGST":sgst,"TotTaxAmt":finaltax,"Rate":finalrate,"ChargeableUnits":netpieces,"AllIncluValue":allincluvalue,"UOMSizeMasterId":uomsizemasterid,"ReferenceNo":referenceno,"StockPointId":stockpointid,"UOMId":uomid,"InvGroupName":invgroupname,"VoucherType":vouchertype},function(err,doc){
+    db.stockBookDetail.insert({"VocherId" : voucherid,"ItemId":itemid,"ItemCode":itemcode,"ParentStock":parentstock,"stockInWord":stockinward,"AccN0":accno,"PosID":posid,"StockBookId":finalstockbookid,"EntryRowNo":finalentryrow,"VocherDate":voucherdate,"NetQty":umosize,"NetPieces":netpieces,"PurchaseRate":purchaserate,"SaleRate":salerate,"TaxableValue":taxablevalue,"CGST":cgst,"SGST":sgst,"TotTaxAmt":finaltax,"Rate":finalrate,"ChargeableUnits":netpieces,"AllIncluValue":allincluvalue,"UOMSizeMasterId":uomsizemasterid,"ReferenceNo":referenceno,"StockPointId":stockpointid,"UOMId":uomid,"InvGroupName":invgroupname,"VoucherType":vouchertype,"NetBase":base,"NetStandard":standard,"NetPackage":pack},function(err,doc){
     res.json(doc)
      console.log(doc.VocherId+"voucherrrrrrrr")
      console.log(typeof(doc.VocherId)+"doc.VocherIddoc.VocherId")
@@ -3993,7 +4002,7 @@ app.put('/purchasetranupdate:purchasetranupdate',function(req,res){
        finalstockbookid++;
        
        console.log(vouchertype+"vouchertypevouchertypevouchertype");
-       db.stockBookDetail.insert({"VocherId" : voucherid,"ItemId":itemid,"ItemCode":itemcode,"ParentStock":parentstock,"stockInWord":tostockinword,"AccN0":accno,"PosID":posid,"StockBookId":finalstockbookid,"EntryRowNo":finalentryrow,"VocherDate":voucherdate,"NetQty":umosize,"NetPieces":netpieces,"PurchaseRate":purchaserate,"SaleRate":salerate,"TaxableValue":taxablevalue,"CGST":cgst,"SGST":sgst,"TotTaxAmt":finaltax,"Rate":finalrate,"ChargeableUnits":netpieces,"AllIncluValue":allincluvalue,"UOMSizeMasterId":uomsizemasterid,"ReferenceNo":referenceno,"StockPointId":tostockpointid,"UOMId":uomid,"InvGroupName":invgroupname,"VoucherType":vouchertype},function(err,doc){
+       db.stockBookDetail.insert({"VocherId" : voucherid,"ItemId":itemid,"ItemCode":itemcode,"ParentStock":parentstock,"stockInWord":tostockinword,"AccN0":accno,"PosID":posid,"StockBookId":finalstockbookid,"EntryRowNo":finalentryrow,"VocherDate":voucherdate,"NetQty":umosize,"NetPieces":netpieces,"PurchaseRate":purchaserate,"SaleRate":salerate,"TaxableValue":taxablevalue,"CGST":cgst,"SGST":sgst,"TotTaxAmt":finaltax,"Rate":finalrate,"ChargeableUnits":netpieces,"AllIncluValue":allincluvalue,"UOMSizeMasterId":uomsizemasterid,"ReferenceNo":referenceno,"StockPointId":tostockpointid,"UOMId":uomid,"InvGroupName":invgroupname,"VoucherType":vouchertype,"NetBase":base,"NetStandard":standard,"NetPackage":pack},function(err,doc){
 //       res.json(doc)
 //     console.log(doc.VocherId+"voucherrrrrrrr")
 //     console.log(typeof(doc.VocherId)+"doc.VocherIddoc.VocherId")

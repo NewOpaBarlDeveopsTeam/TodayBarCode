@@ -65,8 +65,8 @@ function($scope,$http,$window,$filter){
       alert(umosize)
       $scope.umosize  =umosize;
       $scope.pieceNo;
-      alert($scope.pieceNo);
-      alert($scope.finalrate);
+//      alert($scope.pieceNo);
+//      alert($scope.finalrate);
       for(x = 0;x<response.length;x++){
       if($scope.umosize ==response[x].UOM )
       {
@@ -188,12 +188,8 @@ $scope.transactioncall = function (transactiontype)
             console.log(newpurchaseratefind)
           $http.get("/purchaseratefetch"+newpurchaseratefind).success(function(res){
             console.log(res);
-<<<<<<< HEAD
             if(res.length!=0)
-            {
-            console.log(res[0].UOMId)
-            if(res[0].UOMId == 2)
-=======
+              {
             $scope.uomsizemasteridp=res[0].UOMSizeMasterId;
     $http.get('/stduomfetch'+$scope.uomsizemasteridp).success(function(res9){
        console.log(res9)
@@ -201,7 +197,6 @@ $scope.transactioncall = function (transactiontype)
               {
               console.log(res[0].UOMId)
               if(res[0].UOMId == 2)
->>>>>>> origin
               {
                 alert("bottle")
                 console.log(res[0].PurchaseRate)
@@ -218,11 +213,11 @@ $scope.transactioncall = function (transactiontype)
              alert(umosize)
              $scope.umosize =umosize;
              console.log($scope.umosize)
-//              console.log(res9[0].BaseQty);
-//              console.log(res9[0].PackQty)
-              //console.log(res9[0].BaseQty)
               var Case = "Case";
               var Bottle = "Bottle";
+              $scope.baseqty = res9[0].BaseQty;
+              $scope.packqty = res9[0].PackQty;
+              $scope.stdqty = res9[0].StdQty;
             $http.get('/getuommid'+$scope.umosize).success(function(response){
               console.log(response);
               console.log(response[0].UOMID)
@@ -231,37 +226,49 @@ $scope.transactioncall = function (transactiontype)
               console.log($scope.uomid);
               if(res[0].UOMId == response[0].UOMID){
                 $scope.finalrate = $scope.finalrate2;
-                console.log(res9[0].BaseQty);
-                console.log(res9[0].PackQty)
+                if(response[0].UOM == Case )
+                  {
+                    alert($scope.pieceNo)
+                    $scope.calcstd = ($scope.pieceNo*$scope.stdqty)*$scope.packqty;
+                  $scope.calcbase = $scope.calcstd*$scope.baseqty;
+                  $scope.calcpack = $scope.calcstd/$scope.packqty;
+                  }
+                else if(response[0].UOM ==Bottle )
+                  {
+                    alert($scope.pieceNo)
+                  $scope.calcstd = ($scope.pieceNo*$scope.stdqty)
+                  $scope.calcbase = $scope.calcstd*$scope.baseqty;
+                  $scope.calcpack = $scope.calcstd/$scope.packqty;   
+                  }
               }
               else if($scope.umosize == Case)
                 {
-                  //alert("case")
-                  console.log(res9[0].BaseQty);
-                  console.log(res9[0].PackQty)
+                  alert($scope.pieceNo)
                   $scope.finalrate = $scope.finalrate2*10;
+                  $scope.calcstd = ($scope.pieceNo*$scope.stdqty)*$scope.packqty;
+                  $scope.calcbase = $scope.calcstd*$scope.baseqty;
+                  $scope.calcpack = $scope.calcstd/$scope.packqty;
                 }
               else if($scope.umosize == Bottle)
                 {
-                  console.log(res9[0].BaseQty);
-              console.log(res9[0].PackQty)
+                  alert($scope.pieceNo)
                   $scope.finalrate = $scope.finalrate2/10;
+                  $scope.calcstd = ($scope.pieceNo*$scope.stdqty)
+                  $scope.calcbase = $scope.calcstd*$scope.baseqty;
+                  $scope.calcpack = $scope.calcstd/$scope.packqty; 
                 }
             })
-      
-  }//ratecalc
-}// end of if
-else 
-{
-  alert("Rate of this ItemCode not Defined")
-
-}
+          }//ratecalc
             //$scope.finalrate=res[0].PurchaseRate;
           }//if
             else{
               alert("Rate for this itemcode doesnot defined")
             }
       })//stduomfetch
+              }//res end of if
+            else {
+              alert("opening stock of this item not be Done!!!!")
+            }
             })//purchaseratefetch 
           }//if
             
@@ -495,10 +502,12 @@ else
   if( transactiontype == "Stock Transfer")
     {
       alert("Hai Iam Stock Transfer");
-      $scope.yesbottleqty=0;
-      $scope.yescaseqty=0;
-      $scope.nobottleqty=0;
-      $scope.nocaseqty=0;
+      $scope.yesnewNetpackage=0;
+      $scope.yesnewNetbase=0;
+      $scope.yesnewNetstandard=0;
+      $scope.nonewNetpackage=0;
+      $scope.nonewNetbase=0;
+      $scope.nonewNetstandard=0;
       $scope.partyidfound=0;
       $scope.sectionid=0;
       $scope.SaleRate=0;
@@ -513,7 +522,7 @@ else
       {
         $scope.qty = "Qty:";
         $scope.finalrate=0;
-      alert(itemcode)
+        alert(itemcode)
         var itemnwenew = parseInt(itemcode);
         console.log(typeof(itemnwenew));
         $http.get("/skuitemnamefetch"+itemnwenew).success(function(result){
@@ -542,87 +551,44 @@ else
          var itemnewstockid = itemnwenew+","+$scope.fromstockidfound;
         console.log(itemnewstockid)
     $http.get("/itemquantityfetch"+itemnewstockid).success(function(result1){
-           console.log(result1)
-           //console.log(result1[0].stockInWord)
+           console.log(result1);
+      if(result1 != 0)
+           {
            console.log(result1[0].UOMSizeMasterId);
            $scope.uomsizemasterid =result1[0].UOMSizeMasterId;
            $scope.stockinword = result1[0].stockInWord;
-           //console.log($scope.stockinword)
-      $http.get('/stduomfetch'+$scope.uomsizemasterid).success(function(res1){
-            console.log(res1[0])
-            $scope.packuoimid =res1[0].PackUMOID;
-            console.log($scope.packuoimid);
-            $scope.stduomid = res1[0].StdUOMID;
-            console.log($scope.stduomid);
-            $scope.packqty = res1[0].PackQty;
-            console.log($scope.packqty)
-            console.log(typeof(result1[0].UOMId))
-            //$scope.stduomid = result1[0].UOMSizeMasterId;
-           if(result1 != 0)
-           {
-            $scope.totqlquantity = function()
-             {
             for(var t=0;t<result1.length;t++)
              {
                var yes = "Yes";
                var No = "No"
                if(result1[t].stockInWord == yes)
                {
-               alert("yess")
-               
-              console.log(result1[t].UOMId);
-              if(result1[t].UOMId == $scope.stduomid)
-                {
-                  alert("stduomid")
-                  console.log(result1[t].NetPieces)
-                  $scope.yesbottleqty +=result1[t].NetPieces;
-                  console.log($scope.yesbottleqty)
-                }
-              else if(result1[t].UOMId == $scope.packuoimid)
-              {
-               alert("packuomid")
-               console.log(result1[t].NetPieces)
-               console.log($scope.packqty)
-               console.log(result1[t].NetPieces*$scope.packqty);
-               $scope.yescaseqty +=result1[t].NetPieces*$scope.packqty;
-               console.log($scope.yescaseqty)
-               }
-                 $scope.yesnetquantity = $scope.yesbottleqty+$scope.yescaseqty;
-                 console.log($scope.yesnetquantity)
+                 $scope.yesnewNetpackage+=result1[t].NetPackage;
+                 $scope.yesnewNetbase+=result1[t].NetBase;
+                 $scope.yesnewNetstandard+=result1[t].NetStandard;
+                 console.log($scope.yesnewNetpackage);
+                 console.log($scope.yesnewNetbase);
+                 console.log($scope.yesnewNetstandard);
                }//yes
                else if(result1[t].stockInWord == No)
                {
-                 alert("Noo")
-                 console.log(result1[t].UOMId);
-              if(result1[t].UOMId == $scope.stduomid)
-                {
-                  alert("stduomid")
-                  console.log(result1[t].NetPieces)
-                  $scope.nobottleqty +=result1[t].NetPieces;
-                  console.log($scope.nobottleqty)
-                }
-              else if(result1[t].UOMId == $scope.packuoimid)
-              {
-               alert("packuomid")
-               console.log(result1[t].NetPieces)
-               console.log($scope.packqty)
-               console.log(result1[t].NetPieces*$scope.packqty);
-               $scope.nocaseqty +=result1[t].NetPieces*$scope.packqty;
-               console.log($scope.nocaseqty)
-               }
-                 $scope.nonetquantity=$scope.nobottleqty+$scope.nocaseqty;
-                 console.log($scope.nonetquantity);
+                $scope.nonewNetpackage+=result1[t].NetPackage;
+                 $scope.nonewNetbase+=result1[t].NetBase;
+                 $scope.nonewNetstandard+=result1[t].NetStandard;
+                 console.log($scope.nonewNetpackage);
+                 console.log($scope.nonewNetbase);
+                 console.log($scope.nonewNetstandard);
                }//no
-            }//for
-          }//totqlquantity
-            $scope.totqlquantity();
-             $scope.ratecalc=function(umosize)
-             {
-               $scope.netquantity=$scope.yesnetquantity-$scope.nonetquantity;
-               if(umosize == "Bottle" && $scope.netquantity >0)
+            }  //for
+         $scope.ratecalc=function(umosize)
+         {
+          $scope.botnetqty=$scope.yesnewNetstandard-$scope.nonewNetstandard;
+          $scope.casenetqty=$scope.yesnewNetpackage-$scope.nonewNetpackage;
+          $scope.mlnetqty=$scope.yesnewNetbase-$scope.nonewNetbase;
+               if(umosize == "Bottle" && $scope.botnetqty >0)
                  {
                    alert("bottle")
-                   $scope.newnetquantity = $scope.netquantity;
+                   $scope.newnetquantity =$scope.botnetqty;
                    $scope.uomid=2;
                    alert($scope.uomid)
                    
@@ -632,9 +598,9 @@ else
                    alert("Quantity is Zero")
                     $scope.newnetquantity = 0;
                  }
-               if(umosize == "Case" && $scope.netquantity > $scope.packqty)
+               if(umosize == "Case")
                  {
-                   $scope.newnetquantity = $scope.netquantity/$scope.packqty;
+                   $scope.newnetquantity =$scope.casenetqty;
                    $scope.uomid=3;
                    alert($scope.uomid)
                  }
@@ -643,13 +609,70 @@ else
                  alert("Quantity is less than a case")
                   $scope.newnetquantity = 0;
                }
+              if(umosize == "ML")
+               {
+               $scope.newnetquantity =$scope.mlnetqty;
+                 $scope.uomid=1;
+               }
+              else if(umosize == "ML")
+              {
+               alert("Quantity is less")
+                $scope.newnetquantity = 0;
+              }
+           alert($scope.pieceNo+"beforest")
+           if($scope.pieceNo!=null)
+             {
+             $scope.stockcalculation(umosize);
              }
+            }//$scope.ratecalc
       }//if
       else{
           $scope.netquantity = 0
-          alert("Sorry")
-          }
-          })//stduomfetch
+          alert("Stock is Empty at this StockPoint!!!")
+          }  
+    $http.get('/stduomfetch'+$scope.uomsizemasterid).success(function(res9){
+       console.log(res9)
+            if(res9.length!=0)
+              {
+            $scope.stockcalculation= function(umosize)
+            {
+              
+             alert(umosize+"frrom stockcalculation ")
+             $scope.umosize =umosize;
+             console.log($scope.umosize)
+              var Case = "Case";
+              var Bottle = "Bottle";
+              $scope.baseqty = res9[0].BaseQty;
+              $scope.packqty = res9[0].PackQty;
+              $scope.stdqty = res9[0].StdQty;
+            $http.get('/getuommid'+$scope.umosize).success(function(response){
+              console.log(response);
+              console.log(response[0].UOMID)
+              $scope.uomid=response[0].UOMID; 
+              console.log(response[0].UOM)
+              console.log($scope.uomid);
+               if($scope.umosize == Case)
+                {
+                  alert($scope.pieceNo)
+                  $scope.calcstd = ($scope.pieceNo*$scope.stdqty)*$scope.packqty;
+                  $scope.calcbase = $scope.calcstd*$scope.baseqty;
+                  $scope.calcpack = $scope.calcstd/$scope.packqty;
+                }
+              else if($scope.umosize == Bottle)
+                {
+                  alert($scope.pieceNo)
+                  $scope.calcstd = ($scope.pieceNo*$scope.stdqty)
+                  $scope.calcbase = $scope.calcstd*$scope.baseqty;
+                  $scope.calcpack = $scope.calcstd/$scope.packqty; 
+                }
+            })
+          }//$scope.stockcalculation
+            //$scope.finalrate=res[0].PurchaseRate;
+          }//if
+            else{
+              alert("Rate for this itemcode doesnot defined")
+            }
+      })//stduomfetch
         })//itemquantityfetch
       }//itemdetailsfetchfun
     }//Stock Transfer
@@ -662,7 +685,6 @@ else
        $scope.referenceno=0;
        $scope.sectionid=0;
        $scope.onlyopeningstock = "Opening Stock";
-       alert("hai i am Stock Transfer")
        $scope.itemdetailsfetchfun=function(itemcode){
         alert(itemcode)
         var itemmnew = parseInt(itemcode);
@@ -679,43 +701,90 @@ else
           console.log(umosize);
           $http.get("/itemuomqtyfetch"+umosize).success(function(res){
           console.log(res);
-          console.log(res[0].UOMID);
-//          var stduomid = parseInt(res[0].UOMID);
-//          $http.get("/StdUOMID"+stduomid).success(function(result){
-//          console.log(result[0].StdUOMID);
-//          //$scope.displayuomid = result[0].StdUOMID;
-//          $http.get("/Displayuomfetch"+$scope.displayuomid).success(function(res){
-//          console.log(res)
-//          console.log(res[0].UOM);
-//          console.log(res[0].UOMID)
-//          $scope.uomid = res[0].UOMID
-//          $scope.umosize = res[0].UOM; 
-//          })//Displayuomfetch
-//
-//          })//StdUOMID 
+          console.log(res[0].UOMID); 
           console.log(res[0].UOMSize);
           $scope.uomsize = res[0].UOMSize
           console.log(res[0].Qty);
           $scope.umoqty = res[0].Qty;
           console.log(res[0].UOMSizeMasterID);
-          $scope.uomsizemasterid = res[0].UOMSizeMasterID
-          })
-//          console.log(result.length)
-//          if(result.length != 0)
-//          {
-//            console.log(result[0].ItemSKUID)
-//            var skuidfind = result[0].ItemSKUID;
-//            console.log(skuidfind)
-//            $http.get("/purchaseratefetch"+skuidfind).success(function(res){
-//            console.log(res[0])
+          $scope.uomsizemasterid = res[0].UOMSizeMasterID;
+            $http.get('/stduomfetch'+$scope.uomsizemasterid).success(function(res9){
+       console.log(res9)
+            if(res9.length!=0)
+              {
+//              console.log(res[0].UOMId)
+//              if(res[0].UOMId == 2)
+//              {
+//                alert("bottle")
+//                console.log(res[0].PurchaseRate)
+//                $scope.finalrate2 = res[0].PurchaseRate;
+//              }
+//            else if(res[0].UOMId == 3){
+//              alert("case");
+//              $scope.finalrate2 = res[0].PurchaseRate;  
+//            }
 //            console.log(res[0].PurchaseRate)
-//            $scope.purchaserate = res[0].PurchaseRate;
-//            //$scope.finalrate = res[0].PurchaseRate
-//            })//purchaseratefetch 
-//          }//if
+//            $scope.purchaserate =res[0].PurchaseRate;
+            $scope.ratecalc = function(umosize)
+            {
+             alert(umosize)
+             $scope.umosize =umosize;
+             console.log($scope.umosize)
+              var Case = "Case";
+              var Bottle = "Bottle";
+              $scope.baseqty = res9[0].BaseQty;
+              $scope.packqty = res9[0].PackQty;
+              $scope.stdqty = res9[0].StdQty;
+            $http.get('/getuommid'+$scope.umosize).success(function(response){
+              console.log(response);
+              console.log(response[0].UOMID)
+              $scope.uomid=response[0].UOMID; 
+              console.log(response[0].UOM)
+              console.log($scope.uomid);
+              if(res[0].UOMId == response[0].UOMID){
+                $scope.finalrate = $scope.finalrate2;
+                if(response[0].UOM == Case )
+                  {
+                    alert($scope.pieceNo)
+                    $scope.calcstd = ($scope.pieceNo*$scope.stdqty)*$scope.packqty;
+                  $scope.calcbase = $scope.calcstd*$scope.baseqty;
+                  $scope.calcpack = $scope.calcstd/$scope.packqty;
+                  }
+                else if(response[0].UOM ==Bottle )
+                  {
+                    alert($scope.pieceNo)
+                  $scope.calcstd = ($scope.pieceNo*$scope.stdqty)
+                  $scope.calcbase = $scope.calcstd*$scope.baseqty;
+                  $scope.calcpack = $scope.calcstd/$scope.packqty;   
+                  }
+              }
+              else if($scope.umosize == Case)
+                {
+                  alert($scope.pieceNo)
+                  $scope.finalrate = $scope.finalrate2*10;
+                  $scope.calcstd = ($scope.pieceNo*$scope.stdqty)*$scope.packqty;
+                  $scope.calcbase = $scope.calcstd*$scope.baseqty;
+                  $scope.calcpack = $scope.calcstd/$scope.packqty;
+                }
+              else if($scope.umosize == Bottle)
+                {
+                  alert($scope.pieceNo)
+                  $scope.finalrate = $scope.finalrate2/10;
+                  $scope.calcstd = ($scope.pieceNo*$scope.stdqty)
+                  $scope.calcbase = $scope.calcstd*$scope.baseqty;
+                  $scope.calcpack = $scope.calcstd/$scope.packqty; 
+                }
+            })
+      
+  }//ratecalc
+            //$scope.finalrate=res[0].PurchaseRate;
+          }//if
+            else{
+              alert("Rate for this itemcode doesnot defined")
+            }
+           })//stduomfetch
+          })
         })//skuitemnamefetch
-        
-        
       }//itemdetailsfetchfun
     }//Opening Stock
   else if( transactiontype == "Opening Stock")
@@ -880,6 +949,9 @@ $scope.itemtaxfun= function()
       obj["charges"]=$scope.charges;
       obj["invoicevalue"]=$scope.number;
       obj["adjustment"]=$scope.adjustment;
+      obj["base"]=$scope.calcbase;          
+      obj["std"]=$scope.calcstd;
+      obj["pack"]=$scope.calcpack;      
       purchaseitem.push(obj);
       $scope.purchaseitem1 = purchaseitem;
       console.log($scope.purchaseitem1) 
@@ -1004,7 +1076,7 @@ $scope.itemtaxfun= function()
        {
              $scope.stockbookid++;
              $scope.newentryrowno++;
-             purchasetran=purchasetran+","+$scope.newentryrowno+","+$scope.stockbookid+","+$scope.tostockidfound+","+$scope.tostockinward;
+  purchasetran=purchasetran+","+$scope.newentryrowno+","+$scope.stockbookid+","+$scope.tostockidfound+","+$scope.tostockinward+","+purchaseitem1[n].base+","+purchaseitem1[n].std+","+purchaseitem1[n].pack;
              alert("item not exist");
           $http.post('/purchasepost'+purchasetran).success(function(response){
              console.log(response);

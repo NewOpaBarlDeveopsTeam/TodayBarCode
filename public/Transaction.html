@@ -90,19 +90,21 @@
 <!--            </div>-->
             
 <!--            <div class = "col-sm-3 padding-0" style="margin-left: 0">-->
-              <label><span style="color: red;font-size: 25px;padding-top: 0px"><b>*</b></span>Transaction:</label>
+              <label><span style="color: red;font-size: 25px;padding-top: 0px"><b>*</b></span>Transaction:
               <select ng-change ="transactioncall(transactiontype)" ng-model = "transactiontype">
                 <option></option>
                 <option ng-repeat = "transaction in transactionType " id="idid">{{transaction.transactionType}}</option>
               </select>
+              </label>
             </div>
             
             <div class = "col-sm-2 padding-0">
-            <label>Voch_No:</label><input type = "number" id="idid" ng-model="vouchernumber1" readonly>
+            <label>Voch_No:<input type = "number" id="idid" ng-model="vouchernumber1" readonly></label>
             </div>
 <!--               <td> <select ng-model="item.AccNo" ng-show="transaction != 'Issue Voucher'&&transaction != 'Receipt Voucher'">-->
             <div class = "col-sm-3 padding-0">
-            <label>Ref.Date:</label><input type = "date" ng-disabled="transactiontype == 'Opening Stock'||transactiontype == 'Purchase' ||transactiontype == 'Stock Transfer' ||transactiontype == 'Sale' ">
+            <label>Ref.Date:<input type = "date" ng-disabled="transactiontype == 'Opening Stock'||transactiontype == 'Purchase' ||transactiontype == 'Stock Transfer' ||transactiontype == 'Sale' ">
+            </label>
             </div>
             <div class = "col-sm-2 padding-0">
             <label><span style="color: red;font-size: 25px;padding-top: 0px"><b>*</b></span>Ref.No:<input type = "number" id="idid" ng-model="referenceno" ng-disabled="transactiontype == 'Opening Stock' ||transactiontype == 'Stock Transfer' ||transactiontype == 'Sale' " required></label>
@@ -113,11 +115,12 @@
         
         <div class ="row2">
            <div class ="col-sm-3 padding-0">
-             <label><span style="color: red;font-size: 25px;padding-top: 0px"><b>*</b></span>Stock Point:</label>
+             <label><span style="color: red;font-size: 25px;padding-top: 0px"><b>*</b></span>Stock Point:
               <select ng-model="stockid" ng-change="stockpointfrom(stockid)">
                 <option></option>
                    <option ng-repeat = "stockpoint in stockpointname">{{stockpoint.StockPointName}}</option>
               </select>
+             </label>
             </div>
           
             <div class = "col-sm-2 padding-0">
