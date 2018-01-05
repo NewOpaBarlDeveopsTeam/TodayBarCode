@@ -1,0 +1,214 @@
+/* Empty. Add your own CSS if you like */
+
+ion-content {
+    background-color: navajowhite;
+    height: 100px;
+}
+
+.bar.bar-stable {
+    background-color: #4DC27B;
+    background-image: linear-gradient(0deg, #b2b2b2, #b2b2b2 50%, transparent 50%);
+    border-color: #b2b2b2;
+    color: #444;
+}
+
+.scroll {
+    height: 100px;
+    background-color: #505053;
+}
+
+label {
+    cursor: pointer;
+    color: white;
+    display: block;
+    /*
+	padding: 10px;
+	margin: 3px;
+*/
+}
+
+#ionpane {
+    height: 100%;
+    width: 200%;
+    overflow-x: auto;
+}
+
+#panel {
+    height: 355px;
+    overflow-x: auto;
+
+}
+
+div.maindiv {
+    height: 80px;
+}
+
+#spanid {
+    background-color: white;
+}
+
+
+
+
+#selectid {
+    margin-left: -9px;
+    height: 25px;
+    /*#selectid {
+  margin-left: -9px;
+  height: 20px;
+}*/
+}
+
+#viewbutton {
+    margin-top: -15px;
+    height: 17px;
+    /*margin-top: -14px;*/
+    font-size: 15px;
+    /* margin-bottom: 25px; */
+    padding-left: -90px
+}
+
+#Enterbutton {
+    height: 17px;
+    /*margin-top: -14px;*/
+    font-size: 15px;
+    margin-top: -15px;
+}
+
+#id12 {
+
+    padding: 12px
+}
+
+#fontlabel {
+    padding: 12px;
+    margin-top: -13px;
+}
+
+div.panel panel-default {
+    padding-top: 100px;
+}
+
+#theadid {
+
+
+    background: white;
+    height: auto;
+}
+
+.panel panel-default {
+    padding-top: 20px;
+}
+
+#trid {
+
+    color: green;
+    padding-top: auto;
+    font-size: 18px;
+    background-color: pink;
+}
+
+table {
+    display: block;
+    overflow-x: auto;
+    white-space: nowrap;
+}
+
+div.panel panel-default {
+    padding-top: auto;
+}
+
+#spanid {
+    /*background: red;*/
+    /*background-color: red;*/
+    /*background: blue;*/
+}
+
+#forid {
+    background: white;
+    height: 15px;
+}
+
+/*.icon ion-calendar
+{
+  shape-outside: padding-box;
+
+}*/
+
+#lblid {
+    background-color: blue;
+    margin-left: -16px;
+    font-size: 11px;
+}
+
+/*#spanid
+{
+  background: blue;
+}*/
+
+/*.table-fixed thead {
+  width: 97%;
+}*/
+
+/*.table-fixed tbody {
+  height: 230px;
+  /*overflow-y: auto;*/
+
+/*
+ width: 100%;
+}
+.table-fixed thead, .table-fixed tbody, .table-fixed tr, .table-fixed td, .table-fixed th {
+  display: block;
+}
+.table-fixed tbody td, .table-fixed thead > tr> th {
+  float: left;
+  border-bottom-width: 0;
+}
+
+*/
+
+#caldivid {
+    /*    background-color: black;*/
+    /*    background-color: #b2b2b2;*/
+}
+
+/*#fid
+{
+    background-color:darkgoldenrod;
+}*/
+
+#forid13 {
+    margin-top: -20px;
+}
+
+center {
+    font-size: calc;
+}
+
+.ng-binding {
+    font-size: 17px;
+}
+#stockpointid {
+	padding-left: 48px;
+}
+#id34 {
+	padding-left: 34px;
+    padding-bottom: 5px;
+}
+.row {
+	padding-left: 140px;
+
+}
+#viewbutton {
+	margin-right: -95px;
+    margin-top: -30px;
+}
+.ng-pristine.ng-untouched.ng-valid.ng-not-empty {
+	height: auto;
+    margin-top: -13px;
+        
+}
+#date {
+	margin-left: -30px;
+    margin-bottom: 4px
+}

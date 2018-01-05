@@ -4,7 +4,7 @@ myApp.controller('purchaseCntrl',['$scope','$http','$window','$filter',
 function($scope,$http,$window,$filter){ 
   var purchaseitem = [];
   var taxdefinition =[];
-  $scope.openingstockdate = "2017/12/23";
+  $scope.openingstockdate = "2018/01/04";
   console.log($scope.openingstockdate)
   var  dates  = new Date(((new Date().toISOString().slice(0, 23))+"-05:30")).toISOString();
             var a = dates.split("T");
@@ -188,6 +188,8 @@ $scope.transactioncall = function (transactiontype)
             console.log(newpurchaseratefind)
           $http.get("/purchaseratefetch"+newpurchaseratefind).success(function(res){
             console.log(res);
+            if(res.length!=0)
+            {
             console.log(res[0].UOMId)
             if(res[0].UOMId == 2)
               {
@@ -238,6 +240,12 @@ $scope.transactioncall = function (transactiontype)
 //         
 //    }      
   }//ratecalc
+}// end of if
+else 
+{
+  alert("Rate of this ItemCode not Defined")
+
+}
             //$scope.finalrate=res[0].PurchaseRate;
             })//purchaseratefetch 
           }//if
@@ -630,7 +638,7 @@ $scope.transactioncall = function (transactiontype)
       }//itemdetailsfetchfun
     }//Stock Transfer
   
-  if( transactiontype == "Opening Stock" && $scope.openingstockdate >! $scope.date)
+  if( transactiontype == "Opening Stock")
     {
        $scope.pieceNo = 1;
        $scope.stockinward = "Yes";

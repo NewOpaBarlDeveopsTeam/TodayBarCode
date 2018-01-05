@@ -14,7 +14,7 @@ var FileReader = require('filereader'), fileReader = new FileReader();
 var db=mongojs('restaurant',['images','feedbackmaster','orderfeedback','item','menu','service','category','resttypes','Kamat','Kamatorder','juiceorder','KamatOrder','user','tags','transaction','saleinvoice','mode','transactiondetail','batch','bank',
   'transactionSeriesInvoice','itemrate','item','menu','order','useritem','purity','uom','pct','labcal','useradj',
   'barcodesumm','stockpointmaster','configurations','inventorygroupmaster','salescategorymaster','itemtype','taxrate',
-  'itemdata','tax','taxation','session','restaurantid','ChargesMaster','chargename','configurationmaster']);
+  'itemdata','tax','taxation','session','restaurantid','ChargesMaster','chargename','configurationmaster','stockBookDetail','stockBookHeader']);
 
 var bodyParser=require('body-parser');
 var fs = require('fs');
@@ -4267,33 +4267,25 @@ app.get('/abhi', function (req, res) {
 
 app.get('/withincheck:arr', function (req, res) {
 
-    console.log("\n this is '/withincheck:at' path" + "\n");
-
-    var lll = req.params.arr;
-    console.log(typeof (lll));
-    console.log(lll);
-
-    var str=lll.split(",");
-
-    console.log(str)
-
+     console.log("\n this is '/withincheck:at' path" + "\n");
+     var lll = req.params.arr;
+     console.log(typeof (lll));
+     console.log(lll);
+     var str=lll.split(",");
+     console.log(str)
      var stockpointid=str[0];
       stockpointid=parseInt(stockpointid)
      console.log(stockpointid);
-
      var date1=str[1];
      console.log(date1);
+     var vocher=str[2];
+     console.log(vocher);
 
-    // var jk = parseInt(str1);
-    // console.log(jk);
+db.stockBookDetail.aggregate([{$match:{"VoucherType":vocher,"VocherDate":date1,"StockPointId":stockpointid}},{$group:{_id:{itemcode:"$ItemCode"},pieces:{$sum:"$NetPieces"}}}],function(err,doc){
+    console.log(doc+"docccc")
+    res.json(doc)
+})
 
-    db.stockBookDetail.find({
-        'StockPointId':stockpointid,'VocherDate':date1
-    }, function (err, docs) {
-        //console.log(docs);
-        res.json(docs);
-        console.log(docs);
-    });
 });
 
 var str=[];
@@ -4350,7 +4342,6 @@ db.abhishek.insert({"VoucherId":req.params.a},function(err,docs)
 
 })
 
-   
 var port=7000;  
 app.listen(port);
 console.log("server running on  "+port);
