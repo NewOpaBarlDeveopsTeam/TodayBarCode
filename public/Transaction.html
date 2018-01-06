@@ -154,7 +154,7 @@
           
           <div class = "col-sm-2">
             <span id ="rate" >
-              <label pull-left><span style="color: red;font-size: 25px;padding-top: 0px"><b>*</b></span>Rate:<input type = "number" id="idid" style="height: 40px;width: 100px;color:blue;font-size: 30px" ng-model="finalrate" ng-blur = "itemtaxfun()" required></label>
+              <label pull-left><span style="color: red;font-size: 25px;padding-top: 0px"><b>*</b></span>Rate:<input type = "number | number:3" id="idid" style="height: 40px;width: 100px;color:blue;font-size: 30px" ng-model="finalrate" ng-blur = "itemtaxfun()" required  ></label>
               </span>
           </div>
           
@@ -175,15 +175,24 @@
              </div> 
           
             <div class = "col-sm-6 padding-0">
-            <label><span style="color: red;font-size: 25px;padding-top: 0px"><b>*</b></span>Pieces:<input type = "Number" id="idid" ng-model="pieceNo"></label>&nbsp;&nbsp;
+              
+              <label><span style="color: red;font-size: 25px;padding-top: 0px"><b>*</b></span>UOM:
+              <select ng-model="umosize" ng-change="ratecalc(umosize)">
+                   <option ng-repeat="uomsize in umosizefound">{{uomsize.UOM}}</option>
+              </select>
+               </label>&nbsp;&nbsp;
+              
+            <label><span style="color: red;font-size: 25px;padding-top: 0px"><b>*</b></span>Pieces:<input type = "Number" id="idid" ng-model="pieceNo" ng-blur="stockcalculation(umosize,pieceNo)"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 <!--            </div>-->
              
 <!--            <div class = "col-sm-2 padding-0">-->
+<!--
             <label><span style="color: red;font-size: 25px;padding-top: 0px"><b>*</b></span>UOM:
               <select ng-model="umosize" ng-change="ratecalc(umosize)">
                    <option ng-repeat="uomsize in umosizefound">{{uomsize.UOM}}</option>
               </select>
                </label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+-->
 <!--
             </div>
              
@@ -230,10 +239,10 @@
                   <td ng-model="purchase.quantity">{{purchase.quantity}}</td>
                   <td ng-model="purchase.pieces">{{purchase.pieces}}</td>
                   <td ng-model="purchase.umo">{{purchase.umo}}</td>
-                  <td ng-model="purchase.Rate">{{purchase.Rate}}</td>
-                  <td ng-model="purchase.discrate">{{purchase.discrate}}</td>
+                  <td ng-model="purchase.Rate">{{purchase.Rate| number : 5}}</td>
+                  <td ng-model="purchase.discrate">{{purchase.discrate| number : 5}}</td>
                   <td ng-model="purchase">{{}}</td>
-                  <td ng-model="purchase.value">{{purchase.value}}</td>
+                  <td ng-model="purchase.value">{{purchase.value| number : 5}}</td>
                 </tr>
               </tbody>
 	    	</table>
@@ -280,12 +289,12 @@
                   </tr>
                   <tr><th>Sub Total</th>
                   
-                  <td>{{subtotal1}}</td></tr>
+                  <td>{{subtotal1 | number : 5}}</td></tr>
                   <tr><th>Charges</th>
                   <td>00</td>
                   </tr>
                   <tr><th>Invoice Value</th>
-                    <td>{{invoicevalue1}}</td>
+                    <td>{{invoicevalue1 | number : 5}}</td>
                   </tr>
                   <tr><th>Adjustment</th>
                     <td>00</td>
@@ -296,10 +305,10 @@
         </div>
         <br>
         <div class=" col-md-5">
-        <span style="font-size: 19px">Item Disc Total:00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Final Item Value: {{finalvalue}} </span>
+        <span style="font-size: 19px">Item Disc Total:00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Final Item Value: {{finalvalue | number : 5}} </span>
         <p style="font-size:30px">Items:{{totalitems}}</p>
         <p style="font-size:30px">Pieces:{{piece}}</p>
-        <p style="font-size:30px;color:blue"> Nett:{{finalvalue}} </p>
+        <p style="font-size:30px;color:blue"> Nett:{{finalvalue | number : 5}} </p>
         </div>
         </div>
         
