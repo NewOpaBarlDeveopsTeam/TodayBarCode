@@ -360,7 +360,6 @@ $scope.transactioncall = function (transactiontype)
              alert("sale")
              $scope.all = false;
              $scope.stockinward = "No";
-    
              $scope.purchaserate=0;
              $scope.partyidfound=0;
              $scope.referenceno=0;
@@ -379,12 +378,11 @@ $scope.transactioncall = function (transactiontype)
               $scope.nonewNetpackage=0;
               $scope.nonewNetbase=0;
               $scope.nonewNetstandard=0;
-             console.log($scope.pieces);
+//             console.log($scope.pieces);
              console.log($scope.itemcode);
              console.log(typeof($scope.itemcode))
              var itemnew = parseInt($scope.itemcode);
              console.log(typeof(itemnew))
-
              $http.get("/skuitemnamefetch"+itemnew).success(function(result){
              console.log(result[0]);
              console.log(result[0].itemId);
@@ -411,7 +409,7 @@ $scope.transactioncall = function (transactiontype)
              console.log(res[0].UOM);
              console.log(res[0].UOMID)
              $scope.uomid = res[0].UOMID
-             $scope.umosize = res[0].UOM; 
+             //$scope.umosize = res[0].UOM; 
               })//Displayuomfetch
 
               })//StdUOMID
@@ -451,6 +449,18 @@ $scope.transactioncall = function (transactiontype)
               }//getsection
             })//saleratefetch      
           }//if
+               alert($scope.itemidd+"$scope.itemidd");
+     $http.get("/itemwisediscfetch"+$scope.itemidd).success(function(res99){
+        console.log(res99);
+       if(res99.length != 0)
+         {
+           console.log(res99[0].Discount);
+           console.log(res99[0].DiscountByItemId);
+           $scope.discountamt=res99[0].Discount;
+           $scope.discounttype=res99[0].DiscountByItemId;
+           $scope.discountcalfun($scope.discounttype,$scope.discountamt); 
+         }
+       })
         })//skuitemnamefetch 
         var itemnewstockid = itemnew+","+$scope.fromstockidfound;
         console.log(itemnewstockid)
@@ -504,25 +514,25 @@ $scope.transactioncall = function (transactiontype)
                    alert("Quantity is Zero")
                     $scope.newnetquantity = 0;
                  }
-               if(umosize == "Case")
+               if(umosize == "Case" && $scope.casenetqty > 1)
                  {
                    $scope.newnetquantity =$scope.casenetqty;
                    $scope.uomid=3;
                    alert($scope.uomid)
                  }
-               else if(umosize == "Case")
+           else if(umosize == "Case")
                {
-                 alert("Quantity is less than a case")
+                 alert("Quantity is less than a case!!! Please Sale with other UOM!!!")
                   $scope.newnetquantity = 0;
                }
-              if(umosize == "ML")
+              if(umosize == "ML" && $scope.mlnetqty > 0 )
                {
                $scope.newnetquantity =$scope.mlnetqty;
                  $scope.uomid=1;
                }
               else if(umosize == "ML")
               {
-               alert("Quantity is less")
+               alert("Sorry!!!Stock is Empty!!!Sale Can't be Done For this ItemCode")
                 $scope.newnetquantity = 0;
               }
             }//$scope.ratecalc
@@ -543,6 +553,7 @@ $scope.transactioncall = function (transactiontype)
               console.log($scope.umosize)
               var Case = "Case";
               var Bottle = "Bottle";
+              var ml = "ML";
               $scope.baseqty = res9[0].BaseQty;
               $scope.packqty = res9[0].PackQty;
               $scope.stdqty = res9[0].StdQty;
@@ -565,6 +576,16 @@ $scope.transactioncall = function (transactiontype)
                   $scope.calcstd = ($scope.pieceNo*$scope.stdqty)
                   $scope.calcbase = $scope.calcstd*$scope.baseqty;
                   $scope.calcpack = $scope.calcstd/$scope.packqty; 
+                }
+              else if($scope.umosize == ml)
+                {
+                  alert("ML");
+                  $scope.calcbase = $scope.pieceNo;
+                  $scope.calcstd = $scope.calcbase/$scope.baseqty;
+                  $scope.calcpack =$scope.calcstd/$scope.packqty;
+                  alert($scope.calcbase+"$scope.calcbase")
+                  alert($scope.calcstd+"$scope.calcstd")
+                  alert($scope.calcpack+"$scope.calcpack")
                 }
             })
           }//$scope.stockcalculation
@@ -678,7 +699,7 @@ $scope.transactioncall = function (transactiontype)
                    alert("Quantity is Zero")
                     $scope.newnetquantity = 0;
                  }
-               if(umosize == "Case")
+               if(umosize == "Case" && $scope.casenetqty > 1)
                  {
                    $scope.newnetquantity =$scope.casenetqty;
                    $scope.uomid=3;
@@ -686,24 +707,24 @@ $scope.transactioncall = function (transactiontype)
                  }
                else if(umosize == "Case")
                {
-                 alert("Quantity is less than a case")
+                 alert("Quantity is less than a case!!! Please Transfer with other UOM!!!")
                   $scope.newnetquantity = 0;
                }
-              if(umosize == "ML")
+              if(umosize == "ML" && $scope.mlnetqty > 0)
                {
                $scope.newnetquantity =$scope.mlnetqty;
                  $scope.uomid=1;
                }
               else if(umosize == "ML")
               {
-               alert("Quantity is less")
+               alert("Sorry!!!Stock Transfer Can't be Done For this ItemCode")
                 $scope.newnetquantity = 0;
               }
-           alert($scope.pieceNo+"beforestock call")
-           if($scope.pieceNo!=null)
-             {
+           //alert($scope.pieceNo+"beforestock call")
+           //if($scope.pieceNo!=null)
+             //{
 //             $scope.stockcalculation($scope.founduom);
-             }
+            // }
             }//$scope.ratecalc
            }//if
       else{
@@ -722,6 +743,7 @@ $scope.transactioncall = function (transactiontype)
              console.log($scope.umosize)
               var Case = "Case";
               var Bottle = "Bottle";
+              var ml= "ML";
               $scope.baseqty = res9[0].BaseQty;
               $scope.packqty = res9[0].PackQty;
               $scope.stdqty = res9[0].StdQty;
@@ -744,6 +766,16 @@ $scope.transactioncall = function (transactiontype)
                   $scope.calcstd = ($scope.pieceNo*$scope.stdqty)
                   $scope.calcbase = $scope.calcstd*$scope.baseqty;
                   $scope.calcpack = $scope.calcstd/$scope.packqty; 
+                }
+              else if($scope.umosize == ml)
+                {
+                  alert("ML");
+                  $scope.calcbase = $scope.pieceNo;
+                  $scope.calcstd = $scope.calcbase/$scope.baseqty;
+                  $scope.calcpack =$scope.calcstd/$scope.packqty;
+                  alert($scope.calcbase+"$scope.calcbase")
+                  alert($scope.calcstd+"$scope.calcstd")
+                  alert($scope.calcpack+"$scope.calcpack")
                 }
             })
           }//$scope.stockcalculation
@@ -792,7 +824,7 @@ $scope.transactioncall = function (transactiontype)
        console.log(res9)
             if(res9.length!=0)
               {
-            $scope.ratecalc = function(umosize)
+            $scope.stockcalculation = function(umosize)
             {
              alert(umosize)
              $scope.umosize =umosize;
@@ -853,10 +885,9 @@ $scope.transactioncall = function (transactiontype)
                   alert($scope.calcpack+"$scope.calcpack")
                 
               }
-            })
+             })
       
-  }//ratecalc
-            //$scope.finalrate=res[0].PurchaseRate;
+          }//stockcalculation
           }//if
             else{
               alert("Rate for this itemcode doesnot defined")
@@ -871,6 +902,26 @@ $scope.transactioncall = function (transactiontype)
     alert("Opening Stock is already done on"+" "+$scope.openingstockdate)
   }
  }//end of transactioncall
+
+$scope.discountcalfun = function(type,amount)
+{
+  alert(type);
+  alert(amount);
+  console.log(type);
+  console.log(amount);
+  var Amount = "Amount";
+  
+  if(type == "Amount")
+  {
+    alert("amount")
+  }
+  
+  else if(type == "Percent")
+    {
+      alert("Percent")
+    }
+  
+}
 
 $scope.itemtaxfun= function()
 {
@@ -931,8 +982,6 @@ $scope.itemtaxfun= function()
     tot = cgst+sgst;
     totgstper = tot/100;
     console.log(totgstper);
-    //total = $scope.finalrate;
-    //total = $scope.newfinalrate;
     $scope.newfinalvalue = $scope.pieceNo*$scope.finalrate;
     total = $scope.newfinalvalue;
     console.log(total);
@@ -950,38 +999,6 @@ $scope.itemtaxfun= function()
     var  taxsgst = $scope.itemvalue/2;
     console.log(taxsgst);
     $scope.fintaxsgst = taxsgst;
-//    $scope.discount = 0;
-//    $scope.charges=0;
-//    $scope.adjustment=0;
-//    obj9["taxablevalue"]=$scope.hiddenvale;
-//    obj9["tax"]=$scope.itemvalue;
-//    obj9["discount"]=$scope.discount;
-//    obj9["subtotal"]=$scope.number;
-//    obj9["charges"]=$scope.charges;
-//    obj9["invoicevalue"]=$scope.number;
-//    obj9["adjustment"]=$scope.adjustment;
-//    taxdefinition.push(obj9);
-//    $scope.taxdefinition1 = taxdefinition;
-//    console.log($scope.taxdefinition1)
-//    $scope.subtotal1=0;
-//    $scope.taxablevalue1=0;
-//    $scope.tax1=0;
-//    $scope.invoicevalue1=0;
-//    
-//    for(var t=0;t<$scope.taxdefinition1.length;t++)
-//      {
-//        $scope.subtotal1=$scope.subtotal1+$scope.taxdefinition1[t].subtotal;
-//        $scope.taxablevalue1=$scope.taxablevalue1+$scope.taxdefinition1[t].taxablevalue;
-//        $scope.tax1=$scope.tax1+$scope.taxdefinition1[t].tax;
-//        $scope.invoicevalue1=$scope.invoicevalue1+$scope.taxdefinition1[t].invoicevalue;
-//        
-//      }
-//    $scope.itemcode = null;
-//    $scope.itemdetail = null;
-//    $scope.pieceNo = null;
-//    $scope.umosize = null;
-//    $scope.finalrate = null;
-//    $scope.sectionnames=null;
     $scope.rate();
   }//$scope.calculation=function
 
@@ -1009,8 +1026,6 @@ $scope.itemtaxfun= function()
       obj["pieces"]=$scope.pieceNo;
       obj["umo"]=$scope.umosize;
       obj["Rate"]=$scope.finalrate;
-      obj["discrate"] = $scope.discountrate;
-      obj["disctype"] = $scope.type;
 //      $scope.newfinalvalue = $scope.pieceNo*$scope.finalrate;
       obj["value"]= $scope.newfinalvalue;
       obj["stockpointid"]= $scope.stockidfound;
@@ -1030,7 +1045,9 @@ $scope.itemtaxfun= function()
       obj["adjustment"]=$scope.adjustment;
       obj["base"]=$scope.calcbase;          
       obj["std"]=$scope.calcstd;
-      obj["pack"]=$scope.calcpack;      
+      obj["pack"]=$scope.calcpack;
+      obj["discountamt"]=$scope.discountamt;
+      obj["discounttype"]=$scope.discounttype;
       purchaseitem.push(obj);
       $scope.purchaseitem1 = purchaseitem;
       console.log($scope.purchaseitem1) 
@@ -1134,8 +1151,9 @@ $scope.itemtaxfun= function()
     //alert($scope.stockbookid)
     var purchasetran = vouchernumber+","+purchaseitem1[n].itemid+","+posname+","+isCompositable+","+isSplittable+","+$scope.stockinward+","+parentstock+","+accno+","+posid1+","+date+","+purchaseitem1[n].pieces+","+purchaseitem1[n].Rate+","+purchaseitem1[n].quantity+","+allincluvalue+","+purchaseitem1[n].uomsizemasterid+","+$scope.referenceno+","+purchaseitem1[n].stockpointid+","+purchaseitem1[n].uomid+","+$scope.invgroupname+","+$scope.stockbookid+","+$scope.newentryrowno+","+purchaseitem1[n].salerate+","+purchaseitem1[n].purchaserate+","+purchaseitem1[n].taxablevalue+","+purchaseitem1[n].cgst+","+purchaseitem1[n].sgst+","+purchaseitem1[n].tax+","+purchaseitem1[n].itemcode+","+$scope.transactiontype;
      console.log(purchasetran);
+          alert(purchaseitem1[n].uomid)
 //      $scope.onlyopeningstock = "Opening Stock";
-      var getstockdetail = $scope.onlyopeningstock+","+purchaseitem1[n].itemcode+","+purchaseitem1[n].stockpointid;
+      var getstockdetail = $scope.onlyopeningstock+","+purchaseitem1[n].itemcode+","+purchaseitem1[n].stockpointid+","+purchaseitem1[n].uomid;
       console.log(getstockdetail);
       alert("yashwanthoutside get");
           
@@ -1147,7 +1165,7 @@ $scope.itemtaxfun= function()
           alert("item alredy exist")
           console.log(result[0]._id);
           console.log(purchasetran);
-          var purchasetranupdate =purchasetran+","+result[0]._id;
+          var purchasetranupdate =purchasetran+","+result[0]._id+","+purchaseitem1[n].base+","+purchaseitem1[n].std+","+purchaseitem1[n].pack;
           console.log(purchasetranupdate);
         $http.put('/purchasetranupdate'+purchasetranupdate).success(function(response){
               console.log(response);

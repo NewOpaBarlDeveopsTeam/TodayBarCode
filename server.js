@@ -3664,7 +3664,16 @@ app.get('/saleratefetch:saleskuid',function(req,res){
   var saleskuid = parseInt(req.params.saleskuid);
   console.log(typeof(saleskuid+"saleskuidsaleskuidsaleskuid"))
   db.ItemSKURate.find({"ItemSKUID":saleskuid},function(err,doc){
-    
+      res.json(doc)
+  })
+})
+
+
+app.get('/itemwisediscfetch:discountid',function(req,res){
+  var discountid1 = req.params.discountid;
+  console.log(typeof(discountid1+"discountiddiscountid"))
+  db.DiscountByItem.find({"ItemId":discountid1},function(err,doc){
+    console.log(doc[0]+"discounttttt")
       res.json(doc)
   })
 })
@@ -3782,9 +3791,11 @@ app.get('/getstockbookdetail:stockbookdetail',function(req,res){
         console.log(stockdetailitemcode+"stockdetailitemcode");
         var stockdetailpoint=str_array[2];
         stockdetailpoint=parseInt(stockdetailpoint);
+        var uommiidd=str_array[3];
+        uommiidd=parseInt(uommiidd);
         //var transactiontype = "Opening Stock";
         console.log(stockdetailpoint+"stockdetailpoint");
-         db.stockBookDetail.find({$and:[{"ItemCode":stockdetailitemcode,"StockPointId":stockdetailpoint,"VoucherType":transactiontype}]},function(err,doc1){
+         db.stockBookDetail.find({$and:[{"ItemCode":stockdetailitemcode,"StockPointId":stockdetailpoint,"VoucherType":transactiontype,"UOMId":uommiidd}]},function(err,doc1){
          res.json(doc1);
       })   
     })
@@ -3874,7 +3885,16 @@ app.put('/purchasetranupdate:purchasetranupdate',function(req,res){
     console.log(vouchertype);
     var mongoidfind= str_array[29];
     console.log(mongoidfind+"mongoidfindmongoidfindmongoidfindmongoidfind");
-    db.stockBookDetail.update({_id: mongojs.ObjectId(mongoidfind)},{ $inc: { "NetPieces":netpieces,"TaxableValue":taxablevalue,"CGST":cgst,"SGST":sgst,"TotTaxAmt":finaltax }},function(err,doc){
+    var base= str_array[30];
+    base =parseFloat(base)
+    console.log(base+"base");
+    var standard= str_array[31];
+    standard =parseFloat(standard)
+    console.log(standard+"standard");
+    var pack = str_array[32];
+    pack =parseFloat(pack)
+    console.log(pack+"pack");
+    db.stockBookDetail.update({_id: mongojs.ObjectId(mongoidfind)},{ $inc: { "NetPieces":netpieces,"TaxableValue":taxablevalue,"CGST":cgst,"SGST":sgst,"TotTaxAmt":finaltax,"NetBase":base,"NetStandard":standard,"NetPackage":pack}},function(err,doc){
     res.json(doc) })
   
     })
@@ -3943,7 +3963,7 @@ app.put('/purchasetranupdate:purchasetranupdate',function(req,res){
     salerate = parseInt(salerate);
     console.log(salerate)
     var purchaserate= str_array[22];
-    purchaserate = parseInt(purchaserate);
+    purchaserate = parseFloat(purchaserate);
     console.log(purchaserate);
     var taxablevalue= str_array[23];
     taxablevalue =parseFloat(taxablevalue);
@@ -3974,14 +3994,14 @@ app.put('/purchasetranupdate:purchasetranupdate',function(req,res){
     var tostockinword= str_array[32];
     console.log(tostockinword+"tostockinword");
     var base= str_array[33];
-    base =parseInt(base)
+    base =parseFloat(base)
     console.log(base+"base");
     var standard= str_array[34];
-    standard =parseInt(standard)
-    console.log(tostockinword+"standard");
+    standard =parseFloat(standard)
+    console.log(standard+"standard");
     var pack = str_array[35];
     pack =parseFloat(pack)
-    console.log(tostockinword+"pack");
+    console.log(pack+"pack");
   
 
     db.stockBookDetail.insert({"VocherId" : voucherid,"ItemId":itemid,"ItemCode":itemcode,"ParentStock":parentstock,"stockInWord":stockinward,"AccN0":accno,"PosID":posid,"StockBookId":finalstockbookid,"EntryRowNo":finalentryrow,"VocherDate":voucherdate,"NetQty":umosize,"NetPieces":netpieces,"PurchaseRate":purchaserate,"SaleRate":salerate,"TaxableValue":taxablevalue,"CGST":cgst,"SGST":sgst,"TotTaxAmt":finaltax,"Rate":finalrate,"ChargeableUnits":netpieces,"AllIncluValue":allincluvalue,"UOMSizeMasterId":uomsizemasterid,"ReferenceNo":referenceno,"StockPointId":stockpointid,"UOMId":uomid,"InvGroupName":invgroupname,"VoucherType":vouchertype,"NetBase":base,"NetStandard":standard,"NetPackage":pack},function(err,doc){
@@ -4049,218 +4069,253 @@ app.post('/stockbookheadresave:headresave',function(req,res){
       })
  })
 
+
+
+
+//////////Discount Start////////////////////////
+
+app.get('/dscname:barname',function(req,res){
+
+   console.log("ddsssssssssssssssssssssssss")
+   var name=req.params.barname;
+   console.log(name);
+      
+       db.itemdata.find({"POSName":name},function(err,doc){
+        res.json(doc);
+      })
+
+})
+app.get('/getid:name1',function(req,res){
+
+   console.log("ddsssssssssssssssssssssssss")
+   var nam=req.params.name1;
+   console.log(nam);
+      
+       db.itemdata.find({"name":nam},function(err,doc){
+        res.json(doc);
+      })
+
+})
+
+app.post('/disbyitem:discitems',function(req,res){
+      var discitems1 = req.params.discitems;
+   console.log(discitems1);
+   var str_array=discitems1.split(",");
+   var perc1=str_array[0];
+    console.log(perc1+"percent");
+
+    var radio=str_array[1];
+    console.log(radio);
+
+
+    var disc=str_array[2];
+    console.log(disc+"disc");
+     var itemid=str_array[3];
+     console.log(itemid)
+
+db.DiscountByItem.insert({"ItemId":itemid,"Discount":disc,"DiscountByMasterId":radio,"DiscountByItemId":perc1},function(err,doc){
+        res.json(doc);
+      })
+    })
+
 // TRANCTION DETAIL START NOWWWWWWWWWWWWWWWWWWWWWWWWWWW
 
-  app.get('/tranction',function(req,res){
-    console.log("vavavavvavavavavavavavaavavvavaavav")
-     
-    db.transactionMaster.find(function(err,doc){
-      // console.log(doc[0].TransctionType);
-      res.json(doc);
-    })
-  })
-  
- 
-app.get('/partyfetch/',function(req,res){
-console.log("bababababbabbbababababababbaabbaba")
-db.partyMaster.find(function(err,doc){
-  res.json(doc);
-})
-
-})
-
-app.get('/uomfetch/',function(req,res){
-console.log("bababababbabbbababababababbaabbaba")
-db.UOM.find(function(err,doc){
-  res.json(doc);
-})
-
-})
-
-app.get('/sesfetch:posname',function(req,res){
-  var poss= req.params.posname;
-  console.log(poss+"jajajajajjajjajajajajajajajaj");
-
- 
-db.SectionMaster.find({"POSName":poss},function(err,doc){
-  res.json(doc);
-})
-
-})
-    
-
-    app.get('/stocktype:poname',function(req,res){
-      
-      var pss=req.params.poname;
-      console.log(pss+"pllllllllllllllllllllllllllllll")
-
-      db.StockPointMaster.find({"POSName":pss},function(err,doc){
-        res.json(doc);
-      })
-    })
-
-
-
-    app.get('/itembar:barname',function(req,res){
-      console.log("barrrrrrrrrrrrrrrrrrrrrrr")
-      var Barname=req.params.barname;
-      
-   db.ItemSKU.find({"POSName":Barname},function(err,doc){
-        res.json(doc);
-      })
-    })
-
-
-
-     app.get('/getsku:skuuu',function(req,res){
-      console.log("barrrrrrrrrrrrrrrrrrrrrrr")
-      var sku=parseInt(req.params.skuuu);
-      console.log(sku+"iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
-      
-   db.ItemSKU.find({"ItemCode":sku},function(err,doc){
-        res.json(doc);
-      })
-    })
-
-
-  app.get('/allrate:alskuid',function(req,res){
-      console.log("barrrrrrrrrrrrrrrrrrrrrrr")
-      var alskuid= parseInt(req.params.alskuid);
-      console.log(alskuid+"iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
-      
-   db.ItemSKURate.find({"ItemSKUID":alskuid},function(err,doc){
-        res.json(doc);
-      })
-    }) 
-
-app.get('/getinvoice:barn',function(req,res){
-      console.log("barrrrrrrrrrrrrrrrrrrrrrr")
-      var barname=  req.params.barn;
- 
-      
-   db.invoiceDetails.find({"POSName":barname},function(err,doc){
-        res.json(doc);
-      })
-    }) 
-
-app.get('/uomid:uoid',function(req,res){
-      console.log("777777777777777777777777777777777777")
-      var uomid=  req.params.uoid;
-      console.log(typeof(uomid))
-      var uomid=parseInt(uomid);
- 
-      
-   db.UOMSizeMaster.find({"UOMSizeMasterID":uomid},function(err,doc){
-        res.json(doc);
-      })
-    })
-
-
-
-/////////STOCK BOOK DETAIL//////////////////
-app.post('/saledetail:salereturn',function(req,res){
-   var salereturn1 = req.params.salereturn;
-   console.log(salereturn1);
-   var str_array=salereturn1.split(",");
-    var voucherid=str_array[0];
-    console.log(voucherid+"voucherid");
-    var itemid=str_array[1];
-    console.log(itemid+"itemid");
-    var posname=str_array[2];
-    console.log(posname+"posname");
-    var saledate=str_array[3];
-    console.log(saledate+"saledate");
-    var posid=str_array[4];
-    console.log(posid+"posId");
-
-    var sectionsalerate=str_array[5];
-    console.log(sectionsalerate+"sectionsalerate");
-
-    var  netpiece=str_array[6];
-    console.log(netpiece+"netpiece");
-
-    var  value=str_array[7];
-    console.log(value+"value");
-
-    var  uomsizeid=str_array[8];
-    console.log(uomsizeid+"uomsizeid");
-
-    var  uomid=str_array[9];
-    console.log(uomid+"uomid");
-
-    var  stocktypeid=str_array[10];
-    console.log(stocktypeid+"stocktypeid");
-    var  stockinword=str_array[11];
-    console.log(stockinword+"stockinword");
-
-  
-  db.stockBookDetail.insert({"VocherId":voucherid,"ItemId":itemid,"VocherDate":saledate,"PosID":posid,"SaleRate":sectionsalerate,"NetPieces":netpiece,"Value":value,"UOMSizeMasterId":uomsizeid,"UOMId":uomid,"StockPointId":stocktypeid,"stockInWord":stockinword },function(err,doc){
-  res.json(doc)
-  console.log(doc.VocherId) 
-  var voucherid=parseInt(doc.VocherId)
-  console.log(typeof(voucherid))
-     // console.log(doc.VocherId+"voucherrrrrrrr")
-     var voucher1 = voucherid+1;
-     db.invoiceDetails.update({"POSName":posname},{$set:{"invoiceNumber":voucher1}}, function(err,res){
-       
-   })
-      })
-
-
- })
-
-///// STOCK BOOK HEADER/////////////////////////////////
-app.post('/saleheader:salereturn',function(req,res){
-  console.log("bandeeeeeeeeeeeeeeeeeeeeeeeeeeee")
-   var salereturn1 = req.params.salereturn;
-   console.log(salereturn1);
-   var str_array=salereturn1.split(",");
-    var voucherid=str_array[0];
-    console.log(voucherid+"voucherid");
-    var itemid=str_array[1];
-    console.log(itemid+"itemid");
-    var posname=str_array[2];
-    console.log(posname+"posname");
-    var saledate=str_array[3];
-    console.log(saledate+"saledate");
-    var posid=str_array[4];
-    console.log(posid+"posId");
-
-    var voucherclass=str_array[5];
-    console.log(voucherclass+"voucherclass");
-
-     var section=str_array[6];
-    console.log(section+"section");
-     var hhmmsstt=str_array[7];
-    console.log(hhmmsstt+"hhmmsstt");
-       var sectionid=str_array[8];
-    console.log(sectionid+"sectionid");
-  
-  db.stockBookHeader.insert({"VoucherId" : voucherid,"VoucherDate":saledate,"VoucherClass":voucherclass,"VoucherType":section,"VoucherTime":hhmmsstt,"sectionId":sectionid},function(err,doc){
-    res.json(doc)
-    
- 
-    
-      })
-
-
- })
+//  app.get('/tranction',function(req,res){
+//    console.log("vavavavvavavavavavavavaavavvavaavav")
+//     
+//    db.transactionMaster.find(function(err,doc){
+//      // console.log(doc[0].TransctionType);
+//      res.json(doc);
+//    })
+//  })
+//  
+// 
+//app.get('/partyfetch/',function(req,res){
+//console.log("bababababbabbbababababababbaabbaba")
+//db.partyMaster.find(function(err,doc){
+//  res.json(doc);
+//})
+//
+//})
+//
+//app.get('/uomfetch/',function(req,res){
+//console.log("bababababbabbbababababababbaabbaba")
+//db.UOM.find(function(err,doc){
+//  res.json(doc);
+//})
+//
+//})
+//
+//app.get('/sesfetch:posname',function(req,res){
+//  var poss= req.params.posname;
+//  console.log(poss+"jajajajajjajjajajajajajajajaj");
+//
+// 
+//db.SectionMaster.find({"POSName":poss},function(err,doc){
+//  res.json(doc);
+//})
+//
+//})
+//    
+//
+//    app.get('/stocktype:poname',function(req,res){
+//      
+//      var pss=req.params.poname;
+//      console.log(pss+"pllllllllllllllllllllllllllllll")
+//
+//      db.StockPointMaster.find({"POSName":pss},function(err,doc){
+//        res.json(doc);
+//      })
+//    })
+//
+//
+//
+//    app.get('/itembar:barname',function(req,res){
+//      console.log("barrrrrrrrrrrrrrrrrrrrrrr")
+//      var Barname=req.params.barname;
+//      
+//   db.ItemSKU.find({"POSName":Barname},function(err,doc){
+//        res.json(doc);
+//      })
+//    })
+//
+//
+//
+//     app.get('/getsku:skuuu',function(req,res){
+//      console.log("barrrrrrrrrrrrrrrrrrrrrrr")
+//      var sku=parseInt(req.params.skuuu);
+//      console.log(sku+"iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
+//      
+//   db.ItemSKU.find({"ItemCode":sku},function(err,doc){
+//        res.json(doc);
+//      })
+//    })
+//
+//
+//  app.get('/allrate:alskuid',function(req,res){
+//      console.log("barrrrrrrrrrrrrrrrrrrrrrr")
+//      var alskuid= parseInt(req.params.alskuid);
+//      console.log(alskuid+"iiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiiii")
+//      
+//   db.ItemSKURate.find({"ItemSKUID":alskuid},function(err,doc){
+//        res.json(doc);
+//      })
+//    }) 
+//
+//app.get('/getinvoice:barn',function(req,res){
+//      console.log("barrrrrrrrrrrrrrrrrrrrrrr")
+//      var barname=  req.params.barn;
+// 
+//      
+//   db.invoiceDetails.find({"POSName":barname},function(err,doc){
+//        res.json(doc);
+//      })
+//    }) 
+//
+//app.get('/uomid:uoid',function(req,res){
+//      console.log("777777777777777777777777777777777777")
+//      var uomid=  req.params.uoid;
+//      console.log(typeof(uomid))
+//      var uomid=parseInt(uomid);
+// 
+//      
+//   db.UOMSizeMaster.find({"UOMSizeMasterID":uomid},function(err,doc){
+//        res.json(doc);
+//      })
+//    })
+//
+//
+//
+///////////STOCK BOOK DETAIL//////////////////
+//app.post('/saledetail:salereturn',function(req,res){
+//   var salereturn1 = req.params.salereturn;
+//   console.log(salereturn1);
+//   var str_array=salereturn1.split(",");
+//    var voucherid=str_array[0];
+//    console.log(voucherid+"voucherid");
+//    var itemid=str_array[1];
+//    console.log(itemid+"itemid");
+//    var posname=str_array[2];
+//    console.log(posname+"posname");
+//    var saledate=str_array[3];
+//    console.log(saledate+"saledate");
+//    var posid=str_array[4];
+//    console.log(posid+"posId");
+//
+//    var sectionsalerate=str_array[5];
+//    console.log(sectionsalerate+"sectionsalerate");
+//
+//    var  netpiece=str_array[6];
+//    console.log(netpiece+"netpiece");
+//
+//    var  value=str_array[7];
+//    console.log(value+"value");
+//
+//    var  uomsizeid=str_array[8];
+//    console.log(uomsizeid+"uomsizeid");
+//
+//    var  uomid=str_array[9];
+//    console.log(uomid+"uomid");
+//
+//    var  stocktypeid=str_array[10];
+//    console.log(stocktypeid+"stocktypeid");
+//    var  stockinword=str_array[11];
+//    console.log(stockinword+"stockinword");
+//
+//  
+//  db.stockBookDetail.insert({"VocherId":voucherid,"ItemId":itemid,"VocherDate":saledate,"PosID":posid,"SaleRate":sectionsalerate,"NetPieces":netpiece,"Value":value,"UOMSizeMasterId":uomsizeid,"UOMId":uomid,"StockPointId":stocktypeid,"stockInWord":stockinword },function(err,doc){
+//  res.json(doc)
+//  console.log(doc.VocherId) 
+//  var voucherid=parseInt(doc.VocherId)
+//  console.log(typeof(voucherid))
+//     // console.log(doc.VocherId+"voucherrrrrrrr")
+//     var voucher1 = voucherid+1;
+//     db.invoiceDetails.update({"POSName":posname},{$set:{"invoiceNumber":voucher1}}, function(err,res){
+//       
+//   })
+//      })
+//
+//
+// })
+//
+/////// STOCK BOOK HEADER/////////////////////////////////
+//app.post('/saleheader:salereturn',function(req,res){
+//  console.log("bandeeeeeeeeeeeeeeeeeeeeeeeeeeee")
+//   var salereturn1 = req.params.salereturn;
+//   console.log(salereturn1);
+//   var str_array=salereturn1.split(",");
+//    var voucherid=str_array[0];
+//    console.log(voucherid+"voucherid");
+//    var itemid=str_array[1];
+//    console.log(itemid+"itemid");
+//    var posname=str_array[2];
+//    console.log(posname+"posname");
+//    var saledate=str_array[3];
+//    console.log(saledate+"saledate");
+//    var posid=str_array[4];
+//    console.log(posid+"posId");
+//
+//    var voucherclass=str_array[5];
+//    console.log(voucherclass+"voucherclass");
+//
+//     var section=str_array[6];
+//    console.log(section+"section");
+//     var hhmmsstt=str_array[7];
+//    console.log(hhmmsstt+"hhmmsstt");
+//       var sectionid=str_array[8];
+//    console.log(sectionid+"sectionid");
+//  
+//  db.stockBookHeader.insert({"VoucherId" : voucherid,"VoucherDate":saledate,"VoucherClass":voucherclass,"VoucherType":section,"VoucherTime":hhmmsstt,"sectionId":sectionid},function(err,doc){
+//    res.json(doc)
+//    
+// 
+//    
+//      })
+//
+//
+// })
 
 ////////////////////////////////////ABHISHEK/////////////////////////////////////////
-
-
-// app.get('/date', function (req, res) {
-
-//     console.log("this is '/abhi' path");
-
-//     db.stockBookDetail.find({'VocherD}, function (err, docs) {
-
-//         res.json(docs);
-//          console.log(docs);
-//     });
-
-// });
-
 app.get('/abhi', function (req, res) {
 
     console.log("this is '/abhi' path");
@@ -4319,8 +4374,6 @@ db.abhishek.insert({"VoucherId" :str[0] ,"VoucherClass":str[1],"VoucherType":str
     console.log(doc)
  })
  })
-
-
 app.get('/abhishek',function(req,res)
 {
    console.log("this is "+req.path);
@@ -4347,8 +4400,6 @@ db.abhishek.insert({"VoucherId":req.params.a},function(err,docs)
     res.json(docs);
     
 })
-
-
 })
 
 var port=7000;  

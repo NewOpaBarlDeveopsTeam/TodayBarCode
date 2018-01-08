@@ -1,0 +1,290 @@
+ <html ng-app="myapp">
+<title> DISCOUNT</title>
+<head>
+	 <meta charset="utf-8"/>
+  <!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+<!-- Optional theme -->
+<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+
+   <script src="//code.jquery.com/jquery-2.0.3.min.js"></script>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js">
+    </script>
+<script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/lodash.js/0.10.0/lodash.min.js"></script>
+
+<script type="text/javascript" src="http://ajax.googleapis.com/ajax/libs/jquery/1.8.3/jquery.min.js"></script>
+<script type="text/javascript">
+    $(function () {
+        $("input[name='1']").click(function () {
+            if ($("#chkYes").is(":checked")) {
+                $("#dvPassport").show();
+            } else {
+                $("#dvPassport").hide();
+            }
+        });
+    });
+</script>
+
+<style>
+.d1{
+	border:1px solid;
+	background-color:  grey;
+	height:auto;
+  }
+  .d2{
+	border:1px solid;
+	background-color: white;
+	height:300;
+	margin-top: 10px;
+	margin-left:2px; 
+	margin-right:2px;
+  }
+  .d3{
+	border:1px solid;
+	background-color: grey;
+	height:200;
+	width:400px;
+	margin-top: -210px;
+	margin-left:680px; 
+	 
+  }
+  #d3in{
+    background-color: white;
+    border-collapse: collapse;
+    width:100%;
+
+  }
+  #tab{
+   
+  	border-collapse: collapse;
+  	 
+  	width:100%;
+  }
+  th{
+  	border:1px solid;
+  }
+  input[type='text']
+{
+    background:white;
+    width:250px;
+    height: 40px;
+     
+}
+.option{
+	width:250px;
+    height: 40px;
+
+}
+
+  input[type='date']
+{
+    
+    width:150px;
+    height: 40px;
+}
+#idd{
+	margin-left: 30px
+
+}
+ input[type='checkbox']
+ 
+{
+    
+    width:20px;
+    height: 20px;
+}
+#num{
+    border-color: white;
+    width:180px;
+    border:none;
+}
+#sel{
+    
+    width:100px;
+    border:none;
+
+
+}
+#idid{
+      width:70px;
+    }
+
+
+</style>	
+</head>
+<body ng-controller="myctrl">
+	<div class="d1">
+		 
+		<div class="d2">
+			<table id="tab">
+				<tr>
+				<th>Scheme Name</th>
+				<th>Transaction</th>
+				<th>DiscountType</th>
+				<th>Duration</th>
+				 
+			</tr>
+				<tr>
+				<td> </td>
+				<td> </td>
+				<td> </td>
+				<td> </td>
+				 
+			</tr>
+			</table>
+
+		</div>
+		 
+ <div>
+        
+        
+         
+        <span style="margin-left: 450px">
+        <button type="button" class=" btn-default" id="idid">NEW</button>
+        <button type="button" class=" btn-default" id="idid">EDIT</button>
+        <button type="button" class=" btn-default" id="idid">DELETE</button>
+        <button type="button" class=" btn-default" id="idid">CLOSE</button>
+        </span>
+      </div>
+      <br>
+		<br> 
+        <div class="row">
+        	<div class="col-md-4">
+        		<label> Scheme Name</label> 
+        	<select class="option">
+        			<option></option>
+        			<option> </option>
+        		</select></strong>
+        	</div>
+        	
+        
+        	<!-- <div class="col-md-4">
+        		 <input type="checkbox"><label>Treat this Discount as credit Note</label>
+        	</div> -->
+        	<div class="col-md-4">
+        		<label>For Transaction</label> 
+        	<select class="option">
+        			<option></option>
+        			<option> </option>
+        		</select></strong>
+        	</div>
+
+        	<div class="col-md-4">
+        		 <input type="checkbox"><label>Treat this Discount as credit Note</label>
+        	</div>
+        </div>
+	 
+		<br>
+		 <div class="row">
+        	<div class="col-md-4">
+        		<label> Posting Account</label> <input type="text"></strong>
+        	</div>
+        	<div class="col-md-4">
+        		<label> Expired</label>
+        		<select class="option">
+        			<option></option>
+        			<option> </option>
+        		</select
+        	</strong>
+        	</div>
+        	<div class="col-md-4">
+        		<label>  </label> <input type="text" placeholder="name"></strong>
+        	</div>
+        </div>
+        <br>
+		 
+		 
+		 
+		<div class="row">
+			<div class="col-md-8">
+       <input type="radio" VALUE="from" name="date" id="idd" ng-model="select" ng-click="sel(select)"><strong>
+    
+    DATE WISE:: FROM DATE <input type="date" VALUE="to" ng-model="date2.date1" ng-model="sel2" ng-click="sel(sel2)"> 
+    TO DATE <input type="date" id="idd" ng-model="date1.date2"></strong><br><br>
+    <input type="radio"  VALUE="TO" name="date" id="idd">
+    <label> DAY WISE:: </label> 
+    <input type="checkbox"><label>SUN</label>
+    <input type="checkbox"><label>MON</label>
+    <input type="checkbox"><label>TUE</label>
+    <input type="checkbox"><label>WED</label>
+    <input type="checkbox"><label>THU</label>
+    <input type="checkbox"><label>FRI</label>
+    <input type="checkbox"><label>SAT</label>
+    <br> <br>
+    <input type="radio" VALUE="from" name="date" id="idd"><strong>DATE IN MONTH:: DATE <input type="date" ng-model="date2.date1">
+    </div>
+    <div class="col-md-4">
+    	<input type="radio" name="am" VALUE="1" ng-model="per" ng-click="percent(per)"><label> Disc by %</label><br>
+    	<input type="radio" name="am" VALUE="2" ng-model="per" ng-click="percent(per)"><label> Disc by amount</label><br>
+    	<input type="checkbox"><label> Editable</label>
+    </div>
+</div><br><br>
+
+<div class="row">
+	<div class="col-md-4">
+		<input type="radio" name="1" value="1" id="chkYes" ng-model="r1" ng-click="getr1(r1)"><label>Item Wise Before Tax(Tax Reduced)</label><br>
+    <input type="radio" name="1"><label>Sale-Category Wise Before Tax(Tax Reduced)</label><br>
+    <input type="radio" name="1"><label>Sale-Quantity Wise Before Tax(Tax Reduced)</label><br>
+    <input type="radio" name="1"><label>Invoice-Value Wise After Tax(Tax Reduced)</label><br>
+    <input type="radio" name="1"><label>Party-Wise Sale Category Wise Sale Before Tax(Tax NOt Reduced)</label><br>
+    <input type="radio" name="1"><label> Party-Wise Value-Wise After Tax</label><br>
+    <input type="radio" name="1"><label>Clearance(Tax NOt Reduced)</label><br>
+
+	</div>
+	<div class="col-md-8 d3" >
+        <div id="dvPassport" style="display: none">
+            <table id="d3in">
+                <tr>
+                    <th>SI NO</th>
+                    <th>ITEM</th>
+                    <th>DISCOUNT</th>
+                </tr>
+                <tr>
+                    <td>{{$index+1}}</td>
+         <td ><select  ng-model="names"  ng-change="getitemid(names,number)">
+                       
+             <option ng-repeat="na in itename"> {{na.name}}</option>
+                              
+                        </select></td>
+                     <td> <input type="number"  ng-model="number" ng-blur="get(number)" id="num"></td>  
+                 </tr>
+                     <!-- </th>  -->
+            </table>
+
+    
+
+
+</div>
+	</div>
+
+
+</div>
+<br>
+<div class="row">
+	<div class="col-md-6">
+		<span style="margin-left: 450px">
+      
+        <button type="button" class=" btn-default" id="idid">DELETE</button>
+         
+    </div>
+    <div class="col-md-6">
+		<span style="margin-left: 50px">
+        
+        <button type="button" class=" btn-default" id="idid" ng-click="savediscount()">SAVE</button>
+        &nbsp;&nbsp;
+        <button type="button" class=" btn-default" id="idid">CLOSE</button>
+    </div>
+
+   
+
+      
+</form>
+<!-- <div class="d3">
+	</div> -->
+
+</body>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/ngstorage/0.3.6/ngStorage.min.js"></script>
+    <script type="text/javascript" src="controllers/discountcntrl.js"></script>
+</html>

@@ -239,10 +239,10 @@
                   <td ng-model="purchase.quantity">{{purchase.quantity}}</td>
                   <td ng-model="purchase.pieces">{{purchase.pieces}}</td>
                   <td ng-model="purchase.umo">{{purchase.umo}}</td>
-                  <td ng-model="purchase.Rate">{{purchase.Rate| number : 5}}</td>
-                  <td ng-model="purchase.discrate">{{purchase.discrate| number : 5}}</td>
-                  <td ng-model="purchase">{{}}</td>
-                  <td ng-model="purchase.value">{{purchase.value| number : 5}}</td>
+                  <td ng-model="purchase.Rate">{{purchase.Rate| number : 3}}</td>
+                  <td ng-model="purchase.discrate">{{purchase.discountamt| number : 3}}</td>
+                  <td ng-model="purchase">{{purchase.discounttype}}</td>
+                  <td ng-model="purchase.value">{{purchase.value| number : 3}}</td>
                 </tr>
               </tbody>
 	    	</table>
@@ -289,12 +289,12 @@
                   </tr>
                   <tr><th>Sub Total</th>
                   
-                  <td>{{subtotal1 | number : 5}}</td></tr>
+                  <td>{{subtotal1 | number : 3}}</td></tr>
                   <tr><th>Charges</th>
                   <td>00</td>
                   </tr>
                   <tr><th>Invoice Value</th>
-                    <td>{{invoicevalue1 | number : 5}}</td>
+                    <td>{{invoicevalue1 | number : 3}}</td>
                   </tr>
                   <tr><th>Adjustment</th>
                     <td>00</td>
@@ -305,10 +305,10 @@
         </div>
         <br>
         <div class=" col-md-5">
-        <span style="font-size: 19px">Item Disc Total:00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Final Item Value: {{finalvalue | number : 5}} </span>
+        <span style="font-size: 19px">Item Disc Total:00&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Final Item Value: {{finalvalue | number : 3}} </span>
         <p style="font-size:30px">Items:{{totalitems}}</p>
         <p style="font-size:30px">Pieces:{{piece}}</p>
-        <p style="font-size:30px;color:blue"> Nett:{{finalvalue | number : 5}} </p>
+        <p style="font-size:30px;color:blue"> Nett:{{finalvalue | number : 3}} </p>
         </div>
         </div>
         
