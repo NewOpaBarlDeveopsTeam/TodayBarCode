@@ -1,0 +1,132 @@
+ <!DOCTYPE>
+<html ng-app="myApp">
+  <head>
+    <title>Closing Stock</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  </head>
+  <style>
+    #div1{
+      border: 1px solid black;
+      height: 100%;
+    }
+    #div2{
+      border: 2px solid black;
+      height: 90%;
+      background-color:gainsboro;
+      margin:05px;
+   }
+    #div3{
+      border: 2px solid black;
+      height: 80%;
+      background-color: grey;
+      margin:05px;
+      margin-top: -20px;
+    }
+    #tabid {
+/*    height: 90%;*/
+    width: 98%;
+    background-color: white;
+    border: 2px solid grey;
+    margin:05px;
+    }
+    #row1{
+      margin:5px;
+    }
+  </style>
+  <body ng-controller="EnterClosing" ng-cloak>
+    <div class="container-fluid" id="div1">
+      <h4><center>Enter Closing Stock</center></h4>
+      <div class="main" id="div2">
+        <br>
+        <div class="row" id="row1">
+          <div class="col-md-3">
+            <label>For:</label><input type = "date" ng-model="date2.date1" style="margin-left: 5px">
+          </div>
+          <div class="col-md-3">
+           <label>Stock Point:
+              <select ng-model="stockid" ng-change="stockpointfrom(stockid)">
+                <option></option>
+                   <option ng-repeat = "stockpoint in stockpointname">{{stockpoint.StockPointName}}</option>
+              </select>
+             </label>
+          </div>
+          <div class="col-md-3">
+            <label>Price Section:
+            <select>
+                <option></option>
+                   <option ng-repeat = "stockpoint in stockpointname">{{stockpoint.StockPointName}}</option>
+              </select>
+            </label>
+          </div>
+          <div class="col-md-1">
+            <button type="button" class=" btn-default">View/Edit</button>
+          </div>
+          <div class="col-md-2">
+            <button type="button" class=" btn-default" ng-click="enterfunction(date2.date1)">Enter</button>
+          </div>
+        </div>
+        <br>
+        <div class="inside" id="div3">
+            <table class="table table-bordered" id="tabid">
+              <thead>
+                <tr>
+                  <th>No</th>
+                  <th>Item</th>
+                  <th>Size</th>
+                  <th>Open</th>
+                  <th>In</th>
+                  <th>Out</th>
+                  <th>BookQty</th>
+                  <th>PhysicalQty</th>
+                  <th>DiffQty</th>
+                  <th>Sales</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr ng-repeat="just in justcheck">
+                  <td>{{$index+1}}</td>
+                  <td>{{just._id.itemname}}</td>
+                  <td>{{just._id.uom}}</td>
+                  <td></td>
+                  <td>{{just.inpieces | number : 2}}</td>
+                  <td>{{outpieces}}</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table> 
+        </div>
+        <br>
+        <div class="row" id="row1">
+          <div class="col-md-3">
+            <label>Store</label>
+          </div>
+          <div class="col-md-3">
+            <button>Close Stock Point</button>
+          </div>
+          <div class="col-md-3">
+            <button>Enter Stock Point</button>
+          </div>
+          <div class="col-md-1">
+            <button>Save</button>
+          </div>
+          <div class="col-md-1">
+            <button>Export</button>
+          </div>
+          <div class="col-md-1">
+            <button>Close</button>
+          </div>
+          
+        </div>
+        
+      </div>
+    </div>
+  </body>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+<script type="text/javascript" src="controllers/enterclosingcntrl.js"></script>
+</html>
