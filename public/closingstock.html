@@ -86,14 +86,14 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="just in justcheck">
+                <tr ng-repeat="just in dailyclosingstock">
                   <td>{{$index+1}}</td>
-                  <td>{{just._id.itemname}}</td>
-                  <td>{{just._id.uom}}</td>
+                  <td>{{just.itemname}}</td>
+                  <td>{{just.uom}}</td>
                   <td></td>
                   <td>{{just.inpieces | number : 2}}</td>
-                  <td>{{outpieces}}</td>
-                  <td></td>
+                  <td>{{just.outpieces | number : 2}}</td>
+                  <td>{{just.bookqty | number : 2}}</td>
                   <td></td>
                   <td></td>
                   <td></td>

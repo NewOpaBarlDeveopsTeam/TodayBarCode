@@ -3,6 +3,7 @@ var myApp=angular.module('myApp',[]);
 myApp.controller('EnterClosing',['$scope','$http','$window',
 function($scope,$http,$window){
   $scope.date2 = {date1:new Date()}
+  var closingstock=[];
   var loginres= window.sessionStorage.getItem("loginres1")
    console.log(loginres)
    $scope.loginresname = loginres;
@@ -25,7 +26,9 @@ function($scope,$http,$window){
      }
    })//stockpointfetch
   
-  $scope.enterfunction=function(voucherdate){
+  $scope.enterfunction=function(voucherdate)
+  {
+    var obj={};
     alert("enter");
     var  dates  = new Date(((new Date(voucherdate).toISOString().slice(0, 23))+"-05:30")).toISOString();
             var a = dates.split("T");
@@ -35,34 +38,17 @@ function($scope,$http,$window){
        var stockinvalue=date+","+$scope.stockidfound+","+stockinwordtype;
        console.log(stockinvalue)
        $http.get("/stockincalc"+stockinvalue).success(function(response){
-         
-         $scope.justcheck=response;
-//         for(var s=0;s<response.length;s++)
-//         {
-//           $scope.itemcodecode = response[s]._id.itemcode;
-//           console.log(response[s]._id.itemcode);
-//        var itemidwithpos = response[s]._id.itemcode+","+$scope.loginresname;
-//           
-//   $http.get("/stockoutcalc"+$scope.itemcodecode).success(function(res){
-//             console.log(res)
-//          if(res.length !=0)
-//            {
-//              $scope.outpieces = res[0].pieces;
-//              console.log($scope.outpieces)
-//            }
-//     else{
-//              $scope.outpieces = 0;
-//              console.log($scope.outpieces)
-//       
-//         }
-//         })
-//   $http.get("/itemnamefetchwithpos"+itemidwithpos).success(function(result){
-//             console.log(result)
-//             console.log(result[0].ItemName)
-//         })
-//           
-//         }
-         
-       })//stockincalc
-  }
+           console.log(response);
+           console.log(response.length);
+          console.log(response[0]._id.itemcode); 
+         $scope.incalcid=response[0]._id.itemcode;
+          })//stockincalc  
+        $http.get("/stockoutcalc"+stockinvalue).success(function(result){
+              console.log(result);
+              console.log(result.length);
+          $scope.outcalcid=result[0]._id.itemcode;
+          console.log($scope.incalcid)
+          console.log($scope.outcalcid)
+          })
+   }//enterfunction
   }]);

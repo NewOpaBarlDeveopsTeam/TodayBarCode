@@ -4072,6 +4072,7 @@ app.post('/stockbookheadresave:headresave',function(req,res){
 ///////////enterclosingcontroller/////////
 
 app.get('/stockincalc:stockinval',function(req,res){
+  
     var stockinval1=req.params.stockinval;
     var str_array=stockinval1.split(",");
     var voucherdate=str_array[0];
@@ -4094,42 +4095,39 @@ app.get('/stockincalc:stockinval',function(req,res){
         {$project:{ "newitemcode.ItemCode":1,"newitemcode.ItemName":1,"NetQty":1,"NetStandard":1}},
         {$group:{_id:{itemcode:"$newitemcode.ItemCode",itemname:"$newitemcode.ItemName",uom:"$NetQty"},inpieces:{$sum:"$NetStandard"}}}  
         ],function(err,doc){
-    console.log(doc+"docccc")
+    console.log(doc[0]+"docccc")   
     res.json(doc)
-  }) 
+  })//doc
 }) 
 
-app.get('/stockoutcalc:itemcodecode',function(req,res){
-  var itemcode1 = req.params.itemcodecode;
-  itemcode1=parseInt(itemcode1);
-  db.stockBookDetail.aggregate([{$match:{"ItemCode":itemcode1,"stockInWord":"No"}},{$group:{_id:{itemcode:"$ItemCode"},pieces:{$sum:"$NetStandard"}}}],function(err,doc9){
-    console.log(doc9+"docccc")
-    res.json(doc9)
-  })
-  
-})
-
-app.get('/itemnamefetchwithpos:itemidwithpos',function(req,res){
-    var itemidwithpos1=req.params.itemidwithpos;
-    var str_array=itemidwithpos1.split(",");
-    var itemitemcode=str_array[0];
-    itemitemcode = parseInt(itemitemcode);
-    console.log(typeof(itemitemcode+"itemitemcode"));
-    var itempos=str_array[1];
-    console.log(itempos+"itempos");
-  db.ItemSKU.find({"ItemCode":itemitemcode,"POSName":itempos},function(err,doc1){
-    console.log(doc1+"docccc")
+app.get('/stockoutcalc:stockoutvalue',function(req,res){
+    var stockoutvalue1=req.params.stockoutvalue;
+    var str_array=stockoutvalue1.split(",");
+    var voucherdate=str_array[0];
+    console.log(voucherdate+"voucherdate");
+    var stockpointid=str_array[1];
+    stockpointid = parseInt(stockpointid);
+    console.log(stockpointid+"stockpointid");
+    var stockpointype=str_array[2];
+    console.log(stockpointype);
+   db.stockBookDetail.aggregate([
+     {$match:{"VocherDate":voucherdate,"StockPointId":stockpointid,"stockInWord":"No"}},
+      { "$lookup": 
+      {
+        "from": "ItemSKU",
+        "localField":  "ItemCode",
+        "foreignField": "ItemCode",
+        "as": "newitemcode"
+        }},
+       {$unwind:"$newitemcode"}, 
+        {$project:{ "newitemcode.ItemCode":1,"newitemcode.ItemName":1,"NetQty":1,"NetStandard":1}},
+        {$group:{_id:{itemcode:"$newitemcode.ItemCode",itemname:"$newitemcode.ItemName",uom:"$NetQty"},outpieces:{$sum:"$NetStandard"}}}  
+        ],function(err,doc1){
+    console.log(doc1[0]+"docccc")   
     res.json(doc1)
   })
   
-  
 })
-
-
-
-
-
-
 //////////Discount Start////////////////////////
 
 app.get('/dscname:barname',function(req,res){

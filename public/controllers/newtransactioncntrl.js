@@ -1116,7 +1116,7 @@ $scope.itemtaxfun= function()
 //    for(var n=0;n<purchaseitem1.length;n++){
       var transactionsavefun = function(n)
       {
-      if( n < catlen )
+      if( n < catlen)
         {
        alert(n+"inside transactionsavefun")
 //       $scope.stockbookid++;
