@@ -93,3 +93,38 @@
   })//doc1
     })//promise close
   }//openingBalanceCall
+
+
+
+
+
+
+   console.log($scope.voucherid.length);
+                                   $scope.availableGroups = (function () {
+                                    var assignedGroupsIds = {};
+                                    var groupsIds = {};
+                                    var result = [];
+                                      console.log("available");
+                                    $scope.userit.forEach(function (el, i) {
+                                      console.log("userit");
+                                      assignedGroupsIds[el._id] = $scope.userit[i];
+                                       console.log(assignedGroupsIds);
+                                    });
+
+                                    $scope.voucherid.forEach(function (el, i) {
+                                      console.log("voucherid"+$scope.voucherid[i]);
+                                      groupsIds[el.id] = $scope.voucherid[i];
+                                      console.log(groupsIds);
+                                    });
+
+                                    for (var i in groupsIds) {
+                                        if (assignedGroupsIds.hasOwnProperty(i)) {
+                                          console.log("hi");
+                                            result.push(assignedGroupsIds[i]);
+                                            console.log(result);
+                                             window.sessionStorage.setItem('myapp',JSON.stringify('result'));
+                                        }
+                                    }
+                                      console.log("end"+result);
+                                  return result;    
+                                }())

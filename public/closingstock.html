@@ -57,7 +57,7 @@
             <label>Price Section:
             <select>
                 <option></option>
-                   <option ng-repeat = "stockpoint in stockpointname">{{stockpoint.StockPointName}}</option>
+                   <option ng-repeat = "section in sectioname">{{section.SectionName}}</option>
               </select>
             </label>
           </div>
@@ -74,6 +74,7 @@
               <thead>
                 <tr>
                   <th>No</th>
+                  <th>Itemcode</th>
                   <th>Item</th>
                   <th>Size</th>
                   <th>Open</th>
@@ -86,15 +87,16 @@
                 </tr>
               </thead>
               <tbody>
-                <tr ng-repeat="just in dailyclosingstock">
+                <tr ng-repeat="just in notconfirm">
                   <td>{{$index+1}}</td>
+                  <td>{{just.itemcode}}</td>
                   <td>{{just.itemname}}</td>
                   <td>{{just.uom}}</td>
                   <td></td>
                   <td>{{just.inpieces | number : 2}}</td>
                   <td>{{just.outpieces | number : 2}}</td>
                   <td>{{just.bookqty | number : 2}}</td>
-                  <td></td>
+                  <td><input type="text" style="border: 0"></td>
                   <td></td>
                   <td></td>
                 </tr>

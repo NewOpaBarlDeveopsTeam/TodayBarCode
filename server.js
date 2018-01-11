@@ -4083,51 +4083,64 @@ app.get('/stockincalc:stockinval',function(req,res){
     var stockpointype=str_array[2];
     console.log(stockpointype+"stockpointype");
   db.stockBookDetail.aggregate([
-     {$match:{"VocherDate":voucherdate,"StockPointId":stockpointid,"stockInWord":stockpointype}},
-      { "$lookup": 
+        {$match:{"VocherDate":voucherdate,"StockPointId":stockpointid}},
+       { "$lookup": 
       {
         "from": "ItemSKU",
         "localField":  "ItemCode",
         "foreignField": "ItemCode",
         "as": "newitemcode"
         }},
-       {$unwind:"$newitemcode"}, 
-        {$project:{ "newitemcode.ItemCode":1,"newitemcode.ItemName":1,"NetQty":1,"NetStandard":1}},
-        {$group:{_id:{itemcode:"$newitemcode.ItemCode",itemname:"$newitemcode.ItemName",uom:"$NetQty"},inpieces:{$sum:"$NetStandard"}}}  
+         {$unwind:"$newitemcode"},
+         {$project:{ "newitemcode.ItemCode":1,"newitemcode.ItemName":1,"NetQty":1,"NetStandard":1,"stockInWord":1}},
+         {$group:{_id:{itemcode:"$newitemcode.ItemCode",itemname:"$newitemcode.ItemName",uom:"$NetQty",stocktype:"$stockInWord"},
+         netpieces:{$sum:"$NetStandard"}}}
+//  db.stockBookDetail.aggregate([
+//     {$match:{"VocherDate":voucherdate,"StockPointId":stockpointid,"stockInWord":stockpointype}},
+//      { "$lookup": 
+//      {
+//        "from": "ItemSKU",
+//        "localField":  "ItemCode",
+//        "foreignField": "ItemCode",
+//        "as": "newitemcode"
+//        }},
+//       {$unwind:"$newitemcode"}, 
+//        {$project:{ "newitemcode.ItemCode":1,"newitemcode.ItemName":1,"NetQty":1,"NetStandard":1}},
+//        {$group:{_id:{itemcode:"$newitemcode.ItemCode",itemname:"$newitemcode.ItemName",uom:"$NetQty"},inpieces:{$sum:"$NetStandard"}}}  
         ],function(err,doc){
     console.log(doc[0]+"docccc")   
     res.json(doc)
   })//doc
 }) 
 
-app.get('/stockoutcalc:stockoutvalue',function(req,res){
-    var stockoutvalue1=req.params.stockoutvalue;
-    var str_array=stockoutvalue1.split(",");
-    var voucherdate=str_array[0];
-    console.log(voucherdate+"voucherdate");
-    var stockpointid=str_array[1];
-    stockpointid = parseInt(stockpointid);
-    console.log(stockpointid+"stockpointid");
-    var stockpointype=str_array[2];
-    console.log(stockpointype);
-   db.stockBookDetail.aggregate([
-     {$match:{"VocherDate":voucherdate,"StockPointId":stockpointid,"stockInWord":"No"}},
-      { "$lookup": 
-      {
-        "from": "ItemSKU",
-        "localField":  "ItemCode",
-        "foreignField": "ItemCode",
-        "as": "newitemcode"
-        }},
-       {$unwind:"$newitemcode"}, 
-        {$project:{ "newitemcode.ItemCode":1,"newitemcode.ItemName":1,"NetQty":1,"NetStandard":1}},
-        {$group:{_id:{itemcode:"$newitemcode.ItemCode",itemname:"$newitemcode.ItemName",uom:"$NetQty"},outpieces:{$sum:"$NetStandard"}}}  
-        ],function(err,doc1){
-    console.log(doc1[0]+"docccc")   
-    res.json(doc1)
-  })
-  
-})
+//app.get('/stockoutcalc:stockoutvalue',function(req,res){
+//    var stockoutvalue1=req.params.stockoutvalue;
+//    var str_array=stockoutvalue1.split(",");
+//    var voucherdate=str_array[0];
+//    console.log(voucherdate+"voucherdate");
+//    var stockpointid=str_array[1];
+//    stockpointid = parseInt(stockpointid);
+//    console.log(stockpointid+"stockpointid");
+//    var stockpointype=str_array[2];
+//    console.log(stockpointype);
+//   db.stockBookDetail.aggregate([
+//     {$match:{"VocherDate":voucherdate,"StockPointId":stockpointid,"stockInWord":"No"}},
+//      { "$lookup": 
+//      {
+//        "from": "ItemSKU",
+//        "localField":  "ItemCode",
+//        "foreignField": "ItemCode",
+//        "as": "newitemcode"
+//        }},
+//       {$unwind:"$newitemcode"}, 
+//        {$project:{ "newitemcode.ItemCode":1,"newitemcode.ItemName":1,"NetQty":1,"NetStandard":1}},
+//        {$group:{_id:{itemcode:"$newitemcode.ItemCode",itemname:"$newitemcode.ItemName",uom:"$NetQty"},outpieces:{$sum:"$NetStandard"}}}  
+//        ],function(err,doc1){
+//    console.log(doc1[0]+"docccc")   
+//    res.json(doc1)
+//  })
+//  
+//})
 //////////Discount Start////////////////////////
 
 app.get('/dscname:barname',function(req,res){
