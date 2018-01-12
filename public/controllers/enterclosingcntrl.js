@@ -30,6 +30,19 @@ function($scope,$http,$window){
   console.log(response);
   $scope.sectioname = response;
   })//sectionnamefetch
+  
+  $http.get('/itemdetailsfetch'+$scope.loginresname).success(function(response){
+    console.log(response);
+    console.log(response[0].POSID);
+    $scope.posid = response[0].POSID;
+    $scope.itemdetails = response;
+    for(var c=0;c<response.length;c++)
+      {
+        $scope.itemcode=response[c].ItemCode;
+        $scope.itemname=response[c].ItemName;
+        $scope.objectpush();
+      }
+  })
 
   $scope.enterfunction=function(voucherdate)
   {
@@ -82,11 +95,11 @@ function($scope,$http,$window){
          }
          
           })//stockincalc
-    $scope.objectpush=function()
+   }//enterfunction
+  $scope.objectpush=function()
     {
       var obj={};
-      //alert("hai");
-      console.log($scope.itemcode)
+      //console.log($scope.itemcode)
       obj["itemcode"]=$scope.itemcode;
       obj["itemname"]=$scope.itemname;
       obj["uom"]=$scope.uom;
@@ -95,17 +108,7 @@ function($scope,$http,$window){
       $scope.bookqty=$scope.inpieces-$scope.outpieces;
       obj["bookqty"]=$scope.bookqty;
       closingstock.push(obj);
-      //alert(closingstock.length+"object length") ;
-//      for(var n=0;n<closingstock.length;n++);
-//      {
-//        if(closingstock[n].itemcode == $scope.itemcode)
-//          {
-//            alert($scope.itemcode)
-//          }
-//      }
       $scope.notconfirm=closingstock;
       console.log($scope.notconfirm);
     }
-
-   }//enterfunction
   }]);

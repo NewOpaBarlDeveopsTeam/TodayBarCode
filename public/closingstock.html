@@ -69,13 +69,13 @@
           </div>
         </div>
         <br>
-        <div class="inside" id="div3">
+        <div class="inside" id="div3" style="overflow: auto">
             <table class="table table-bordered" id="tabid">
               <thead>
                 <tr>
                   <th>No</th>
-                  <th>Itemcode</th>
                   <th>Item</th>
+                  <th>Itemcode</th>
                   <th>Size</th>
                   <th>Open</th>
                   <th>In</th>
@@ -89,8 +89,8 @@
               <tbody>
                 <tr ng-repeat="just in notconfirm">
                   <td>{{$index+1}}</td>
-                  <td>{{just.itemcode}}</td>
                   <td>{{just.itemname}}</td>
+                  <td>{{just.itemcode}}</td>
                   <td>{{just.uom}}</td>
                   <td></td>
                   <td>{{just.inpieces | number : 2}}</td>
