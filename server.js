@@ -4071,6 +4071,21 @@ app.post('/stockbookheadresave:headresave',function(req,res){
 
 ///////////enterclosingcontroller/////////
 
+app.get("/openingstock:openingstockvalue",function(req,res){
+  var openingstockvalue1=req.params.openingstockvalue;
+  var str_array=openingstockvalue1.split(",");
+  var openingitemcode=str_array[0];
+  openingitemcode=parseInt(openingitemcode);
+  var voucherdate=str_array[1];
+  console.log(voucherdate+"openingstockvaluevoucherdate");
+  db.closingStock.find({"ClosingDate":{$lt:voucherdate},"ItemCode":openingitemcode},function(err,doc){
+        res.json(doc);
+    
+  })
+  
+  
+})
+
 app.get('/stockincalc:stockinval',function(req,res){
   
     var stockinval1=req.params.stockinval;
