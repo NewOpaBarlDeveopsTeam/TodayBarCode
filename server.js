@@ -4073,14 +4073,29 @@ app.post('/stockbookheadresave:headresave',function(req,res){
 
 app.get("/openingstock:openingstockvalue",function(req,res){
   var openingstockvalue1=req.params.openingstockvalue;
-  var str_array=openingstockvalue1.split(",");
-  var openingitemcode=str_array[0];
-  openingitemcode=parseInt(openingitemcode);
-  var voucherdate=str_array[1];
-  console.log(voucherdate+"openingstockvaluevoucherdate");
-  db.closingStock.find({"ClosingDate":{$lt:voucherdate},"ItemCode":openingitemcode},function(err,doc){
-        res.json(doc);
-    
+//  var str_array=openingstockvalue1.split(",");
+//  var openingitemcode=str_array[0];
+//  openingitemcode=parseInt(openingitemcode);
+//  var voucherdate=str_array[1];
+//  console.log(voucherdate+"openingstockvaluevoucherdate");
+ db.ItemSKU.aggregate([
+      {$match:{"POSName":openingstockvalue1}},
+       { "$lookup": 
+       {
+        "from": "closingStock",
+        "localField":  "ItemCode",
+        "foreignField": "ItemCode",
+        "as": "closing"
+        }},
+         {$project:{ "ItemCode":1,"ItemName":1,"closing.Closing":1,"closing.ClosingDate":1,"ItemSKUID":1}},
+    { "$unwind": { "path": "$closing", "preserveNullAndEmptyArrays": true }},
+          //{$match:{"closing.ClosingDate":"2018-01-13"}},
+          //{$unwind:"$closing"},
+          {$group:{_id:{itemcode:"$ItemCode",itemname:"$ItemName",closing:"$closing.Closing",skuid:"$ItemSKUID"}}},
+                 
+      ],function(err,doc9){
+    //console.log(doc[0]+"docccc")   
+    res.json(doc9)
   })
   
   
@@ -4097,8 +4112,11 @@ app.get('/stockincalc:stockinval',function(req,res){
     console.log(stockpointid+"stockpointid");
     var stockpointype=str_array[2];
     console.log(stockpointype+"stockpointype");
+    var itemcoddee=str_array[3];
+    itemcoddee=parseInt(itemcoddee);
+    console.log(itemcoddee+"itemcoddee");
   db.stockBookDetail.aggregate([
-        {$match:{"VocherDate":voucherdate,"StockPointId":stockpointid}},
+        {$match:{"VocherDate":voucherdate,"StockPointId":stockpointid,"ItemCode":itemcoddee}},
        { "$lookup": 
       {
         "from": "ItemSKU",
@@ -4128,34 +4146,19 @@ app.get('/stockincalc:stockinval',function(req,res){
   })//doc
 }) 
 
-//app.get('/stockoutcalc:stockoutvalue',function(req,res){
-//    var stockoutvalue1=req.params.stockoutvalue;
-//    var str_array=stockoutvalue1.split(",");
-//    var voucherdate=str_array[0];
-//    console.log(voucherdate+"voucherdate");
-//    var stockpointid=str_array[1];
-//    stockpointid = parseInt(stockpointid);
-//    console.log(stockpointid+"stockpointid");
-//    var stockpointype=str_array[2];
-//    console.log(stockpointype);
-//   db.stockBookDetail.aggregate([
-//     {$match:{"VocherDate":voucherdate,"StockPointId":stockpointid,"stockInWord":"No"}},
-//      { "$lookup": 
-//      {
-//        "from": "ItemSKU",
-//        "localField":  "ItemCode",
-//        "foreignField": "ItemCode",
-//        "as": "newitemcode"
-//        }},
-//       {$unwind:"$newitemcode"}, 
-//        {$project:{ "newitemcode.ItemCode":1,"newitemcode.ItemName":1,"NetQty":1,"NetStandard":1}},
-//        {$group:{_id:{itemcode:"$newitemcode.ItemCode",itemname:"$newitemcode.ItemName",uom:"$NetQty"},outpieces:{$sum:"$NetStandard"}}}  
-//        ],function(err,doc1){
-//    console.log(doc1[0]+"docccc")   
-//    res.json(doc1)
-//  })
-//  
-//})
+app.get("/sectionratefetch:sectionrate",function(req,res){
+   var newsectionrate=req.params.sectionrate;
+  
+    var str_array=newsectionrate.split(",");
+    var itemskuid=str_array[0];
+    itemskuid=parseInt(itemskuid);
+    console.log(itemskuid+"itemskuid");
+    var sectionname=str_array[1];
+  db.ItemSKURate.find({"ItemSKUID":itemskuid,"SectionName":sectionname},function(err,doc2){
+    res.json(doc2)
+  })
+  
+})
 //////////Discount Start////////////////////////
 
 app.get('/dscname:barname',function(req,res){

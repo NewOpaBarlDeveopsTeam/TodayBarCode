@@ -55,7 +55,7 @@
           </div>
           <div class="col-md-3">
             <label>Price Section:
-            <select>
+            <select ng-model="sectionname">
                 <option></option>
                    <option ng-repeat = "section in sectioname">{{section.SectionName}}</option>
               </select>
@@ -76,6 +76,7 @@
                   <th>No</th>
                   <th>Item</th>
                   <th>Itemcode</th>
+                  <th>ItemSKU</th>
                   <th>Size</th>
                   <th>Open</th>
                   <th>In</th>
@@ -91,14 +92,15 @@
                   <td>{{$index+1}}</td>
                   <td>{{just.itemname}}</td>
                   <td>{{just.itemcode}}</td>
+                  <td>{{just.itemskuid}}</td>
                   <td>{{just.uom}}</td>
                   <td>{{just.openingstock}}</td>
                   <td>{{just.inpieces | number : 2}}</td>
                   <td>{{just.outpieces | number : 2}}</td>
                   <td>{{just.bookqty | number : 2}}</td>
-                  <td><input type="text" style="border: 0"></td>
-                  <td></td>
-                  <td></td>
+                  <td><input type="text" style="border: 0;width:100px" ng-model="physicalqty" ng-blur="diffcalcfun(just.itemskuid,sectionname,physicalqty,just.bookqty)"></td>
+                  <td>{{diffqty}}</td>
+                  <td>{{sales}}</td>
                 </tr>
               </tbody>
             </table> 
