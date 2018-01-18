@@ -30,6 +30,37 @@ function($scope,$http,$window){
   console.log(response);
   $scope.sectioname = response;
   })//sectionnamefetch
+  $http.get("/closingstockinfo").success(function(res1){
+         console.log(res1)
+    $scope.closingstockdate=res1[0].ClosingDate;
+    console.log($scope.closingstockdate)
+    })///closingstockinfo
+  
+  $scope.validation=function(todaydate)
+  {
+    var  dates  = new Date(((new Date(todaydate).toISOString().slice(0, 23))+"-05:30")).toISOString();
+            var a = dates.split("T");
+            var date = a[0];
+            console.log(date)
+    console.log($scope.closingstockdate)
+    if($scope.stockid==null)
+      {
+        alert("Please Select Stock Point!!!!!")
+      }
+    else if($scope.sectionname==null)
+      {
+        alert("Please Select Price Section!!!!!")
+      }
+     else if(date == $scope.closingstockdate)
+       {
+         alert("Sorry Closing Stock Is Already Done For This Day!!!!!")
+       }
+    else
+    {
+      $scope.enterfunction($scope.date2.date1)
+    }
+  }
+  
   $scope.enterfunction=function(voucherdate)
   {
             var  dates  = new Date(((new Date(voucherdate).toISOString().slice(0, 23))+"-05:30")).toISOString();
@@ -43,7 +74,7 @@ function($scope,$http,$window){
             $http.get("/openingstock"+$scope.loginresname).success(function( result){
               console.log(result);
               var itemlength=result.length;
-             var closingstockfun = function(r)
+               var closingstockfun = function(r)
              {
                //alert(r);
                if( r < itemlength)
@@ -102,31 +133,11 @@ function($scope,$http,$window){
           })//openingstock
           }//enterfunction
   
-  $scope.diffcalcfun=function(itemsku,section,physicalqty,bookqty)
-  {
-    alert("diff");
-    alert(itemsku);
-    alert(section);
-    alert(physicalqty);
-    alert(bookqty);
-    var sectionratefetch=itemsku+","+section;
-    $scope.diffqty=bookqty-physicalqty;
-    $http.get("/sectionratefetch"+sectionratefetch).success(function(res9){
-    console.log(res9)
-    console.log(res9[0].SaleRate);
-    console.log(res9[0].ItemSKUID);
-    if(itemsku==res9[0].ItemSKUID)
-      {
-        alert("match")
-     $scope.salerate=res9[0].SaleRate;
-     $scope.sales=$scope.diffqty*$scope.salerate;
-      }
-    })
-  }
    $scope.objectpush=function()
     {
+     
+     var itemlength=closingstock.length;
       var obj={};
-      //console.log($scope.itemcode)
       obj["itemcode"]=$scope.objitemcode;
       obj["itemname"]=$scope.itemname;
       obj["itemskuid"]=$scope.skuid;
@@ -136,8 +147,68 @@ function($scope,$http,$window){
       obj["openingstock"]=$scope.closingvalue;
       $scope.bookqty=($scope.closingvalue+$scope.inpiecse)-$scope.outpieces;
       obj["bookqty"]=$scope.bookqty;
+      obj["diffqty"]=$scope.diffqty;
+      obj["sales"]=$scope.sales;
+      obj["physicalqty"]=$scope.physicalqty;
       closingstock.push(obj);
-     console.log(closingstock)
-      $scope.notconfirm=closingstock;
+      console.log(closingstock)
+      $scope.notconfirm=closingstock;  
     }
+   $scope.diffcalcfun=function(itemsku,section,physicalqty,bookqty)
+  {
+    $scope.diffqty=null;
+    $scope.sales=null;
+    var sectionratefetch=itemsku+","+section;
+    $scope.diffqty=bookqty-physicalqty;
+    $http.get("/sectionratefetch"+sectionratefetch).success(function(res9){
+    console.log(res9)
+        console.log(res9[0].SaleRate);
+        console.log(res9[0].ItemSKUID);
+        $scope.itemskuid=res9[0].ItemSKUID;
+        $scope.salerate=res9[0].SaleRate;
+        $scope.sales=$scope.diffqty*$scope.salerate;
+     for( var s=0;s<=closingstock.length;s++)
+         {
+           if(closingstock[s].itemskuid==$scope.itemskuid)
+              {
+                var obj={};
+                closingstock[s].diffqty=$scope.diffqty;
+                closingstock[s].sales=$scope.sales;
+                closingstock[s].physicalqty=physicalqty;
+                
+                break;
+              }
+         }//for
+      })
+  }
+   $scope.closinstockfun=function(closingsave,closingdate)
+   {
+      console.log(closingsave);
+      var closingstocklength=closingsave.length;
+          $scope.closingstockid=0;
+          var closingsfun = function(y)
+          {
+            if(y  < closingstocklength)
+              {
+                
+                var  dates  = new Date(((new Date(closingdate).toISOString().slice(0, 23))+"-05:30")).toISOString();
+            var a = dates.split("T");
+            var date = a[0];
+            console.log(date);
+            $scope.closingstockid++;
+          var closingitemvalue=$scope.stockidfound+","+date+","+closingsave[y].itemskuid+","+closingsave[y].openingstock+","+closingsave[y].inpieces+","+closingsave[y].outpieces+","+closingsave[y].itemcode+","+closingsave[y].physicalqty+","+$scope.closingstockid;
+                
+//       $http.get("/closingstockinfo").success(function(res1){
+//         console.log(res1)
+//       }) 
+//                $http.post("/closingstocksave"+closingitemvalue).success(function(result99){
+//            console.log(result99);
+//            
+//            closingsfun(y+1);
+//          }) 
+                
+          }//ifclosingsfun
+          }//closingsfun
+          closingsfun(0);
+   }
   }]);

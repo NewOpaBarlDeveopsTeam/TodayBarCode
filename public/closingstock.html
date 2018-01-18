@@ -65,7 +65,7 @@
             <button type="button" class=" btn-default">View/Edit</button>
           </div>
           <div class="col-md-2">
-            <button type="button" class=" btn-default" ng-click="enterfunction(date2.date1)">Enter</button>
+            <button type="button" class=" btn-default" ng-click="validation(date2.date1)">Enter</button>
           </div>
         </div>
         <br>
@@ -99,8 +99,8 @@
                   <td>{{just.outpieces | number : 2}}</td>
                   <td>{{just.bookqty | number : 2}}</td>
                   <td><input type="text" style="border: 0;width:100px" ng-model="physicalqty" ng-blur="diffcalcfun(just.itemskuid,sectionname,physicalqty,just.bookqty)"></td>
-                  <td>{{diffqty}}</td>
-                  <td>{{sales}}</td>
+                  <td>{{just.diffqty}}</td>
+                  <td>{{just.sales}}</td>
                 </tr>
               </tbody>
             </table> 
@@ -111,19 +111,19 @@
             <label>Store</label>
           </div>
           <div class="col-md-3">
-            <button>Close Stock Point</button>
+          <button type="button" class=" btn-default" ng-click="closinstockfun(notconfirm,date2.date1)">Close Stock Point</button>
           </div>
           <div class="col-md-3">
-            <button>Enter Stock Point</button>
+            <button type="button" class="btn-default">Enter Stock Point</button>
           </div>
           <div class="col-md-1">
-            <button>Save</button>
+            <button type="button" class="btn-default">Save</button>
           </div>
           <div class="col-md-1">
-            <button>Export</button>
+            <button type="button" class="btn-default">Export</button>
           </div>
           <div class="col-md-1">
-            <button>Close</button>
+            <button type="button" class="btn-default">Close</button>
           </div>
           
         </div>

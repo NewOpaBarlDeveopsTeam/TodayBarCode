@@ -1111,8 +1111,8 @@ $scope.itemtaxfun= function()
       if(purchaseitem1.length !=0)
         {
       var catlen = purchaseitem1.length;
-    alert(catlen+"catlen")
-    $scope.newentryrowno = 0;
+      alert(catlen+"catlen")
+      $scope.newentryrowno = 0;
 //    for(var n=0;n<purchaseitem1.length;n++){
       var transactionsavefun = function(n)
       {

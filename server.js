@@ -4159,6 +4159,40 @@ app.get("/sectionratefetch:sectionrate",function(req,res){
   })
   
 })
+
+app.get("/closingstockinfo",function(req,res){
+  
+  db.closingStock.find({}).sort({_id:-1}).limit(1,function(err,doc){
+    res.json(doc)
+  })
+})
+
+app.post("/closingstocksave:closingvalue",function(req,res){
+  var closingvalue1=req.params.closingvalue;
+  
+    var str_array=closingvalue1.split(",");
+    var stockid=str_array[0];
+    stockid=parseInt(stockid);
+    var closingdate=str_array[1];
+    var itemskuid=str_array[2];
+    itemskuid=parseInt(itemskuid);
+    var opening=str_array[3];
+    opening=parseInt(opening);
+    var inpieces=str_array[4];
+    inpieces=parseInt(inpieces);
+    var outpieces=str_array[5];
+    outpieces=parseInt(outpieces);
+    var itemcode=str_array[6];
+    //itemcode=parseInt(itemcode);
+    var closing=str_array[7];
+    closing=parseInt(closing);
+    var closingid=str_array[8];
+    closingid=parseInt(closingid);
+  db.closingStock.insert({"ClosingStockId":closingid,"StockPointId":stockid,"ClosingDate":closingdate,"ItemCode":itemcode,"Opening":opening,"ItemSKUId":itemskuid,"In":inpieces,"Out":outpieces,"Closing":closing},function(err,doc){
+    res.json(doc);
+  })
+  
+})
 //////////Discount Start////////////////////////
 
 app.get('/dscname:barname',function(req,res){
