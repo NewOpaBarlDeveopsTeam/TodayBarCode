@@ -43,7 +43,7 @@
         <br>
         <div class="row" id="row1">
           <div class="col-md-3">
-            <label>For:</label><input type = "date" ng-model="date2.date1" style="margin-left: 5px">
+            <label>For:</label><input type = "date" ng-model="date2.date1" style="margin-left: 5px" readonly>
           </div>
           <div class="col-md-3">
            <label>Stock Point:
@@ -98,7 +98,7 @@
                   <td>{{just.inpieces | number : 2}}</td>
                   <td>{{just.outpieces | number : 2}}</td>
                   <td>{{just.bookqty | number : 2}}</td>
-                  <td><input type="text" style="border: 0;width:100px" ng-model="physicalqty" ng-blur="diffcalcfun(just.itemskuid,sectionname,physicalqty,just.bookqty)"></td>
+                  <td><input type="text" style="border: 0;width:100px" ng-model="physicalqty" ng-blur="diffcalcfun(just.itemskuid,sectionname,physicalqty,just.bookqty,just.itemcode)"></td>
                   <td>{{just.diffqty}}</td>
                   <td>{{just.sales}}</td>
                 </tr>

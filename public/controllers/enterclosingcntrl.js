@@ -71,7 +71,8 @@ function($scope,$http,$window){
             $scope.inpieces=null;
             $scope.outpieces=null;
             $scope.closing=0;
-            $http.get("/openingstock"+$scope.loginresname).success(function( result){
+           var openingstockvalue=$scope.loginresname+","+$scope.fromstockidfound;
+            $http.get("/openingstock"+openingstockvalue).success(function( result){
               console.log(result);
               var itemlength=result.length;
                var closingstockfun = function(r)
@@ -97,6 +98,7 @@ function($scope,$http,$window){
        var stockinvalue=date+","+$scope.stockidfound+","+stockinwordtype+","+$scope.objitemcode;
        $http.get("/stockincalc"+stockinvalue).success(function(response){
         console.log(response);
+         //$scope.notconfirm1=response;
          if(response.length!=0)
            {
              console.log(response[0]._id.stocktype);
@@ -108,9 +110,11 @@ function($scope,$http,$window){
                {
                 console.log(response[c].netpieces);
                 $scope.inpiecse=response[c].netpieces;
+                //$scope.outpieces=0;
                }
               if(response[c]._id.stocktype=="No")
                 {
+                //$scope.inpiecse=0;
                 console.log(response[c].netpieces);
                 $scope.outpieces=response[c].netpieces;  
                 }
@@ -148,16 +152,35 @@ function($scope,$http,$window){
       obj["diffqty"]=$scope.diffqty;
       obj["sales"]=$scope.sales;
       obj["physicalqty"]=$scope.physicalqty;
+     obj["openingbase"]=$scope.calcbase;
+     obj["openingcase"]=$scope.calcpack;
       closingstock.push(obj);
       console.log(closingstock)
       $scope.notconfirm=closingstock;  
     }
-   $scope.diffcalcfun=function(itemsku,section,physicalqty,bookqty)
+   $scope.diffcalcfun=function(itemsku,section,physicalqty,bookqty,itemcode)
   {
     $scope.diffqty=null;
     $scope.sales=null;
+//     $scope.calcbase;
+//     obj["openinbcase"]=$scope.calcpack;
     var sectionratefetch=itemsku+","+section;
     $scope.diffqty=bookqty-physicalqty;
+     $http.get("/skuitemnamefetch"+itemcode).success(function(result){
+       console.log(result)
+       console.log(result[0].UOMSize)
+       $scope.umoumosize=result[0].UOMSize;
+      $http.get("/openingconversion"+$scope.umoumosize).success(function(res2){
+        console.log(res2);
+        $scope.baseqty=res2[0].BaseQty;
+        $scope.packqty=res2[0].PackQty;
+        $scope.calcstd = physicalqty
+        $scope.calcbase = $scope.calcstd*$scope.baseqty;
+        $scope.calcpack = $scope.calcstd/$scope.packqty;
+        console.log($scope.calcstd);
+        console.log($scope.calcbase);
+        console.log($scope.calcpack);
+     
     $http.get("/sectionratefetch"+sectionratefetch).success(function(res9){
     console.log(res9)
         console.log(res9[0].SaleRate);
@@ -173,11 +196,14 @@ function($scope,$http,$window){
                 closingstock[s].diffqty=$scope.diffqty;
                 closingstock[s].sales=$scope.sales;
                 closingstock[s].physicalqty=physicalqty;
-                
+                closingstock[s].openingbase=$scope.calcbase; 
+                closingstock[s].openingcase=$scope.calcpack; 
                 break;
               }
          }//for
-      })
+      })//sectionratefetch
+      })//openingconversion
+     })//skuitemnamefetch
   }
    $scope.closinstockfun=function(closingsave,closingdate)
    {
@@ -194,12 +220,12 @@ function($scope,$http,$window){
             var date = a[0];
             console.log(date);
             $scope.closingstockid++;
-          var closingitemvalue=$scope.stockidfound+","+date+","+closingsave[y].itemskuid+","+closingsave[y].openingstock+","+closingsave[y].inpieces+","+closingsave[y].outpieces+","+closingsave[y].itemcode+","+closingsave[y].physicalqty+","+$scope.closingstockid;
+          var closingitemvalue=$scope.stockidfound+","+date+","+closingsave[y].itemskuid+","+closingsave[y].openingstock+","+closingsave[y].inpieces+","+closingsave[y].outpieces+","+closingsave[y].itemcode+","+closingsave[y].physicalqty+","+$scope.closingstockid+","+closingsave[y].openingbase+","+closingsave[y].openingcase;
                 
-       $http.get("/closingstockinfo").success(function(res1){
-         console.log(res1)
-       }) 
-                $http.post("/closingstocksave"+closingitemvalue).success(function(result99){
+//       $http.get("/closingstockinfo").success(function(res1){
+//         console.log(res1)
+//       }) 
+    $http.post("/closingstocksave"+closingitemvalue).success(function(result99){
             console.log(result99);
             
             closingsfun(y+1);

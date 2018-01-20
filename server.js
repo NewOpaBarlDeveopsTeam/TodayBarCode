@@ -3703,6 +3703,21 @@ app.get('/itemwisediscfetch:discountid',function(req,res){
 //      var merge1 = req.params.merge;
 //      var str_array=merge1.split(",");
 //    {$and:[{"POSName": itemposname },{"id" : itemiddd}] }
+app.get('/predayitemqtyfetch:details',function(req,res){
+       var details1 = req.params.details;
+       var str_array=details1.split(",");
+       var itemstockcode=str_array[0];
+       itemstockcode = parseInt(itemstockcode);
+       console.log(typeof(itemstockcode+"itemstockcode"));
+       var fromstockid = str_array[1];
+       fromstockid = parseInt(fromstockid);
+       console.log(fromstockid+"fromstockidfromstockid");
+       var closingdate = str_array[2];
+  db.closingStock.find({"ClosingDate":"2018-01-19","ItemCode":itemstockcode,
+  "StockPointId":fromstockid},function(err,doc9){
+    res.json(doc9);
+  })
+})
      app.get('/itemquantityfetch:itemcodefind',function(req,res){
        var itemcodefind1 = req.params.itemcodefind;
        var str_array=itemcodefind1.split(",");
@@ -3710,9 +3725,12 @@ app.get('/itemwisediscfetch:discountid',function(req,res){
        itemstockcode = parseInt(itemstockcode);
        console.log(typeof(itemstockcode+"itemstockcode"));
        var fromstockid = str_array[1];
-       fromstockid = parseInt(fromstockid)
+       fromstockid = parseInt(fromstockid);
        console.log(fromstockid+"fromstockidfromstockid");
-       db.stockBookDetail.find({$and:[{"ItemCode":itemstockcode},{"StockPointId":fromstockid}]},function(err,doc1){
+       var voucherdate = str_array[2];
+       //fromstockid = parseInt(fromstockid)
+       
+       db.stockBookDetail.find({$and:[{"ItemCode":itemstockcode},{"StockPointId":fromstockid},{"VocherDate":voucherdate}]},function(err,doc1){
          console.log(doc1[0]); 
          res.json(doc1);
       })   
@@ -4073,13 +4091,13 @@ app.post('/stockbookheadresave:headresave',function(req,res){
 
 app.get("/openingstock:openingstockvalue",function(req,res){
   var openingstockvalue1=req.params.openingstockvalue;
-//  var str_array=openingstockvalue1.split(",");
-//  var openingitemcode=str_array[0];
-//  openingitemcode=parseInt(openingitemcode);
-//  var voucherdate=str_array[1];
-//  console.log(voucherdate+"openingstockvaluevoucherdate");
+  var str_array=openingstockvalue1.split(",");
+  var openingbar=str_array[0];
+  var openingstockid=str_array[1];
+  openingstockid=parseInt(openingstockid);
+  //console.log(voucherdate+"openingstockvaluevoucherdate");
  db.ItemSKU.aggregate([
-      {$match:{"POSName":openingstockvalue1}},
+      {$match:{"POSName":openingbar}},
        { "$lookup": 
        {
         "from": "closingStock",
@@ -4087,9 +4105,9 @@ app.get("/openingstock:openingstockvalue",function(req,res){
         "foreignField": "ItemCode",
         "as": "closing"
         }},
-         {$project:{ "ItemCode":1,"ItemName":1,"closing.Closing":1,"closing.ClosingDate":1,"ItemSKUID":1}},
+         {$project:{ "ItemCode":1,"ItemName":1,"closing.Closing":1,"closing.ClosingDate":1,"ItemSKUID":1,"closing.StockPointId":1}},
     { "$unwind": { "path": "$closing", "preserveNullAndEmptyArrays": true }},
-          //{$match:{"closing.ClosingDate":"2018-01-13"}},
+          {$match:{"closing.StockPointId":openingstockid,"closing.ClosingDate":"2018-01-19"}},
           //{$unwind:"$closing"},
           {$group:{_id:{itemcode:"$ItemCode",itemname:"$ItemName",closing:"$closing.Closing",skuid:"$ItemSKUID"}}},
                  
@@ -4141,7 +4159,8 @@ app.get('/stockincalc:stockinval',function(req,res){
 //        {$project:{ "newitemcode.ItemCode":1,"newitemcode.ItemName":1,"NetQty":1,"NetStandard":1}},
 //        {$group:{_id:{itemcode:"$newitemcode.ItemCode",itemname:"$newitemcode.ItemName",uom:"$NetQty"},inpieces:{$sum:"$NetStandard"}}}  
         ],function(err,doc){
-    console.log(doc[0]+"docccc")   
+    console.log(doc[0]+"docccc")
+    console.log(doc)
     res.json(doc)
   })//doc
 }) 
@@ -4167,6 +4186,15 @@ app.get("/closingstockinfo",function(req,res){
   })
 })
 
+app.get("/openingconversion:sizemasterid",function(req,res){
+  var sizemasterid=req.params.sizemasterid;
+  sizemasterid=parseInt(sizemasterid);
+  db.UOMConversion.find({"UOMSizeMasterID":sizemasterid},function(err,doc29){
+    res.json(doc29)
+  })
+  
+})
+
 app.post("/closingstocksave:closingvalue",function(req,res){
   var closingvalue1=req.params.closingvalue;
   
@@ -4183,12 +4211,16 @@ app.post("/closingstocksave:closingvalue",function(req,res){
     var outpieces=str_array[5];
     outpieces=parseInt(outpieces);
     var itemcode=str_array[6];
-    //itemcode=parseInt(itemcode);
+    itemcode=parseInt(itemcode);
     var closing=str_array[7];
     closing=parseInt(closing);
     var closingid=str_array[8];
-    closingid=parseInt(closingid);
-  db.closingStock.insert({"ClosingStockId":closingid,"StockPointId":stockid,"ClosingDate":closingdate,"ItemCode":itemcode,"Opening":opening,"ItemSKUId":itemskuid,"In":inpieces,"Out":outpieces,"Closing":closing},function(err,doc){
+    closingid=parseFloat(closingid);
+    var openingbase=str_array[9];
+    openingbase=parseFloat(openingbase);
+    var openingcase=str_array[10];
+    openingcase=parseFloat(openingcase);
+  db.closingStock.insert({"ClosingStockId":closingid,"StockPointId":stockid,"ClosingDate":closingdate,"ItemCode":itemcode,"Opening":opening,"ItemSKUId":itemskuid,"In":inpieces,"Out":outpieces,"Closing":closing,"OpeningBase":openingbase,"OpeningCase":openingcase},function(err,doc){
     res.json(doc);
   })
   
