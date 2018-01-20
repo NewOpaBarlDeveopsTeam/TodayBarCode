@@ -4,7 +4,7 @@ myApp.controller('purchaseCntrl',['$scope','$http','$window','$filter',
 function($scope,$http,$window,$filter){ 
   var purchaseitem = [];
   var taxdefinition =[];
-  $scope.openingstockdate = "2018/01/04";
+  $scope.openingstockdate = "2018/01/18";
   console.log($scope.openingstockdate);
     $scope.yesnewNetpackage=0;
     $scope.yesnewNetbase=0;
@@ -25,6 +25,12 @@ function($scope,$http,$window,$filter){
   console.log(result);
   $scope.transactionType = result;
   })
+  
+  $http.get("/closingstockinfo").success(function(res1){
+         console.log(res1)
+    $scope.closingstockdate=res1[0].ClosingDate;
+    console.log($scope.closingstockdate)
+    })
   
   $http.get('/partynamefetch').success(function(res){
   console.log(res);
@@ -124,7 +130,19 @@ function($scope,$http,$window,$filter){
     $scope.posid = response[0].POSID;
     $scope.itemdetails = response;
   })
-  
+  $scope.validationfunction=function(transactiontype)
+  {
+//    alert("hai");
+    if($scope.date==$scope.closingstockdate)
+      {
+        alert("Sorry Closing Stock is Done For"+ " "+$scope.date)
+      }
+    else
+    {
+      $scope.transactioncall(transactiontype);
+    }
+    
+  }
 $scope.transactioncall = function (transactiontype)
  {
   $scope.netquantity=0
@@ -602,12 +620,6 @@ $scope.transactioncall = function (transactiontype)
   if( transactiontype == "Stock Transfer")
     {
       alert("Hai Iam Stock Transfer");
-      $scope.yesnewNetpackage=0;
-      $scope.yesnewNetbase=0;
-      $scope.yesnewNetstandard=0;
-      $scope.nonewNetpackage=0;
-      $scope.nonewNetbase=0;
-      $scope.nonewNetstandard=0;
       $scope.partyidfound=0;
       $scope.sectionid=0;
       $scope.SaleRate=0;
@@ -622,6 +634,12 @@ $scope.transactioncall = function (transactiontype)
       {
         $scope.qty = "Qty:";
         $scope.finalrate=0;
+        $scope.yesnewNetpackage=0;
+        $scope.yesnewNetbase=0;
+        $scope.yesnewNetstandard=0;
+        $scope.nonewNetpackage=0;
+        $scope.nonewNetbase=0;
+       $scope.nonewNetstandard=0;
         alert(itemcode)
         var itemnwenew = parseInt(itemcode);
         console.log(typeof(itemnwenew));
@@ -789,7 +807,7 @@ $scope.transactioncall = function (transactiontype)
       }//itemdetailsfetchfun
     }//Stock Transfer
   
-  if( transactiontype == "Opening Stock")
+  if( transactiontype == "Opening Stock" && $scope.openingstockdate == $scope.date)
     {
        $scope.pieceNo = 1;
        $scope.stockinward = "Yes";

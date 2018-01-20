@@ -91,7 +91,7 @@
             
 <!--            <div class = "col-sm-3 padding-0" style="margin-left: 0">-->
               <label><span style="color: red;font-size: 25px;padding-top: 0px"><b>*</b></span>Transaction:
-              <select ng-change ="transactioncall(transactiontype)" ng-model = "transactiontype">
+              <select ng-change ="validationfunction(transactiontype)" ng-model = "transactiontype">
                 <option></option>
                 <option ng-repeat = "transaction in transactionType " id="idid">{{transaction.transactionType}}</option>
               </select>

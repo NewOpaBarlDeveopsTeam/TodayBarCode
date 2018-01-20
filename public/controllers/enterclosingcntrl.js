@@ -76,15 +76,14 @@ function($scope,$http,$window){
               var itemlength=result.length;
                var closingstockfun = function(r)
              {
-               //alert(r);
                if( r < itemlength)
              {
                 console.log(result[r]._id.itemname);
                 console.log(result[r]._id.itemcode);
                 $scope.objitemcode=result[r]._id.itemcode;
-               $scope.itemname=result[r]._id.itemname;
-               $scope.skuid=result[r]._id.skuid;
-               console.log($scope.skuid)
+                $scope.itemname=result[r]._id.itemname;
+                $scope.skuid=result[r]._id.skuid;
+                console.log($scope.skuid)
                 if(result[r]._id.closing !=null)
                   {
                     $scope.closingvalue=result[r]._id.closing;
@@ -116,14 +115,13 @@ function($scope,$http,$window){
                 $scope.outpieces=response[c].netpieces;  
                 }
                }
-           }
+            }
            else if(response.length==0)
            {
              $scope.inpiecse=0;
              $scope.outpieces=0;
              $scope.uom=null;
            }
-         
           $scope.objectpush();
           closingstockfun (r+1);
           })//stockincalc
@@ -198,14 +196,14 @@ function($scope,$http,$window){
             $scope.closingstockid++;
           var closingitemvalue=$scope.stockidfound+","+date+","+closingsave[y].itemskuid+","+closingsave[y].openingstock+","+closingsave[y].inpieces+","+closingsave[y].outpieces+","+closingsave[y].itemcode+","+closingsave[y].physicalqty+","+$scope.closingstockid;
                 
-//       $http.get("/closingstockinfo").success(function(res1){
-//         console.log(res1)
-//       }) 
-//                $http.post("/closingstocksave"+closingitemvalue).success(function(result99){
-//            console.log(result99);
-//            
-//            closingsfun(y+1);
-//          }) 
+       $http.get("/closingstockinfo").success(function(res1){
+         console.log(res1)
+       }) 
+                $http.post("/closingstocksave"+closingitemvalue).success(function(result99){
+            console.log(result99);
+            
+            closingsfun(y+1);
+          }) 
                 
           }//ifclosingsfun
           }//closingsfun
