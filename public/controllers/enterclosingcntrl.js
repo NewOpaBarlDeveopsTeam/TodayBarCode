@@ -31,17 +31,37 @@ function($scope,$http,$window){
   $scope.sectioname = response;
   })//sectionnamefetch
   $http.get("/closingstockinfo").success(function(res1){
-         console.log(res1)
+    console.log(res1)
     $scope.closingstockdate=res1[0].ClosingDate;
     console.log($scope.closingstockdate)
     })///closingstockinfo
-  
+ $scope.datefindfun=function()
+ {
+//   var  dates  = new Date(((new Date($scope.date2.date1).toISOString().slice(0, 23))+"-05:30")).toISOString();
+//            var a = dates.split("T");
+//            var date = a[0];
+//            console.log(date);
+           var date = new Date(), d = date.getDate(), y = date.getFullYear(), m = date.getMonth();
+           var predate = new Date(y,m,d);
+           var premonth = new Date(y, m,d-1);
+           var preyear = new Date(y, m + 1, 0);
+//           console.log(predate)
+           console.log(premonth)
+//           console.log(preyear)
+   
+      var  dates  = new Date(((new Date(premonth).toISOString().slice(0, 23))+"-05:30")).toISOString();
+            var a = dates.split("T");
+            $scope.prevdate = a[0];
+            console.log($scope.prevdate);
+
+ }
+ $scope.datefindfun();  
   $scope.validation=function(todaydate)
   {
     var  dates  = new Date(((new Date(todaydate).toISOString().slice(0, 23))+"-05:30")).toISOString();
             var a = dates.split("T");
             var date = a[0];
-            console.log(date)
+            console.log(date);
     console.log($scope.closingstockdate)
     if($scope.stockid==null)
       {
@@ -71,7 +91,7 @@ function($scope,$http,$window){
             $scope.inpieces=null;
             $scope.outpieces=null;
             $scope.closing=0;
-           var openingstockvalue=$scope.loginresname+","+$scope.fromstockidfound;
+           var openingstockvalue=$scope.loginresname+","+$scope.fromstockidfound+","+$scope.prevdate;
             $http.get("/openingstock"+openingstockvalue).success(function( result){
               console.log(result);
               var itemlength=result.length;

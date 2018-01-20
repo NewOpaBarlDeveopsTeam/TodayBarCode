@@ -3713,7 +3713,7 @@ app.get('/predayitemqtyfetch:details',function(req,res){
        fromstockid = parseInt(fromstockid);
        console.log(fromstockid+"fromstockidfromstockid");
        var closingdate = str_array[2];
-  db.closingStock.find({"ClosingDate":"2018-01-19","ItemCode":itemstockcode,
+  db.closingStock.find({"ClosingDate":closingdate,"ItemCode":itemstockcode,
   "StockPointId":fromstockid},function(err,doc9){
     res.json(doc9);
   })
@@ -3728,9 +3728,10 @@ app.get('/predayitemqtyfetch:details',function(req,res){
        fromstockid = parseInt(fromstockid);
        console.log(fromstockid+"fromstockidfromstockid");
        var voucherdate = str_array[2];
+       var todaydate = str_array[3];
        //fromstockid = parseInt(fromstockid)
        
-       db.stockBookDetail.find({$and:[{"ItemCode":itemstockcode},{"StockPointId":fromstockid},{"VocherDate":voucherdate}]},function(err,doc1){
+       db.stockBookDetail.find({$and:[{"ItemCode":itemstockcode},{"StockPointId":fromstockid},{"VocherDate":todaydate}]},function(err,doc1){
          console.log(doc1[0]); 
          res.json(doc1);
       })   
@@ -4095,6 +4096,7 @@ app.get("/openingstock:openingstockvalue",function(req,res){
   var openingbar=str_array[0];
   var openingstockid=str_array[1];
   openingstockid=parseInt(openingstockid);
+  var closingdate=str_array[2];
   //console.log(voucherdate+"openingstockvaluevoucherdate");
  db.ItemSKU.aggregate([
       {$match:{"POSName":openingbar}},
@@ -4107,7 +4109,7 @@ app.get("/openingstock:openingstockvalue",function(req,res){
         }},
          {$project:{ "ItemCode":1,"ItemName":1,"closing.Closing":1,"closing.ClosingDate":1,"ItemSKUID":1,"closing.StockPointId":1}},
     { "$unwind": { "path": "$closing", "preserveNullAndEmptyArrays": true }},
-          {$match:{"closing.StockPointId":openingstockid,"closing.ClosingDate":"2018-01-19"}},
+          {$match:{"closing.StockPointId":openingstockid,"closing.ClosingDate":closingdate}},
           //{$unwind:"$closing"},
           {$group:{_id:{itemcode:"$ItemCode",itemname:"$ItemName",closing:"$closing.Closing",skuid:"$ItemSKUID"}}},
                  
