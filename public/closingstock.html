@@ -35,6 +35,38 @@
     #row1{
       margin:5px;
     }
+    
+    thead, tbody, tr, td, th { display: block; }
+
+        tr:after {
+            content: ' ';
+            display: block;
+            visibility: hidden;
+            clear: both;
+        }
+
+
+        thead th {
+/*            height: 50px;*/
+              width: 8%;
+
+            float: left;
+
+            /*text-align: left;*/
+        }
+
+        tbody {
+            height: 450px;
+            overflow-y: auto;
+          overflow-x: auto;
+        }
+
+        tbody td {
+
+            width: 10%;
+
+            float: left;
+        }
   </style>
   <body ng-controller="EnterClosing" ng-cloak>
     <div class="container-fluid" id="div1">
@@ -69,8 +101,10 @@
           </div>
         </div>
         <br>
-        <div class="inside" id="div3" style="overflow: auto">
-            <table class="table table-bordered" id="tabid">
+        <div class="inside" id="div3" style="overflow-y: auto" >
+<!--          id="tabid" -->
+<!--
+            <table class="table table-bordered table-fixed" style="background-color: white">
               <thead>
                 <tr>
                   <th>No</th>
@@ -87,6 +121,7 @@
                   <th>Sales</th>
                 </tr>
               </thead>
+              
               <tbody>
                 <tr ng-repeat="just in notconfirm">
                   <td>{{$index+1}}</td>
@@ -104,7 +139,42 @@
                 </tr>
               </tbody>
             </table> 
-        </div>
+-->
+          <table class="table" style="background-color: white">
+          <thead style=" border-bottom-width: 0;">
+          <tr>
+                  <th style="width: 30px">No</th>
+                  <th style="width: 250px;text-align: center">Item</th>
+                  <th style="width: 100px;text-align: center">ItemCode</th>
+                  <th style="width: 100px;text-align: center">ItemSKU</th>
+                  <th style="width: 80px">Size</th>
+                  <th style="width:80px">Open</th>
+                  <th style="width:80px">In</th>
+                  <th style="width:80px">Out</th>
+                  <th style="width:100px">BookQty</th>
+                  <th style="width:100px">PhyQty</th>
+                  <th style="width:100px">DiffQty</th>
+                  <th style="width:111px">Sales</th>
+          </tr>
+          </thead>
+          <tbody>
+             <tr ng-repeat="just in notconfirm">
+                  <td style="width: 30px">{{$index+1}}</td>
+                  <td style="width: 250px">{{just.itemname}}</td>
+               <td style="width: 100px;text-align: center">{{just.itemcode}}</td>
+                  <td style="width: 100px;text-align: center">{{just.itemskuid}}</td>
+                  <td style="width: 80px;text-align: center">{{just.uom}}</td>
+                  <td style="width:80px;text-align: center">{{just.openingstock}}</td>
+                  <td style="width:80px;text-align: center">{{just.inpieces | number : 2}}</td>
+                  <td style="width:80px;text-align: center">{{just.outpieces | number : 2}}</td>
+                  <td style="width:100px;text-align: center">{{just.bookqty | number : 2}}</td>
+                  <td><input type="text" style="border: 0;width:80px" ng-model="physicalqty" ng-blur="diffcalcfun(just.itemskuid,sectionname,physicalqty,just.bookqty,just.itemcode)"></td>
+                  <td style="width:80px;text-align: center">{{just.diffqty}}</td>
+                  <td style="width:80px;text-align: center">{{just.sales}}</td>
+                </tr>
+         </tbody>
+         </table>
+         </div>
         <br>
         <div class="row" id="row1">
           <div class="col-md-3">

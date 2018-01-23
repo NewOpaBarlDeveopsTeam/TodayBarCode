@@ -141,22 +141,29 @@ function($scope,$http,$window,$filter){
     $scope.posid = response[0].POSID;
     $scope.itemdetails = response;
   })
+  
   $scope.validationfunction=function(transactiontype)
   {
-//    alert("hai");
-    if($scope.date==$scope.closingstockdate)
+    if($scope.referenceno==null)
+       {
+       alert("Reference Number Is Required")
+       }
+    else if($scope.stockid==null)
       {
-        alert("Sorry Closing Stock is Done For"+ " "+$scope.date)
+        alert("Please Select Stock Point!!!")
+      }
+    else if($scope.pieceNo == null)
+      {
+        alert("Please Select Pieces")
       }
     else
     {
-      $scope.transactioncall(transactiontype);
+      $scope.itemtaxfun();
     }
-    
   }
 $scope.transactioncall = function (transactiontype)
  {
-  $scope.netquantity=0
+    $scope.netquantity=0
     alert(transactiontype)
     if(transactiontype == "Purchase")
     {
@@ -177,6 +184,8 @@ $scope.transactioncall = function (transactiontype)
           var itemnew = parseInt($scope.itemcode);
           console.log(typeof(itemnew))
           $http.get("/skuitemnamefetch"+itemnew).success(function(result){
+            if(result!=0)
+            {
           console.log(result[0]);
           console.log(result[0].itemId);
           $scope.itemidd = result[0].itemId;
@@ -417,7 +426,12 @@ $scope.transactioncall = function (transactiontype)
               alert("opening stock of this item not be Done!!!!")
             }
             })//purchaseratefetch 
-          }//if     
+          }//if 
+          }//if
+            else
+            {
+              alert("Please Enter a valid Item Code!!!")  
+            }
         })//skuitemnamefetch
       }//end of itemdetailsfetch   
     }//end of purchase
@@ -451,6 +465,8 @@ $scope.transactioncall = function (transactiontype)
              var itemnew = parseInt($scope.itemcode);
              console.log(typeof(itemnew))
              $http.get("/skuitemnamefetch"+itemnew).success(function(result){
+            if(result!=0)
+              {
              console.log(result[0]);
              console.log(result[0].itemId);
              $scope.itemidd = result[0].itemId;
@@ -528,6 +544,11 @@ $scope.transactioncall = function (transactiontype)
            $scope.discountcalfun($scope.discounttype,$scope.discountamt); 
          }
          })
+        }//if
+        else
+        {
+        alert("Please Enter Item Code!!!")  
+        }
          })//skuitemnamefetch 
         var itemnewstockid = itemnew+","+$scope.fromstockidfound+","+$scope.prevdate+","+$scope.date;
                
@@ -886,7 +907,7 @@ $scope.transactioncall = function (transactiontype)
       }//itemdetailsfetchfun
     }//Stock Transfer
   
-  if( transactiontype == "Opening Stock" && $scope.openingstockdate == $scope.date)
+  if( transactiontype == "Opening Stock" && $scope.openingstockdate >! $scope.date)
     {
        $scope.pieceNo = 1;
        $scope.stockinward = "Yes";
@@ -996,7 +1017,7 @@ $scope.transactioncall = function (transactiontype)
     }//Opening Stock
   else if( transactiontype == "Opening Stock")
   {
-    alert("Opening Stock is already done on"+" "+$scope.openingstockdate)
+    alert("Opening Stock is already done on"+" "+$scope.openingstockdate);
   }
  }//end of transactioncall
 

@@ -30,6 +30,9 @@
     #idid{
       width:85px;
     }
+    #input{
+      width:85px;
+    }
     .padding-0{
       padding-left: -50;
       padding-right: -50;
@@ -74,6 +77,8 @@
     margin-top: 0px;
 /*    background-color: white;*/
         }
+    
+select[disabled] { background-color:gainsboro;};
 
   </style>
 
@@ -91,7 +96,7 @@
             
 <!--            <div class = "col-sm-3 padding-0" style="margin-left: 0">-->
               <label><span style="color: red;font-size: 25px;padding-top: 0px"><b>*</b></span>Transaction:
-              <select ng-change ="validationfunction(transactiontype)" ng-model = "transactiontype">
+              <select ng-change ="transactioncall(transactiontype)" ng-model = "transactiontype" autofocus>
                 <option></option>
                 <option ng-repeat = "transaction in transactionType " id="idid">{{transaction.transactionType}}</option>
               </select>
@@ -106,8 +111,8 @@
             <label>Ref.Date:<input type = "date" ng-disabled="transactiontype == 'Opening Stock'||transactiontype == 'Purchase' ||transactiontype == 'Stock Transfer' ||transactiontype == 'Sale' ">
             </label>
             </div>
-            <div class = "col-sm-2 padding-0">
-            <label><span style="color: red;font-size: 25px;padding-top: 0px"><b>*</b></span>Ref.No:<input type = "number" id="idid" ng-model="referenceno" ng-disabled="transactiontype == 'Opening Stock' ||transactiontype == 'Stock Transfer' ||transactiontype == 'Sale' " required></label>
+            <div class = "col-sm-2 padding-0" id="error">
+            <label><span style="color: red;font-size: 25px;padding-top: 0px"><b>*</b></span>Ref.No:<input type = "number" id="input" ng-model="referenceno" ng-disabled="transactiontype == 'Opening Stock' ||transactiontype == 'Stock Transfer' ||transactiontype == 'Sale' " required></label>
             </div>
             </div>
         <div class="clearfix"></div>
@@ -116,7 +121,7 @@
         <div class ="row2">
            <div class ="col-sm-3 padding-0">
              <label><span style="color: red;font-size: 25px;padding-top: 0px"><b>*</b></span>Stock Point:
-              <select ng-model="stockid" ng-change="stockpointfrom(stockid)">
+              <select ng-model="stockid" ng-change="stockpointfrom(stockid)" ng-disabled="transactiontype == 'Opening Stock' && openingstockdate != date">
                 <option></option>
                    <option ng-repeat = "stockpoint in stockpointname">{{stockpoint.StockPointName}}</option>
               </select>
@@ -135,7 +140,7 @@
              
             <div class = "col-sm-3 padding-0" style="margin-left: 0">
             <label><span style="color: red;font-size: 25px;padding-top: 0px"><b>*</b></span>Party:
-              <select ng-model="party" ng-change="partyid(party)" ng-disabled="transactiontype == 'Opening Stock'||transactiontype == 'Stock Transfer' ||transactiontype == 'Sale'">
+              <select ng-model="party" ng-change="partyid(party)" ng-disabled="transactiontype == 'Opening Stock'||transactiontype == 'Stock Transfer' ||transactiontype == 'Sale'" id="party">
                 <option></option>
                    <option ng-repeat="party in partyname">{{party.partyName}}</option>
               </select>
@@ -152,10 +157,15 @@
             </label>
           </div>
           
-          <div class = "col-sm-2">
-            <span id ="rate" >
-              <label pull-left><span style="color: red;font-size: 25px;padding-top: 0px"><b>*</b></span>Rate:<input type = "number | number:3" id="idid" style="height: 40px;width: 100px;color:blue;font-size: 30px" ng-model="finalrate" ng-blur = "itemtaxfun()" required  ></label>
-              </span>
+          <div class = "col-sm-2">  
+            <label>Discount:
+              <select ng-disabled="transactiontype == 'Opening Stock'||transactiontype == 'Purchase'||transactiontype == 'Stock Transfer' ||transactiontype == 'Sale'">
+                <option></option>
+                   <option>Discount</option>
+              </select>
+               </label>
+<!--              <input type = "text" id="idid" ng-model = "discountname" ng-disabled="transactiontype == 'Opening Stock'||transactiontype == 'Purchase'||transactiontype == 'Stock Transfer' ||transactiontype == 'Sale'">-->
+
           </div>
           
         </div>
@@ -163,26 +173,24 @@
          <br>
 <!--        <select ng-model="getcharge" ng-change="sale(getcharge)">-->
         <div class ="row3">
-           <div class ="col-sm-6 padding-0 row">
+           <div class ="col-sm-7 padding-0 row">
               <label><span style="color: red;font-size: 25px;padding-top: 0px"><b>*</b></span>Item Code:</label>
              <b><input list="itemname" name="itemname" id="idid" ng-model="itemcode" ng-blur="itemdetailsfetchfun(itemcode,date2.date1)" required></b>
               <datalist id = "itemname">
-                <select>
+                <select ng-disabled="transactiontype == 'Opening Stock' && openingstockdate != date">
                   <option ng-repeat="item in itemdetails" ng-model="itemcode">{{item.ItemCode}}</option>
                  </select>
                  </datalist>
              <span style="font-size: 20px;color: blue">{{skuitemname}}&nbsp;{{uomsize}}&nbsp;{{qty}}{{newnetquantity | number : 3}}</span>
-             </div> 
-          
-            <div class = "col-sm-6 padding-0">
-              
+             </div>
+            <div class = "col-sm-5 padding-0">  
               <label><span style="color: red;font-size: 25px;padding-top: 0px"><b>*</b></span>UOM:
               <select ng-model="umosize" ng-change="ratecalc(umosize)">
                    <option ng-repeat="uomsize in umosizefound">{{uomsize.UOM}}</option>
               </select>
-               </label>&nbsp;&nbsp;
+               </label>&nbsp;
               
-            <label><span style="color: red;font-size: 25px;padding-top: 0px"><b>*</b></span>Pieces:<input type = "Number" id="idid" ng-model="pieceNo" ng-blur="stockcalculation(umosize,pieceNo)"></label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <label><span style="color: red;font-size: 25px;padding-top: 0px"><b>*</b></span>Pieces:<input type = "Number" id="idid" ng-model="pieceNo" ng-blur="stockcalculation(umosize,pieceNo)"></label>
 <!--            </div>-->
              
 <!--            <div class = "col-sm-2 padding-0">-->
@@ -198,6 +206,7 @@
              
             <div class = "col-sm-3 padding-0">
 -->
+<!--
             <label>Discount:
               <select ng-disabled="transactiontype == 'Opening Stock'||transactiontype == 'Purchase'||transactiontype == 'Stock Transfer' ||transactiontype == 'Sale'">
                 <option></option>
@@ -205,7 +214,8 @@
               </select>
                </label>
               <input type = "text" id="idid" ng-model = "discountname" ng-disabled="transactiontype == 'Opening Stock'||transactiontype == 'Purchase'||transactiontype == 'Stock Transfer' ||transactiontype == 'Sale'">
-            </div> 
+-->
+<!--            </div> -->
     
 <!--
           <div class = "col-sm-2">
@@ -214,6 +224,11 @@
               </span>
           </div>
 -->
+<!--          <div class = "col-sm-2">-->
+            <span id ="rate" >
+              <label pull-left><span style="color: red;font-size: 25px;padding-top: 0px"><b>*</b></span>Rate:<input type = "number | number:3" id="idid" style="height: 40px;width: 100px;color:blue;font-size: 30px" ng-model="finalrate" ng-blur = "validationfunction()" required ng-disabled="transactiontype == 'Opening Stock' && openingstockdate != date" ></label>
+              </span>
+          </div>
           
         </div>
         <br><br>
@@ -336,4 +351,39 @@
   </body>
   <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
   <script type="text/javascript" src="controllers/newtransactioncntrl.js"></script>
+  
+<!--
+  <script type="text/javascript">
+    $('#idid9').blur(function(){
+      alert($(this).val());
+      if($(this).val()== " ")
+      {
+        alert($(this).val());
+        $(this).focusin();
+        
+      }
+    })
+    
+  </script>
+-->
+  
+<!--
+  <script>
+input.onblur = function() {
+  if (!input.value.includes('@')) { // not email
+    input.classList.add('invalid');
+    error.innerHTML = 'Please enter a correct email.'
+  }
+};
+
+input.onfocus = function() {
+  if (this.classList.contains('invalid')) {
+    // remove the "error" indication, because the user wants to re-enter something
+    this.classList.remove('invalid');
+    error.innerHTML = "";
+  }
+};
+  </script>
+-->
+
   </html>
