@@ -4,6 +4,7 @@ myApp.controller('EnterClosing',['$scope','$http','$window',
 function($scope,$http,$window){
   $scope.date2 = {date1:new Date()}
   var closingstock=[];
+
   var loginres= window.sessionStorage.getItem("loginres1")
    console.log(loginres)
    $scope.loginresname = loginres;
@@ -55,6 +56,8 @@ function($scope,$http,$window){
             console.log($scope.prevdate);
 
  }
+ 
+ 
  $scope.datefindfun();  
   $scope.validation=function(todaydate)
   {
@@ -121,23 +124,46 @@ function($scope,$http,$window){
          //$scope.notconfirm1=response;
          if(response.length!=0)
            {
+             $scope.inpiecse=0;
+             $scope.outpieces=0;
              console.log(response[0]._id.stocktype);
              console.log(response[0]._id.uom);
+             console.log(response[0]._id.Yesstocktype);
+             console.log(response[0]._id.Nostocktype)
              $scope.uom=response[0]._id.uom;
              for(var c=0;c<response.length;c++)
                {
-             if(response[c]._id.stocktype=="Yes")
+                if(response[c]._id.Yesstocktype==true && response[c]._id.Nostocktype==false )
                {
-                console.log(response[c].netpieces);
-                $scope.inpiecse=response[c].netpieces;
-                //$scope.outpieces=0;
+                 //alert("Yestrue")
+                 console.log(response[c].netpieces);
+                 $scope.inpiecse=response[c].netpieces;
+                 //$scope.outpieces=0
+                 //console.log($scope.outpieces)
+                 console.log($scope.inpiecse)
                }
-              if(response[c]._id.stocktype=="No")
+               if(response[c]._id.Yesstocktype==false && response[c]._id.Nostocktype==true)
                 {
-                //$scope.inpiecse=0;
-                console.log(response[c].netpieces);
-                $scope.outpieces=response[c].netpieces;  
+                  //alert("hai")
+                 console.log(response[c].netpieces);
+                 $scope.outpieces=response[c].netpieces;
+                 //$scope.inpiecse=0
+                 console.log($scope.outpieces)
+                 //console.log($scope.inpiecse)
                 }
+//              if(response[c]._id.Nostocktype==true)
+//               {
+//                 alert("Notrue")
+//                 console.log(response[c].netpieces);
+//                 $scope.outpieces=response[c].netpieces;  
+//                 console.log($scope.outpieces)
+//               }
+//              else if(response[c]._id.Nostocktype==false)
+//                {
+//                  alert("Nofalse")
+//                  $scope.outpieces=0;  
+//                 console.log($scope.outpieces)
+//                }
                }
             }
            else if(response.length==0)

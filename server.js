@@ -4135,18 +4135,38 @@ app.get('/stockincalc:stockinval',function(req,res){
     var itemcoddee=str_array[3];
     itemcoddee=parseInt(itemcoddee);
     console.log(itemcoddee+"itemcoddee");
+//  db.stockBookDetail.aggregate([
+//        {$match:{"VocherDate":voucherdate,"StockPointId":stockpointid,"ItemCode":itemcoddee}},
+//       { "$lookup": 
+//      {
+//        "from": "ItemSKU",
+//        "localField":  "ItemCode",
+//        "foreignField": "ItemCode",
+//        "as": "newitemcode"
+//        }},
+//         {$unwind:"$newitemcode"},
+//         {$project:{ "newitemcode.ItemCode":1,"newitemcode.ItemName":1,"NetQty":1,"NetStandard":1,"stockInWord":1}},
+//         {$group:{_id:{itemcode:"$newitemcode.ItemCode",itemname:"$newitemcode.ItemName",uom:"$NetQty",stocktype:"$stockInWord"},
+//         netpieces:{$sum:"$NetStandard"}}}
   db.stockBookDetail.aggregate([
         {$match:{"VocherDate":voucherdate,"StockPointId":stockpointid,"ItemCode":itemcoddee}},
        { "$lookup": 
-      {
+       {
         "from": "ItemSKU",
         "localField":  "ItemCode",
         "foreignField": "ItemCode",
         "as": "newitemcode"
         }},
-         {$unwind:"$newitemcode"},
-         {$project:{ "newitemcode.ItemCode":1,"newitemcode.ItemName":1,"NetQty":1,"NetStandard":1,"stockInWord":1}},
-         {$group:{_id:{itemcode:"$newitemcode.ItemCode",itemname:"$newitemcode.ItemName",uom:"$NetQty",stocktype:"$stockInWord"},
+         {$project:{
+             "newitemcode.ItemCode":1,
+             "newitemcode.ItemName":1,
+             "NetQty":1,
+             "NetStandard":1,
+             "YesstockInWord":{$eq: ['$stockInWord', 'Yes']},
+             "NostockInWord":{$eq: ['$stockInWord', 'No']},
+             }},
+             { "$unwind": { "path": "$newitemcode", "preserveNullAndEmptyArrays": true }},
+         {$group:{_id:{itemcode:"$newitemcode.ItemCode",itemname:"$newitemcode.ItemName",uom:"$NetQty",Yesstocktype:"$YesstockInWord",Nostocktype:"$NostockInWord"},
          netpieces:{$sum:"$NetStandard"}}}
 //  db.stockBookDetail.aggregate([
 //     {$match:{"VocherDate":voucherdate,"StockPointId":stockpointid,"stockInWord":stockpointype}},

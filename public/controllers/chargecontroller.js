@@ -4,12 +4,14 @@ myApp.controller('ChargeCntrl',['$scope','$http','$window',
 function($scope,$http,$window){
   // var charge= null;
   var editcheck = false;
+  $scope.addnewrow = false;
   var data;
-    $scope.all = true;
-    $scope.disable = function(){
-    alert($scope.selected + "form disable")
-    $scope.all = false;
-  }
+//    $scope.all = true;
+//    $scope.disable = function()
+//    {
+//    alert($scope.selected + "form disable")
+//    $scope.all = false;
+//   }
   
   $http.get('/chargeConfigure').success(function(res){
         console.log(res);
@@ -35,6 +37,8 @@ function($scope,$http,$window){
       detailsfetch();//detailsfetch
        //new function.......
         $scope.addNew = function(details){
+        $scope.addnewrow=true;
+          alert($scope.addnewrow)
         $scope.chargedetails.push({
           'chargeName':"",
           'accountName':"" ,
@@ -78,20 +82,13 @@ $http.get('/ledgerdetails').success(function(response){
   
     $scope.saveitem = function(){
 
-
-  //       if($scope.bitem.composite == true){
-  //     $scope.bitem.composite = "yes"
-  //  }else if($scope.bitem.composite == false || $scope.bitem.composite == undefined ){
-  //     $scope.bitem.composite = "no"
-  //  }
-
-        if(editcheck == true){
-          //console.log($scope.selected);
-
-       $http.put('/putaccountdetails',$scope.selected).success(function(response){
+        if(editcheck == true)
+        {
+          alert("Edit")
+  $http.put('/putaccountdetails',$scope.selected).success(function(response){
                console.log(response);
           })
-        }//if
+          }//if
         else{
           alert("hai")
 
@@ -126,13 +123,15 @@ $http.get('/ledgerdetails').success(function(response){
           $scope.selected = data;
           console.log($scope.selected);
         }
-      //  edit function
-//        if($scope.indexx != null){
-             $scope.edititem = function(){
-             alert($scope.indexx+"i got call edit call")
-             console.log(charge);
-             $scope.selected = charge;
-          }
+             $scope.edititem = function()
+             {
+               editcheck = true;
+               alert($scope.indexx+"i got call edit call")
+               $scope.newindex=$scope.indexx;
+               console.log(charge);
+               $scope.selected = charge;
+               
+             }
 //        }
 
           //delete function

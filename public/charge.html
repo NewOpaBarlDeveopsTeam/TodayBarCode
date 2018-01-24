@@ -137,12 +137,12 @@ a:active {color:black;}
             
             <td ng-model="details.ChargeId" ng-click=" seldetails(details,$index)"ng-class="{selected:$index === indexx}">{{$index+1}}</td>
 
-          <td><input type="text" ng-model="details.chargeName" class="text1" ng-disabled="all"  value="{{details.chargeName}}"/></td>
+          <td><input type="text" ng-model="details.chargeName" class="text1" ng-disabled="$index != indexx ||addnewrow != true "  value="{{details.chargeName}}"/></td>
 
           <td ng-model="details.accountName">
           {{details.accountName}}
           <td >
-          <select class="selectpicker" ng-model="details.accountName" ng-change = "accountFetch(details.accountName)" ng-disabled="all">
+          <select class="selectpicker" ng-model="details.accountName" ng-change = "accountFetch(details.accountName)" ng-disabled="$index != indexx ||addnewrow == true ">
           <option  ng-repeat="account1  in  account">{{account1.accountName}}</option>
           </select>
           </td>
@@ -151,29 +151,29 @@ a:active {color:black;}
           <td ng-model="details.AddSub">
           {{details.AddSub}}
           <td>
-          <select class="selectpicker" ng-model="details.AddSub" ng-disabled="all" >
+          <select class="selectpicker" ng-model="details.AddSub" ng-disabled="$index != indexx">
           <option  ng-repeat="addsub1  in  addsub">{{addsub1.addsub}}</option>
           </select>
           </td>
           </td>
 
-          <td><input type="text" class="text" ng-model="details.ChargeValue" ng-disabled="all"  value="{{details.ChargeValue}}"/></td>
+          <td><input type="text" class="text" ng-model="details.ChargeValue" ng-disabled="$index != indexx" value="{{details.ChargeValue}}"/></td>
 
           <td ng-model="details.ChargeMethod">
           {{details.ChargeMethod}}
           <td>
-          <select class="selectpicker" ng-model="details.ChargeMethod" ng-disabled="all" >
+          <select class="selectpicker" ng-model="details.ChargeMethod" ng-disabled="$index != indexx">
           <option  ng-repeat="x  in  value">{{x.valueIn}}</option>
           </select>
           </td>
           </td>
  
           <td>
-          <input type="checkbox" ng-model="details.Editable" ng-disabled="all" >
+          <input type="checkbox" ng-model="details.Editable" ng-disabled="$index != indexx">
           </td>
 
           <td>
-          <input type="checkbox" ng-model="details.Taxable" ng-disabled="all" >
+          <input type="checkbox" ng-model="details.Taxable" ng-disabled="$index != indexx" >
           </td>
 
           </tr>
