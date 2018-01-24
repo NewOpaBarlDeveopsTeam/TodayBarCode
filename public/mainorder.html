@@ -1,0 +1,226 @@
+<html  ng-app="myApp">
+<head>
+	  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<style>
+     .container
+        {
+        	height:900px;
+        	width:900px;
+        	border:1px solid;
+
+
+
+        }
+        .div2{
+        	height:800px;
+        	width:880px;
+        	/*border:1px solid;*/
+        	background-color: #eee;
+
+
+        }
+        .div3{
+        	height:829px;
+        	width:860px;
+        	margin-top: 20px;
+        	margin-left: 10px;
+        	border:1px solid;
+        	background-color: lightgrey
+
+        }
+        .div4{
+        	height:758px;
+        	width:840px;
+        	margin-top: 20px;
+        	margin-left: 10px;
+        	border:1px solid red;
+        	background-color: white;
+
+        }
+        .div5{
+        	height:350px;
+        	width:400px;
+        	margin-top: -840px;
+        	margin-left: 420px;
+        	border:1px solid;
+        	background-color: lightgrey;
+        	/*position: fixed;*/
+
+        }
+         .div6{
+        	height:400px;
+        	width:400px;
+        	 
+        	border:1px solid;
+        	background-color: lightgrey;
+        	margin-left: 10px;
+
+        }
+         .div7{
+        	height:300px;
+        	width:400px;
+        	margin-top: -300px;
+        	margin-left: 420px;
+        	border:1px solid;
+        	background-color: white;
+
+        }
+          th {
+    border: 1px solid black;
+}
+P{
+
+	margin-top:41px;
+	margin-left: 700px;
+}
+.selected {
+	background-color:blue;
+	 
+}
+      
+ 
+</style>
+<body  ng-controller="mainctrl">
+	 
+	<div class="container">
+		<center><strong>Order Entry</strong></center>
+		<div class="div2">
+			<div class="div3"> 
+				  <div class="div4"> 
+				  <strong>	
+				  	KOT<input  style="width:40px;margin-left: 10px;margin-top: 10px" type="number" >
+				  	<input  style="width:80px;margin-top: 10px;margin-left: 10px" type="number" ng-model="kotno">
+				  	<input style="width:40px;margin-top: 10px;margin-left: 10px"  type="number"></strong>
+                     &nbsp;&nbsp;&nbsp;&nbsp;
+				  <strong>	SECTION <input type="text" style="width:90px" ng-model="Section1"><br>
+				  <!--  </strong><select ng-model="Section1">
+				  		             <option></option>
+				  		           <option ng-repeat="sec in section">{{sec.SectionName}}</option> -->
+				  		            
+				  		   <!--  </select> -->
+				  		COVERS   <input  style="width:80px;margin-top: 10px;margin-left: 10px" type="number">
+
+				  		    <br><br>
+				  		   <strong> Tables </strong><select style="width:150px" ng-model="Sections" ng-change="tabname(Sections);ordertable(Sections)">
+				  		             <option></option>
+				  		   <option ng-repeat="table in tablenames">{{table.TableName}}</option>
+				  		           
+				  		    </select>
+				  		  <strong>  WAITER </strong><select style="width:150px" ng-model="waiter.name">
+				  		             <option></option>
+				  		           <option ng-repeat="waiter in tablenames">{{waiter.WaiterName}}</option>
+				  		            
+				  		    </select>
+				  		    <br>
+				  		    <br> 
+				  		   <strong> CODE</strong> 
+				  		   <select ng-model="a"><option></option>
+				  		   	<option ng-repeat="code in codes">{{code.ItemCode}}</option>
+				  		   </select>
+				  		   	&nbsp;&nbsp;&nbsp;
+				  		   <strong> QTY</strong><input  style="width:60px" type="number" ng-model="qty"   ng-blur="getcode(a,qty,Section1,Sections,waiter.name)"> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				  		   <strong> <span style="color:blue">LIST TABLES1</span></strong><br><br>
+				  		<div class="div6">
+				  			<table style="width:100%" class="table table-bordered">
+				  				<tr>
+				  					<!-- <th> SI NO</th> -->
+				  					<th>CODE</th>
+				  					<th>ITEMNAME</th>
+				  					<th>QTY</th>
+
+				  				</tr>
+				  				<tr ng-repeat=" all in allorders" ng-model="allorders">
+				  					<!-- <td>{{$index+1}}</td> -->
+				  					<td  ng-model="all.code1">{{all.code1}}</td>
+				  					<td  ng-model="ite">{{all.itemname1}}</td>
+				  					<td  ng-model="qty">{{all.qty1}}</td>
+
+				  				</tr>
+				  			</table>
+				  			 
+
+				  		</div><br><br><br>
+                         &nbsp;&nbsp;&nbsp;<select style="width:400px;border:2px solid"><option>spetial instrunctions</option></select>
+				  		<!-- <input type="text" > --><br><br>
+
+				  		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <!-- <a href="pd.html"> --><button ng-click="print(allorders);save(all.code1,ite,qty)">PRINT</button><!-- </a> -->
+				  		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button>CANCEL</button>
+				  		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<button ng-click="clear()">CLEAR</button><br>
+				  		<div class="div7"   style="overflow:auto">
+				  			<table style="width:100%;" class="table table bordered ">
+				  				<thead>
+				  				<tr>
+				  					<th>ITEMNAME</th>
+				  					<th>UNITS</th>
+				  					<th>CODE</th>
+
+				  				</tr>
+				  			</thead>
+				  			<tbody   style="overflow:auto">
+				  				<tr ng-repeat="co in codes"  ng-class="{'selected':$index == index1}"  ng-click="setClickedRow($index,co.ItemName,co.ItemCode)">
+				  					<td ng-model="co.ItemName">{{co.ItemName}}</td>
+				  					<td>{{co.UOMSize}}</td>
+				  					<td ng-model="co.ItemCode">{{co.ItemCode}}</td>
+
+				  				</tr>
+				  			</tbody>
+				  			</table>
+
+
+				  		</div> 
+			<button style="margin-top: 60px" ng-click="change()"> change</button>
+				  		   <strong><h4> <span style="color:blue;margin-left:500px;">{{itemname}} {{salerate1}}</span></strong>
+<p><a href="mainsale.html"><button  style="margin-top: -75px">CLOSE</button></a></p>
+                         
+				  		<div class="div5">
+				  			<table style="width:100%">
+				  				<tr>
+				  				<th>CODE</th>
+				  				<th>ITEM NAME</th>
+				  				<th>QTY</th>
+				  			</tr>
+				  			<tr ng-repeat="codd in kotmama">
+				  				<td>{{codd.itemcode}}</td>
+				  				<td>{{codd.itemname}} </td>
+				  				<td>{{codd.itemqty}}</td>
+
+
+
+				  			</tr>
+
+				  		</div> 
+				  </div>
+			</div>
+
+ 
+		</div>
+
+	</div>
+<dialog id="myDialog" style="width:400px;height:200px">
+	              <br><br>
+                  FROM <select style="width:100px" ng-model="ttnn" ng-change="tttable(ttnn)"><option></option>
+                  	           <option ng-repeat="tt in ttnames">{{tt._id.Tablename}}</option>
+                  </select> &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                 TO<select style="width:100px" ng-model="chan" ng-change="changett(chan)"><option></option>
+                  	           <option ng-repeat="tt in tablenames">{{tt.TableName}}</option>
+                  </select>  
+                 
+                 <br>
+                 <br>
+                  <button style="margin-left:100px" class="btn btn-success" ng-click="abhitable()">CHANGE</button>
+                
+                <button style="margin-left:15px" class="btn btn-danger" ng-click="closeDialog()">CLOSE</button>
+                
+              </dialog>
+
+</body>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/ngstorage/0.3.6/ngStorage.min.js"></script> 
+    <script type="text/javascript" src="controllers/mainorderctrl.js"></script> 
+
+</html>

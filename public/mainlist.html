@@ -1,0 +1,134 @@
+ <!DOCTYPE>
+<html ng-app="myapp">
+<head>
+<title>LIST</title>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<style>
+#main{
+	width:1150px;
+	height:750px;
+	margin-left:100px;
+	margin-right:100px;
+	border:1px solid black;
+}
+#second{
+	width:1100px;
+	height:680px;
+	background-color:lightgrey;
+	margin-left:10px;
+	margin-right:10px;
+	margin-top:10px;
+}
+#thrid{
+	width:500px;
+	height:520px;
+	background-color:white;
+	border:2px solid black;
+	margin-left:20px;
+	margin-right:20px;
+	margin-top:35px;
+	overflow-y:auto;
+}
+#forth{
+	width:500px;
+	height:520px;
+	background-color:white;
+	border:2px solid black;
+	margin-left:525px;
+	margin-top: -520px;
+	 
+ 
+	overflow-y:auto;
+
+
+#title{
+	margin-left:420px;
+	margin-top:5px;
+	color:black;
+
+}
+th,td{
+	/*margin-left:10px;*/
+	padding-top:-5px;
+	padding-left: 20px;
+	padding-right: 45px;
+}
+table {
+    border: 1px solid black;
+    border-collapse: collapse;
+    
+}
+/*th, td {
+    padding: 5px;
+}*/
+</style>
+</head>
+<body ng-controller="mainsalectrl"> 
+	<div id='main'>  		<centre><strong style="margin-left:500px">ORDER ENTRY</strong></centre>
+		<div  id='title'> </div>
+		
+		<div id="second" class='row-sm-1'>
+			<br>
+			<br>
+			<label style="margin-left:300px" >TABLES</label>
+		 
+<select style='width:150px'  ng-model="tabs" ng-change="listtab(tabs);listtable(tabs)">
+					<option> </option>
+					<option  ng-repeat="tt in ttnames">{{tt._id.Tablename}}</option>
+						 
+				</select> 
+			 
+		
+              <p><span style="color:blue;margin-left:650px"><strong>LIST TABLES:{{listtablename}}</strong></span> </p>  
+			
+			
+			<div id="thrid"> 
+			<table   class="table table-bordered">
+				<tr >
+					<th >NO</th>
+					<th>TABLE NO</th>
+					<th>DATE & TIME</th>
+					<th>W NO</th>
+					 
+				</tr>
+				<tr ng-repeat="re in tableresult">
+					<td>{{$index+1}}</td>
+					<td>{{re.runtab}}</td>
+					<td>{{re.resuldate | date:"dd/MM/yyyy"}}</td>
+					<td>{{re.sesname}}</td>
+
+				</tr>
+				 
+			</table>
+			</div>
+			<div id="forth"> 
+			<table   class="table table-bordered">
+				<tr >
+					<th >KOTNO</th>
+					<th>CODE</th>
+					<th>iTEM NAME</th>
+					<th>QTY</th>
+					 
+				</tr>
+				<tr ng-repeat="all in kotmama">
+				<td>{{all.itemkotno}}</td>
+				<td>{{all.itemcode}}</td>
+				<td>{{all.itemname}}</td>
+				<td>{{all.itemqty}}</td>
+				</tr> 
+			</table>
+			</div><br>
+			<button style="margin-left:50px">DELETE</button>
+
+			<button style="margin-left:800px">CLOSE</button>
+		</div>
+
+
+	</div>
+</body>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/ngstorage/0.3.6/ngStorage.min.js"></script> 
+    <script type="text/javascript" src="controllers/mainorderctrl.js"></script> 
+
+</html>
