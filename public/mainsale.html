@@ -1,0 +1,171 @@
+<html ng-app="myapp">
+<head>
+	  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <title>main transaction</title>
+</head>
+<style>
+.container{
+	height:100%;
+	width:102%;
+	margin-left: 20px;
+	margin-top: 20px;
+	border:1px solid;
+	background-color: #eee;
+	 
+}
+ .div3{
+ 	height:90%;
+	width:100%;
+	
+	margin-top: 16px;
+	/*border:1px solid;*/
+	background-color: pink ;
+ }
+ .div2{
+ 	height:94%;
+	width:102%;
+	 margin-top: 0px; 
+	margin-top: 10px;
+	border:1px solid;
+	background-color: pink ;
+ }
+  
+  .col-md-4{
+  	border:2px solid;
+  	height:530;
+  	margin-left: 15px;
+  	margin-top: 30px;
+  	background-color: white ;
+
+  	   }
+  	   .col-md-8{
+  	border:2px solid;
+  	height:530;
+  	margin-left: 480px;
+  	margin-top:-530;
+  	width:58%;
+  	background-color: white ;
+
+  	   }
+   
+  table{
+  	 
+  	 
+  /*	border-collapse: collapse;*/
+  	width:100%;
+
+  }
+  th{
+  	border:1px solid;
+  }
+
+</style>
+
+
+
+<body ng-controller="mainsalectrl">
+{{name}}
+	<div class="container">
+		 <h4><center>Table Status </h4></center></span> 
+		 <div class="div2">
+		 <div class = "row">
+			<div class="col-md-2">
+		     <a href="mainorder.html">
+		    <button>KOT</button></a>
+			</div>
+			<div class="col-md-2">
+		    <a href="mainbill.html"><button>BILL</button></a>
+			</div>
+			<div class="col-md-3">
+		   <button>DIRECT BILING</button>
+			</div>
+			<div class="col-md-3">
+		   <button>COUPON</button>
+			</div>
+			<div class="col-md-2">
+		 <button>CLOSE</button>
+			</div>
+	</div>
+
+	<div class="div3">
+ 
+      <div class = "row"> 
+      	<span style="margin-left:-350px"><strong>Running Tables</strong>
+      		<span style="margin-left:500px"><strong>Billed Tables</strong></span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      		<input type="radio"><strong>Billed</strong>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+      		<input type="radio"><strong>Setteled</strong>
+
+		<div class="col-md-4"> 
+		       <table class="table table-bordered" style="width:100%">
+		       	<tr>
+		       		<th>T...</th>
+		       		 
+		       		<th> WAITER</th>
+		       		
+		       		<th> AMOUNT</th>
+		       		
+		       		<th> TIME</th>
+		       		 
+		       	</tr>
+		       	<tr ng-repeat="t in shivanew">
+                   <td>{{t.tablename}}</td>
+                   <td>{{t.waitername}}</td>
+                   <td></td>
+                   <td></td>
+
+		       		<!-- <td>{{tablename}}</td>
+		       		<td>{{waitername}}</td>
+		       		<td>{{wholerate}}</td>
+		       		<td>1</td> -->
+		       	</tr>
+		       </table>
+		     
+			</div>
+			 
+			<div class="col-md-8">
+		           
+		       <table class="table table-bordered">
+		       	<tr>
+		       		<th>BILL NO
+		       		</th>
+		       		<th> WAITER
+		       		</th>
+		       		<th> TABLE NO
+		       		</th>
+		       		<th> AMOUNT
+		       		</th>
+		       		<th> I DISK
+		       		</th>
+		       		<th> TAX
+		       		</th>
+		       		<th> CHAR
+		       		</th>
+		       		<th>  BILL
+		       		</th>
+		       		<th> ROFF
+		       		</th>
+		       		<th> TOTAL
+		       		</th>
+		       	</tr>
+		       </table>
+		     
+			 
+			</div>
+			 
+	</div>
+			 
+			 
+			 
+		 </div> 
+		 </div>
+	</div>
+
+</body>
+ <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/ngstorage/0.3.6/ngStorage.min.js"></script> 
+    <script type="text/javascript" src="controllers/mainorderctrl.js"></script> 
+</html>

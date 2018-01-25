@@ -4514,6 +4514,504 @@ db.DiscountByItem.insert({"ItemId":itemid,"Discount":disc,"DiscountByMasterId":r
 //
 // })
 
+/////////////////////////////MAIN TABLE ORDER FROM SHIVA///////////////////////////
+
+app.get('/maincode:login',function(req,res)
+{
+    var logs=req.params.login;
+   
+
+
+   db.ItemSKU.find({"POSName":logs},function(err,docs)
+   {
+     res.json(docs);
+    
+   })
+
+})
+
+ app.get('/mainuom:login',function(req,res)
+{
+    var logs=req.params.login;
+    logs=parseInt(logs)
+   db.UOMConversion.find({"UOMSizeMasterID":logs},function(err,docs)
+   {
+    // console.log(docs[0].UOMSize)
+     res.json(docs);
+    
+   })
+
+})
+ app.get('/getqty:uoid',function(req,res)
+{
+    var uids=req.params.uoid;
+    console.log(typeof(uids));
+    var uids=parseInt(uids);
+    
+
+
+   db.UOMConversion.find({"UOMSizeMasterID":uids},function(err,docs)
+   {
+     res.json(docs);
+    
+   })
+
+})
+  app.get('/gettable',function(req,res)
+{
+    
+
+
+   db.TableMapping.find(function(err,docs)
+   {
+     res.json(docs);
+    
+   })
+
+})   
+
+
+  app.get('/getsec:sect',function(req,res)
+{
+    var section1 =req.params.sect;
+
+         var str=section1.split(",");
+         var login=str[0];
+         console.log(login+"nnnnnnnnn");
+         var section1=str[1];
+         console.log(section1+"uuuuuuuuuuuuu")
+    
+
+
+   db.SectionMaster.find({"POSName":login,"SectionName":section1},function(err,docs)
+   {
+     res.json(docs);
+    
+   })
+
+})
+
+
+
+    app.get('/getkot:logname',function(req,res)
+{
+    var logi =req.params.logname;
+
+
+   db.invoiceDetails.find({"POSName":logi},function(err,docs)
+   {
+     res.json(docs);
+    
+   })
+
+})
+
+
+  app.get('/mainsection:logname',function(req,res)
+{
+    var logi =req.params.logname;
+
+
+   db.SectionMaster.find({"POSName":logi},function(err,docs)
+   {
+     res.json(docs);
+    
+   })
+
+})
+
+
+app.get("/orderedtable:tabnames",function(req,res){
+     var tabname=req.params.tabnames;
+     console.log(tabname+"tttttttttttttttt")
+     db.TableMapping.find({"TableName":tabname},function(err,doc)
+     {
+        res.json(doc);
+     })
+
+})
+
+app.get("/gettabid:tabid",function(req,res){
+
+    var tabid=req.params.tabid
+    console.log(tabid)
+    db.KotMaster.find({"TabId":tabid},function(err,doc){
+        res.json(doc);
+    })
+
+})
+
+// app.get("/getkotid:kot1",function(req,res){
+
+//     var kot1=req.params.kot1
+//     console.log(kot1+"kkkkkkkkkkkkkkkkkk");
+//     console.log(typeof(kot1))
+//     db.KotTrans.find({"KotNo":kot1},function(err,doc){
+//         res.json(doc);
+//     })
+
+// })
+
+app.get("/getnewkotid:kot1",function(req,res){
+
+    var kot1=req.params.kot1
+    console.log(kot1+"yashwanthh999999999999999999");
+    console.log(typeof(kot1))
+    db.KotTrans.find({"KotNo":kot1},function(err,doc){
+        res.json(doc);
+    })
+})
+
+app.get("/kotitemnamefetch:kotitemcode",function(req,res){
+    var kotitemcode1=parseInt(req.params.kotitemcode);
+
+    db.ItemSKU.find({"ItemCode":kotitemcode1},function(err,doc){
+        res.json(doc)
+    })
+})
+
+
+
+
+
+
+    app.get('/getcodefor:codename',function(req,res)
+{
+    var namecode =req.params.codename;
+    console.log(typeof(namecode));
+    var uids=parseInt(uids);
+    var namecode1 = parseInt(namecode);
+    console.log(namecode1);
+    console.log(namecode1)
+
+
+   db.ItemSKU.find({"ItemCode":namecode1},function(err,docs)
+   {
+     res.json(docs);
+    
+   })
+
+})
+
+    app.post("/tableiteminsert:itemlist",function(req,res){
+
+        var itemlist1=req.params.itemlist;
+         var str=itemlist1.split(",");
+         var itemcode=str[0];
+         console.log(itemcode);
+         var itemqty=str[1];
+         console.log(itemqty+"qtyyyyyyyy");
+         var kono=str[2];
+         console.log(kono);
+          var itskuid=str[3];
+          itskuid=parseInt(itskuid);
+         console.log(itskuid);
+
+
+
+         db.KotTrans.insert({"ItemCode":itemcode,"qty":itemqty,"KotNo":kono,"ItemSkuid":itskuid},function(err,doc){
+
+            // console.log(doc[0]+"doccccccuuuu");
+            res.json(doc)
+            console.log(doc.KotNo+"kkkkkkot");
+            var kott = parseInt(doc.KotNo);
+            var  newkot= kott+1;
+            db.invoiceDetails.update({"POSName":"Bar"},{$set:{"invoiceNumber":newkot}},function(err,doc){
+                
+            })
+         })
+
+    })
+
+     app.post("/tablemast:tabwait",function(req,res){
+
+        var tabwait123=req.params.tabwait;
+         var str=tabwait123.split(",");
+         var tabid=str[0];
+         console.log(tabid);
+         var waitid=str[1];
+         console.log(waitid+"qtyyyyyyyy");
+         var kono=str[2];
+         console.log(kono);
+
+         var date =str[3];
+         console.log(date);
+
+         var time=str[4];
+         console.log(time);
+
+         var secid=str[5];
+         console.log(secid);
+      
+
+         db.KotMaster.insert({"TabId":tabid,"WaiterId":waitid,"KotNo":kono,
+                               "KotDate":date,"KotTime":time,"SectionId":secid},function(err,doc){
+
+           
+            res.json(doc)
+            
+         })
+
+    })
+
+ app.post("/tableee:formaster",function(req,res){
+
+        var tbmaster=req.params.formaster;
+         var str=tbmaster.split(",");
+         var tabss=str[0];
+         console.log(tabss);
+         var secid=str[1];
+         console.log(secid+"qtyyyyyyyy");
+         var posid=str[2];
+         console.log(posid);
+
+         var tablename =str[3];
+         console.log(tablename);
+
+          
+      
+
+         db.TableMaster.insert({"TabId":tabss,
+                               "SectionId":secid,"posId":posid,"TableName":tablename,
+                                 },function(err,doc){
+
+           
+            res.json(doc)
+            
+         })
+
+    })
+
+
+
+
+
+
+
+   app.get('/getskid:codi',function(req,res)
+{
+    var codiii =req.params.codi;
+    var codii=parseInt(codiii);
+     console.log(typeof(parseInt(codii))+"uuuuuuuuuuu")
+
+
+   db.ItemSKU.find({"ItemCode":codii},function(err,docs)
+   {
+     res.json(docs);
+    
+   })
+
+})
+
+app.get('/mainskuid:all',function(req,res)
+{
+    var results = req.params.all;
+    
+     
+     var str=results.split(",");
+     console.log(str)
+     var skuidno=str[0];
+     console.log(skuidno);
+     console.log(typeof(skuidno));
+     var skuidno =parseInt(skuidno); 
+     var sectionname=str[1];
+     console.log(sectionname)
+
+
+   db.ItemSKURate.find({"ItemSKUID":skuidno,"SectionName":sectionname},function(err,docs)
+   {
+     res.json(docs);
+    
+   })
+
+})
+
+   app.get('/changetable',function(req,res)
+{   
+db.TableMaster.aggregate([
+{$project:{"TableName":1}},
+{$group:{_id:{Tablename:"$TableName"}}}
+],function(err,doc){
+res.json(doc);
+})
+})
+
+
+   app.get('/runningtable',function(req,res)
+{   
+db.TableMaster.aggregate([
+{$project:{"TableName":1}},
+{$group:{_id:{Tablename:"$TableName"}}}
+],function(err,doc){
+res.json(doc);
+})
+})
+
+
+
+  app.get('/foretable:taname',function(req,res)
+{
+     var tename =req.params.taname;
+    // var codii=parseInt(codiii);
+    //  console.log(typeof(parseInt(codii))+"uuuuuuuuuuu")
+
+
+   db.TableMapping.find({"TableName":tename},function(err,docs)
+   {
+     res.json(docs);
+    
+   })
+
+})
+
+app.put("/firstupdate:allresult",function(req,res){
+   var alls= req.params.allresult;
+    var str=alls.split(",");
+     
+     var firstid=str[0];
+     console.log(firstid);
+
+       var secondid=str[1];
+     console.log(secondid);
+
+     db.KotMaster.update({"TabId":firstid},{"$set":{"TabId":secondid}},{multi:true},function(err,doc){
+        res.json(doc)
+     })
+  
+ 
+
+
+
+})
+
+
+app.put("/secondupdate:allresponse",function(req,res){
+   var alla= req.params.allresponse;
+    var str=alla.split(",");
+     
+     var forid1=str[0];
+     console.log(forid1+"second iiiiii");
+
+       var forid2=str[1];
+     console.log(forid2+"second iiiiii");
+        
+        var secondtabname=str[2];
+        console.log(secondtabname+"uuuuuuuuuuuu")
+     
+  
+ db.TableMaster.update({"TabId":forid1},{"$set":{"TabId":forid2,"TableName":secondtabname}},{multi:true},function(err,doc){
+        res.json(doc)
+     })
+
+  })
+
+ 
+
+
+
+ ////////////LIST PAGE FOR TABLES ORDERS///////////
+ 
+app.get('/runtables:tasnameme',function(req,res)
+{
+     var tname =req.params.tasnameme;
+    
+
+   db.TableMaster.find({"TableName":tname},function(err,docs)
+   {
+     res.json(docs);
+    
+   })
+
+})
+
+app.get('/machtab:macid',function(req,res)
+{
+     var matchid =req.params.macid;
+    
+
+   db.KotMaster.find({"TabId":matchid},function(err,docs)
+   {
+     res.json(docs);
+    
+   })
+
+})
+
+app.get('/forsecid:boths',function(req,res)
+{
+     var bothid =req.params.boths;
+    
+     var str=bothid.split(",");
+     
+     var secid=str[0];
+     console.log(secid+"first iiiiii");
+     var secid=parseInt(secid);
+
+       var log=str[1];
+     console.log(log+"second iiiiii");
+
+   db.SectionMaster.find({"SectionId":secid,"POSName":"Bar"},function(err,doc)
+   {
+     res.json(doc);
+    
+   })
+
+})
+
+////////////////////  MAIN BILL CONCEPT/////////////////////////
+  app.get('/billtable',function(req,res)
+{   
+db.TableMaster.aggregate([
+{$project:{"TableName":1}},
+{$group:{_id:{Tablename:"$TableName"}}}
+],function(err,doc){
+res.json(doc);
+})
+})
+
+
+app.get("/finaltab:tabsid",function(req,res){
+    var tablid=req.params.tabsid;
+    console.log(typeof(tablid))
+    console.log(tablid+"hhhhhhhhhhhh");
+    // var tablid=parseInt(tablid);
+    // db.KotMaster.find({"TabId":tablid},function(err,doc){
+    //     res.json(doc);
+    // })
+
+db.KotMaster.aggregate([ { $match : {TabId :tablid}},
+                    { $group: { _id: {tabid:"$TabId",kotno:"$KotNo" }} },
+                    
+
+
+],function(err,doc){
+    res.json(doc);
+})
+
+})
+
+  app.get('/billid',function(req,res)
+{   
+db.KotMaster.aggregate([
+{$project:{"WaiterId":1}},
+{$group:{_id:{waiterds:"$WaiterId"}}}
+],function(err,doc){
+res.json(doc);
+})
+})
+
+
+app.get('/idget:id123',function(req,res){
+    var getid=req.params.id123;
+    console.log(getid)
+
+    db.TableMapping.find({"TableName":getid},function(err,doc){
+        res.json(doc);
+    })
+
+})  
+
+
 
 var port=7000;  
 app.listen(port);
