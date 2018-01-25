@@ -107,6 +107,7 @@ function($scope,$http,$window){
                 $scope.objitemcode=result[r]._id.itemcode;
                 $scope.itemname=result[r]._id.itemname;
                 $scope.skuid=result[r]._id.skuid;
+                $scope.uombase=result[r]._id.baseqty;
                 console.log($scope.skuid)
                 if(result[r]._id.closing !=null)
                   {
@@ -189,7 +190,7 @@ function($scope,$http,$window){
       obj["itemcode"]=$scope.objitemcode;
       obj["itemname"]=$scope.itemname;
       obj["itemskuid"]=$scope.skuid;
-      obj["uom"]=$scope.uom;
+      obj["uom"]=$scope.uombase;
       obj["inpieces"]=$scope.inpiecse;
       obj["outpieces"]=$scope.outpieces;
       obj["openingstock"]=$scope.closingvalue;
@@ -198,8 +199,8 @@ function($scope,$http,$window){
       obj["diffqty"]=$scope.diffqty;
       obj["sales"]=$scope.sales;
       obj["physicalqty"]=$scope.physicalqty;
-     obj["openingbase"]=$scope.calcbase;
-     obj["openingcase"]=$scope.calcpack;
+      obj["openingbase"]=$scope.calcbase;
+      obj["openingcase"]=$scope.calcpack;
       closingstock.push(obj);
       console.log(closingstock)
       $scope.notconfirm=closingstock;  

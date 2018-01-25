@@ -4098,7 +4098,21 @@ app.get("/openingstock:openingstockvalue",function(req,res){
   openingstockid=parseInt(openingstockid);
   var closingdate=str_array[2];
   //console.log(voucherdate+"openingstockvaluevoucherdate");
- db.ItemSKU.aggregate([
+// db.ItemSKU.aggregate([
+//      {$match:{"POSName":openingbar}},
+//       { "$lookup": 
+//       {
+//        "from": "closingStock",
+//        "localField":  "ItemCode",
+//        "foreignField": "ItemCode",
+//        "as": "closing"
+//        }},
+//         {$project:{ "ItemCode":1,"ItemName":1,"closing.Closing":1,"closing.ClosingDate":1,"ItemSKUID":1,"closing.StockPointId":1}},
+//    { "$unwind": { "path": "$closing", "preserveNullAndEmptyArrays": true }},
+//          {$match:{"closing.StockPointId":openingstockid,"closing.ClosingDate":closingdate}},
+//          //{$unwind:"$closing"},
+//          {$group:{_id:{itemcode:"$ItemCode",itemname:"$ItemName",closing:"$closing.Closing",skuid:"$ItemSKUID"}}},
+  db.ItemSKU.aggregate([
       {$match:{"POSName":openingbar}},
        { "$lookup": 
        {
@@ -4107,11 +4121,21 @@ app.get("/openingstock:openingstockvalue",function(req,res){
         "foreignField": "ItemCode",
         "as": "closing"
         }},
-         {$project:{ "ItemCode":1,"ItemName":1,"closing.Closing":1,"closing.ClosingDate":1,"ItemSKUID":1,"closing.StockPointId":1}},
+         {$project:{ "ItemCode":1,"ItemName":1,"closing.Closing":1,"closing.ClosingDate":1,"ItemSKUID":1,"closing.StockPointId":1,"UOMSize":1}},
     { "$unwind": { "path": "$closing", "preserveNullAndEmptyArrays": true }},
           {$match:{"closing.StockPointId":openingstockid,"closing.ClosingDate":closingdate}},
+          
+           { "$lookup": 
+          {
+        "from": "UOMConversion",
+        "localField":  "UOMSize",
+        "foreignField": "UOMSizeMasterID",
+        "as": "uom"
+        }},
+        { "$unwind": { "path": "$uom", "preserveNullAndEmptyArrays": true }},
+          
           //{$unwind:"$closing"},
-          {$group:{_id:{itemcode:"$ItemCode",itemname:"$ItemName",closing:"$closing.Closing",skuid:"$ItemSKUID"}}},
+       {$group:{_id:{itemcode:"$ItemCode",itemname:"$ItemName",closing:"$closing.Closing",skuid:"$ItemSKUID",uom:"$uom.UOMSizeMasterID",baseqty:"$uom.BaseQty"}}},
                  
       ],function(err,doc9){
     //console.log(doc[0]+"docccc")   

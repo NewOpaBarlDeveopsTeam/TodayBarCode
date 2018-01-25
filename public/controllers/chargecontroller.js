@@ -37,7 +37,8 @@ function($scope,$http,$window){
       detailsfetch();//detailsfetch
        //new function.......
         $scope.addNew = function(details){
-        $scope.addnewrow=true;
+          $scope.true=true;
+        $scope.addnewrow=$scope.true;
           alert($scope.addnewrow)
         $scope.chargedetails.push({
           'chargeName':"",

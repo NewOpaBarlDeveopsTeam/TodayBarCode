@@ -137,7 +137,7 @@ a:active {color:black;}
             
             <td ng-model="details.ChargeId" ng-click=" seldetails(details,$index)"ng-class="{selected:$index === indexx}">{{$index+1}}</td>
 
-          <td><input type="text" ng-model="details.chargeName" class="text1" ng-disabled="$index != indexx ||addnewrow != true "  value="{{details.chargeName}}"/></td>
+          <td><input type="text" ng-model="details.chargeName" class="text1" ng-disabled="$index != indexx || addnewrow == true "  value="{{details.chargeName}}"/></td>
 
           <td ng-model="details.accountName">
           {{details.accountName}}
