@@ -31,7 +31,7 @@
       margin-top: -20px;
     }
     #thead{
-      background-color: cadetblue;
+      background-color: gainsboro;
 /*      color: white;*/
     }
     #tabid {
@@ -103,7 +103,7 @@
             </label>
           </div>
           <div class="col-md-1">
-            <button type="button" class=" btn-default">View/Edit</button>
+            <button type="button" class=" btn-default" ng-click="closingtallywiew(date2.date1,stockid)" ng-disabled="isDisabled">View/Edit</button>
           </div>
           <div class="col-md-2">
             <button type="button" class=" btn-default" ng-click="validation(date2.date1)">Enter</button>
@@ -169,17 +169,17 @@
           <tbody>
              <tr ng-repeat="just in notconfirm">
                   <td style="width: 30px">{{$index+1}}</td>
-                  <td style="width: 250px;margin-left:05px">{{just.itemname}}</td>
-               <td style="width: 80px;text-align: center">{{just.uom}}</td>
-               <td style="width: 100px;text-align: center">{{just.itemcode}}</td>
-                  <td style="width: 100px;text-align: center">{{just.itemskuid}}</td>
-                  <td style="width:80px;text-align: center">{{just.openingstock}}</td>
-                  <td style="width:80px;text-align: center">{{just.inpieces | number : 2}}</td>
-                  <td style="width:80px;text-align: center">{{just.outpieces | number : 2}}</td>
-                  <td style="width:100px;text-align: center">{{just.bookqty | number : 2}}</td>
-                  <td><input type="text" style="border: 0;width:80px;text-align: center" ng-model="physicalqty" ng-blur="diffcalcfun(just.itemskuid,sectionname,physicalqty,just.bookqty,just.itemcode)"></td>
-                  <td style="width:90px">{{just.diffqty}}</td>
-                  <td style="width:80px;text-align: center">{{just.sales}}</td>
+                  <td style="width: 250px;margin-left:05px">{{just.ItemName}}</td>
+               <td style="width: 80px;text-align: center">{{just.UOM}}</td>
+               <td style="width: 100px;text-align: center">{{just.ItemCode}}</td>
+                  <td style="width: 100px;text-align: center">{{just.ItemSKUId}}</td>
+                  <td style="width:80px;text-align: center">{{just.Closing}}</td>
+                  <td style="width:80px;text-align: center">{{just.In | number : 2}}</td>
+                  <td style="width:80px;text-align: center">{{just.Out | number : 2}}</td>
+                  <td style="width:100px;text-align: center">{{just.BookQty | number : 2}}</td>
+                  <td><input type="text" style="border: 0;width:80px;text-align: center" ng-model="just.PhysicalQty" ng-blur="diffcalcfun(just.ItemSKUId,sectionname,just.PhysicalQty,just.BookQty,just.ItemCode,notconfirm)"></td>
+                  <td style="width:90px">{{just.DiffQty}}</td>
+                  <td style="width:80px;text-align: center">{{just.Sales}}</td>
                 </tr>
          </tbody>
          </table>
@@ -196,7 +196,7 @@
             <button type="button" class="btn-default">Enter Stock Point</button>
           </div>
           <div class="col-md-1">
-            <button type="button" class="btn-default">Save</button>
+            <button type="button" class="btn-default" ng-click="closingtallyfun(notconfirm,date2.date1)" ng-disabled="isDisabled">Save</button>
           </div>
           <div class="col-md-1">
             <button type="button" class="btn-default">Export</button>
