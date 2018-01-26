@@ -4272,7 +4272,7 @@ app.post("/closingstocksave:closingvalue",function(req,res){
 })
 app.post("/closingstocktallysave:closingtally",function(req,res){
   var closingtally1=req.params.closingtally;
-  console.log("closingstocktallysaveclosingstocktallysaveclosingstocktallysave")
+  
     var str_array=closingtally1.split(",");
     var stockid=str_array[0];
     stockid=parseInt(stockid);
@@ -4298,10 +4298,14 @@ app.post("/closingstocktallysave:closingtally",function(req,res){
     sales=parseInt(sales);
     var closingstocktally=str_array[12];
     closingstocktally=parseInt(closingstocktally);
-   var bookqty=str_array[13];
+    var bookqty=str_array[13];
     bookqty=parseInt(bookqty);
+    var openingbase=str_array[14];
+    openingbase=parseFloat(openingbase);
+    var openingcase=str_array[15];
+    openingcase=parseFloat(openingcase);
 //  "Closing":closing,"OpeningBase":openingbase,"OpeningCase":openingcase
-  db.closingStockTally.insert({"ClosingStockTally":closingstocktally,"StockPointId":stockid,"ClosingDate":closingdate,"ItemName":itemname,"UOM":uom,"ItemCode":itemcode,"Closing":closing,"ItemSKUId":itemskuid,"In":inpieces,"Out":outpieces,"PhysicalQty":opening,"DiffQty":diffqty,"Sales":sales,"BookQty":bookqty},function(err,doc){
+  db.closingStockTally.insert({"ClosingStockTally":closingstocktally,"StockPointId":stockid,"ClosingDate":closingdate,"ItemName":itemname,"UOM":uom,"ItemCode":itemcode,"Closing":closing,"ItemSKUId":itemskuid,"In":inpieces,"Out":outpieces,"PhysicalQty":opening,"DiffQty":diffqty,"Sales":sales,"BookQty":bookqty,"OpeningBase":openingbase,"OpeningCase":openingcase},function(err,doc){
     res.json(doc);
   })
   

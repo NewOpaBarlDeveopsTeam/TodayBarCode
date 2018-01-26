@@ -18,7 +18,6 @@ function($scope,$http,$window,$filter){
              console.log($scope.date)
   $scope.transaction;
   $scope.all = true;
-//  $scope.qty = "Qty:";
   $scope.date2 = {date1:new Date()}
    
   $http.get('/transactionfetch').success(function(result){

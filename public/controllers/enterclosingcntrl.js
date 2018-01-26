@@ -7,6 +7,7 @@ function($scope,$http,$window){
   $scope.isDisabled = false;
   var loginres= window.sessionStorage.getItem("loginres1")
    console.log(loginres)
+  
    $scope.loginresname = loginres;
   $http.get('/stockpointfetch'+$scope.loginresname).success(function(response){
    console.log(response);
@@ -184,7 +185,6 @@ function($scope,$http,$window){
   
    $scope.objectpush=function()
     {
-     
      var itemlength=closingstock.length;
       var obj={};
       obj["ItemCode"]=$scope.objitemcode;
@@ -205,7 +205,7 @@ function($scope,$http,$window){
       console.log(closingstock)
       $scope.notconfirm=closingstock;  
     }
-  $scope.diffcalcfun=function(itemsku,section,PhysicalQty,bookqty,itemcode,notconfirm)
+  $scope.diffcalcfun=function(itemsku,section,PhysicalQty,bookqty,itemcode)
   {
     $scope.diffqty=null;
     $scope.sales=null;
@@ -235,9 +235,8 @@ function($scope,$http,$window){
         $scope.itemskuid=res9[0].ItemSKUID;
         $scope.salerate=res9[0].SaleRate;
         $scope.sales=$scope.diffqty*$scope.salerate;
-        console.log(notconfirm)
      for( var s=0;s<=closingstock.length;s++)
-         {
+         { 
            if(closingstock[s].ItemSKUId==$scope.itemskuid)
               {
                 var obj={};
@@ -268,11 +267,8 @@ function($scope,$http,$window){
             var date = a[0];
             console.log(date);
             $scope.closingstockid++;
-          var closingitemvalue=$scope.stockidfound+","+date+","+closingsave[y].ItemSKUId+","+closingsave[y].openingstock+","+closingsave[y].In+","+closingsave[y].Out+","+closingsave[y].ItemCode+","+closingsave[y].Opening+","+$scope.closingstockid+","+closingsave[y].OpeningBase+","+closingsave[y].OpeningCase;
+          var closingitemvalue=$scope.stockidfound+","+date+","+closingsave[y].ItemSKUId+","+closingsave[y].Closing+","+closingsave[y].In+","+closingsave[y].Out+","+closingsave[y].ItemCode+","+closingsave[y].Opening+","+$scope.closingstockid+","+closingsave[y].OpeningBase+","+closingsave[y].OpeningCase;
                 
-//       $http.get("/closingstockinfo").success(function(res1){
-//         console.log(res1)
-//       }) 
     $http.post("/closingstocksave"+closingitemvalue).success(function(result99){
             console.log(result99);
             
@@ -300,12 +296,8 @@ function($scope,$http,$window){
             var date = a[0];
             console.log(date);
             $scope.closingstocktally++;
-          var closingitemvalue=$scope.stockidfound+","+date+","+closingsave[y].ItemSKUId+","+closingsave[y].Closing+","+closingsave[y].In+","+closingsave[y].Out+","+closingsave[y].ItemCode+","+closingsave[y].Opening+","+closingsave[y].ItemName+","+closingsave[y].UOM+","+closingsave[y].DiffQty+","+closingsave[y].Sales+","+$scope.closingstocktally+","+closingsave[y].BookQty;
-          console.log(closingitemvalue)
-                
-//       $http.get("/closingstockinfo").success(function(res1){
-//         console.log(res1)
-//       }) 
+          var closingitemvalue=$scope.stockidfound+","+date+","+closingsave[y].ItemSKUId+","+closingsave[y].Closing+","+closingsave[y].In+","+closingsave[y].Out+","+closingsave[y].ItemCode+","+closingsave[y].Opening+","+closingsave[y].ItemName+","+closingsave[y].UOM+","+closingsave[y].DiffQty+","+closingsave[y].Sales+","+$scope.closingstocktally+","+closingsave[y].BookQty+","+closingsave[y].OpeningBase+","+closingsave[y].OpeningCase;
+          console.log(closingitemvalue) 
     $http.post("/closingstocktallysave"+closingitemvalue).success(function(result99){
             console.log(result99);
             
@@ -329,8 +321,35 @@ function($scope,$http,$window){
      var tallyvalue=date+","+$scope.fromstockidfound;
      
      $http.get("/closingtallydetail"+tallyvalue).success(function(response){
-       console.log(response)
-       $scope.notconfirm=response;
+       console.log(response);
+       var tallylength=response.length;
+       var tallypush = function(z)
+          {
+          if( z  < tallylength)
+           {
+           $scope.objitemcode=response[z].ItemCode;
+           $scope.itemname=response[z].ItemName;
+           $scope.skuid=response[z].ItemSKUId;
+           $scope.uombase=response[z].UOM;
+           $scope.inpiecse=response[z].In;
+           $scope.outpieces=response[z].Out;
+           $scope.closingvalue=response[z].Closing;
+           //$scope.bookqty=($scope.closingvalue+$scope.inpiecse)-$scope.outpieces;
+           $scope.bookqty=response[z].BookQty;
+           $scope.diffqty=response[z].DiffQty;
+           $scope.sales=response[z].Sales;
+           $scope.PhysicalQty=response[z].PhysicalQty;
+           $scope.calcbase=response[z].OpeningBase;
+           $scope.calcpack=response[z].OpeningCase;
+           $scope.objectpush();
+           tallypush(z+1)
+  //       obj["Opening"]=$scope.PhysicalQty;
+  //       obj["OpeningBase"]=$scope.calcbase;
+  //       obj["OpeningCase"]=$scope.calcpack;
+                
+              }
+          }
+       tallypush(0);
      })
    }
   }]);
