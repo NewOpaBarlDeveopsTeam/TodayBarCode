@@ -10,7 +10,7 @@
   <style>
     #div1{
       border: 1px solid black;
-      height: 100%;;
+      height: 100%;
       background-color:gainsboro;
     }
     #div2{
@@ -101,12 +101,13 @@
                    <option ng-repeat = "section in sectioname">{{section.SectionName}}</option>
               </select>
             </label>
+<!--Name:<input type="text" ng-model="name" ng-keydown="checkcall($event,name);">-->
           </div>
           <div class="col-md-1">
             <button type="button" class=" btn-default" ng-click="closingtallywiew(date2.date1,stockid)" ng-disabled="isDisabled">View/Edit</button>
           </div>
           <div class="col-md-2">
-            <button type="button" class=" btn-default" ng-click="validation(date2.date1)">Enter</button>
+            <button type="button" class=" btn-default" ng-click="validation(date2.date1)"ng-disabled="isDisabled">Enter</button>
           </div>
         </div>
         <br>
@@ -167,7 +168,7 @@
           </tr>
           </thead>
           <tbody>
-             <tr ng-repeat="just in notconfirm">
+             <tr ng-repeat="just in notconfirm | orderBy:'ItemCode'">
                   <td style="width: 30px">{{$index+1}}</td>
                   <td style="width: 250px;margin-left:05px">{{just.ItemName}}</td>
                <td style="width: 80px;text-align: center">{{just.UOM}}</td>
@@ -177,7 +178,7 @@
                   <td style="width:80px;text-align: center">{{just.In | number : 2}}</td>
                   <td style="width:80px;text-align: center">{{just.Out | number : 2}}</td>
                   <td style="width:100px;text-align: center">{{just.BookQty | number : 2}}</td>
-                  <td><input type="text" style="border: 0;width:80px;text-align: center" ng-model="just.Opening" ng-blur="diffcalcfun(just.ItemSKUId,sectionname,just.Opening,just.BookQty,just.ItemCode,notconfirm)"></td>
+                  <td><input type="text" style="border: 0;width:80px;text-align: center" ng-model="just.Opening" ng-keydown="diffcalcfun($event,just.ItemSKUId,sectionname,just.Opening,just.BookQty,just.ItemCode,notconfirm)"></td>
                   <td style="width:90px">{{just.DiffQty}}</td>
                   <td style="width:80px;text-align: center">{{just.Sales}}</td>
                 </tr>
@@ -196,7 +197,7 @@
             <button type="button" class="btn-default">Enter Stock Point</button>
           </div>
           <div class="col-md-1">
-            <button type="button" class="btn-default" ng-click="closingtallyfun(notconfirm,date2.date1)" ng-disabled="isDisabled">Save</button>
+            <button type="button" class="btn-default" ng-click="closingtallyfun(notconfirm,date2.date1)">Save</button>
           </div>
           <div class="col-md-1">
             <button type="button" class="btn-default">Export</button>

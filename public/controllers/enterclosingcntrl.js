@@ -57,8 +57,6 @@ function($scope,$http,$window){
             console.log($scope.prevdate);
 
  }
- 
- 
  $scope.datefindfun();  
   $scope.validation=function(todaydate)
   {
@@ -90,7 +88,8 @@ function($scope,$http,$window){
             var  dates  = new Date(((new Date(voucherdate).toISOString().slice(0, 23))+"-05:30")).toISOString();
             var a = dates.split("T");
             var date = a[0];
-            console.log(date)
+            console.log(date);
+            $scope.isDisabled = true;
             var stockinwordtype="Yes";
             $scope.inpieces=null;
             $scope.outpieces=null;
@@ -205,8 +204,10 @@ function($scope,$http,$window){
       console.log(closingstock)
       $scope.notconfirm=closingstock;  
     }
-  $scope.diffcalcfun=function(itemsku,section,PhysicalQty,bookqty,itemcode)
+  $scope.diffcalcfun=function(event,itemsku,section,PhysicalQty,bookqty,itemcode)
   {
+    if(event.keyCode==13)
+       {
     $scope.diffqty=null;
     $scope.sales=null;
 //     $scope.calcbase;
@@ -251,6 +252,7 @@ function($scope,$http,$window){
        })//sectionratefetch
       })//openingconversion
      })//skuitemnamefetch
+  }//ng-ketdown
   }
    $scope.closinstockfun=function(closingsave,closingdate)
    {
@@ -273,8 +275,10 @@ function($scope,$http,$window){
             console.log(result99);
             
             closingsfun(y+1);
-          }) 
-                
+          })
+          $http.delete("/closingtallydelete").success(function(res29){
+            console.log(res29)
+          })
           }//ifclosingsfun
           }//closingsfun
           closingsfun(0);
@@ -352,4 +356,11 @@ function($scope,$http,$window){
        tallypush(0);
      })
    }
+//   $scope.checkcall=function(event,name)
+//   {
+//    if (event.keyCode==13)
+//      {
+//      alert(name)
+//      }
+//   }
   }]);

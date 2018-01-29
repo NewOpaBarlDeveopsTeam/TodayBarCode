@@ -175,7 +175,7 @@ select[disabled] { background-color:gainsboro;};
         <div class ="row3">
            <div class ="col-sm-7 padding-0 row">
               <label><span style="color: red;font-size: 25px;padding-top: 0px"><b>*</b></span>Item Code:</label>
-             <b><input list="itemname" name="itemname" id="idid" ng-model="itemcode" ng-blur="itemdetailsfetchfun(itemcode,date2.date1)" required></b>
+             <b><input list="itemname" name="itemname" id="idid" ng-model="itemcode" ng-keydown="itemdetailsfetchfun($event,itemcode,date2.date1)" required></b>
               <datalist id = "itemname">
                 <select ng-disabled="transactiontype == 'Opening Stock' && openingstockdate != date">
                   <option ng-repeat="item in itemdetails" ng-model="itemcode">{{item.ItemCode}}</option>
@@ -190,7 +190,7 @@ select[disabled] { background-color:gainsboro;};
               </select>
                </label>&nbsp;
               
-            <label><span style="color: red;font-size: 25px;padding-top: 0px"><b>*</b></span>Pieces:<input type = "Number" id="idid" ng-model="pieceNo" ng-blur="stockcalculation(umosize,pieceNo)"></label>
+            <label><span style="color: red;font-size: 25px;padding-top: 0px"><b>*</b></span>Pieces:<input type = "Number" id="idid" ng-model="pieceNo" ng-keydown="stockcalculation($event,umosize,pieceNo)"></label>
 <!--            </div>-->
              
 <!--            <div class = "col-sm-2 padding-0">-->
@@ -226,14 +226,15 @@ select[disabled] { background-color:gainsboro;};
 -->
 <!--          <div class = "col-sm-2">-->
             <span id ="rate" >
-              <label pull-left><span style="color: red;font-size: 25px;padding-top: 0px"><b>*</b></span>Rate:<input type = "number | number:3" id="idid" style="height: 40px;width: 100px;color:blue;font-size: 30px" ng-model="finalrate" ng-blur = "validationfunction()" required ng-disabled="transactiontype == 'Opening Stock' && openingstockdate != date" ></label>
+              <label pull-left><span style="color: red;font-size: 25px;padding-top: 0px"><b>*</b></span>Rate:<input type = "number | number:3" id="idid" style="height: 40px;width: 100px;color:blue;font-size: 30px" ng-model="finalrate" ng-keydown="validationfunction($event)" required ng-disabled="transactiontype == 'Opening Stock' && openingstockdate != date" ></label>
               </span>
           </div>
           
         </div>
         <br><br>
         <div class="outer" style="overflow: auto">
-            <table class="table table-bordered" style="overflow:auto">
+            <table class="table table-bordered" >
+              <div class="head" style="position: sticky;top: 0;z-index: 1;">
               <thead style="font-size: 15px">
 	    		<tr>
 	    			<th>Sl No</th>
@@ -247,6 +248,8 @@ select[disabled] { background-color:gainsboro;};
 	    			<th>Value</th>
 	    		</tr>
               </thead>
+              </div>
+              <div class="body">
               <tbody>
                 <tr ng-repeat = "purchase in purchaseitem1" ng-model="purchaseitem1">
                   <td ng-model="index">{{$index+1}}</td>
@@ -260,6 +263,7 @@ select[disabled] { background-color:gainsboro;};
                   <td ng-model="purchase.value">{{purchase.value| number : 3}}</td>
                 </tr>
               </tbody>
+              </div>
 	    	</table>
 	    	</div>
         <br>

@@ -4098,8 +4098,7 @@ app.get("/openingstock:openingstockvalue",function(req,res){
   openingstockid=parseInt(openingstockid);
   var closingdate=str_array[2];
   //console.log(voucherdate+"openingstockvaluevoucherdate");
-// db.ItemSKU.aggregate([
-//      {$match:{"POSName":openingbar}},
+//  }},
 //       { "$lookup": 
 //       {
 //        "from": "closingStock",
@@ -4269,6 +4268,11 @@ app.post("/closingstocksave:closingvalue",function(req,res){
   db.closingStock.insert({"ClosingStockId":closingid,"StockPointId":stockid,"ClosingDate":closingdate,"ItemCode":itemcode,"Opening":opening,"ItemSKUId":itemskuid,"In":inpieces,"Out":outpieces,"Closing":closing,"OpeningBase":openingbase,"OpeningCase":openingcase},function(err,doc){
     res.json(doc);
   })  
+})
+app.delete("/closingtallydelete",function(req,res){
+  db.closingStockTally.remove({},function(err,doc){
+    res.json(doc);
+  })
 })
 app.post("/closingstocktallysave:closingtally",function(req,res){
   var closingtally1=req.params.closingtally;
