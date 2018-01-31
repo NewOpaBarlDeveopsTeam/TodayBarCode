@@ -12,7 +12,7 @@ const assert = require('assert');
 var FileReader = require('filereader'), fileReader = new FileReader();
 
 var db=mongojs('restaurant',['images','feedbackmaster','orderfeedback','item','menu','service','category','resttypes','Kamat','Kamatorder','juiceorder','KamatOrder','user','tags','transaction','saleinvoice','mode','transactiondetail','batch','bank',
-  'transactionSeriesInvoice','itemrate','item','menu','order','useritem','purity','uom','pct','labcal','useradj',
+  'transactionSeriesInvoice','i temrate','item','menu','order','useritem','purity','uom','pct','labcal','useradj',
   'barcodesumm','stockpointmaster','configurations','inventorygroupmaster','salescategorymaster','itemtype','taxrate',
   'itemdata','tax','taxation','session','restaurantid','ChargesMaster','chargename','configurationmaster','stockBookDetail','stockBookHeader']);
 

@@ -73,11 +73,11 @@
         tbody td {
 
             width: 10%;
-
+            font-size: 18px;
             float: left;
         }
   </style>
-  <body ng-controller="EnterClosing" ng-cloak>
+  <body ng-cloak ng-controller="EnterClosing">
     <div class="container-fluid" id="div1">
       <h4><center>Enter Closing Stock</center></h4>
       <div class="main" id="div2">
@@ -111,46 +111,8 @@
           </div>
         </div>
         <br>
-        <div class="inside" id="div3" style="overflow-y: auto" >
-<!--          id="tabid" -->
-<!--
-            <table class="table table-bordered table-fixed" style="background-color: white">
-              <thead>
-                <tr>
-                  <th>No</th>
-                  <th>Item</th>
-                  <th>Itemcode</th>
-                  <th>ItemSKU</th>
-                  <th>Size</th>
-                  <th>Open</th>
-                  <th>In</th>
-                  <th>Out</th>
-                  <th>BookQty</th>
-                  <th>PhysicalQty</th>
-                  <th>DiffQty</th>
-                  <th>Sales</th>
-                </tr>
-              </thead>
-              
-              <tbody>
-                <tr ng-repeat="just in notconfirm">
-                  <td>{{$index+1}}</td>
-                  <td>{{just.itemname}}</td>
-                  <td>{{just.itemcode}}</td>
-                  <td>{{just.itemskuid}}</td>
-                  <td>{{just.uom}}</td>
-                  <td>{{just.openingstock}}</td>
-                  <td>{{just.inpieces | number : 2}}</td>
-                  <td>{{just.outpieces | number : 2}}</td>
-                  <td>{{just.bookqty | number : 2}}</td>
-                  <td><input type="text" style="border: 0;width:100px" ng-model="physicalqty" ng-blur="diffcalcfun(just.itemskuid,sectionname,physicalqty,just.bookqty,just.itemcode)"></td>
-                  <td>{{just.diffqty}}</td>
-                  <td>{{just.sales}}</td>
-                </tr>
-              </tbody>
-            </table> 
--->
-          <table class="table" style="background-color: white">
+        <div ng-cloak class="inside" id="div3" style="overflow-y: auto">
+          <table ng-cloak class="table" style="background-color: white" id="target">
           <thead id="thead">
           <tr>
                   <th style="width: 30px">No</th>
@@ -200,7 +162,7 @@
             <button type="button" class="btn-default" ng-click="closingtallyfun(notconfirm,date2.date1)">Save</button>
           </div>
           <div class="col-md-1">
-            <button type="button" class="btn-default">Export</button>
+            <button type="button" class="btn-default" id="btnExport">Export</button>
           </div>
           <div class="col-md-1">
             <button type="button" class="btn-default">Close</button>
@@ -213,4 +175,28 @@
   </body>
 <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
 <script type="text/javascript" src="controllers/enterclosingcntrl.js"></script>
+  
+    <script type="text/javascript">
+$(document).ready(function() {
+    $("#btnExport").click(function(e) {
+        var dt = new Date();
+        var day = dt.getDate();
+        var month = dt.getMonth() + 1;
+        var year = dt.getFullYear();
+        // var hour = dt.getHours();
+        // var mins = dt.getMinutes();
+        var postfix = day + "." + month + "." + year;
+        var a = document.createElement('a');
+        var data_type = 'data:application/vnd.ms-excel';
+        var table_div = document.getElementById('target');
+        var table_html = table_div.outerHTML.replace(/ /g, '%20');
+        a.href = data_type + ', ' + table_html;
+        a.download = 'GroupItem-' + postfix + '.pdf';
+        a.click();
+        e.preventDefault();
+    });
+});
+</script>
+
 </html>
+ 

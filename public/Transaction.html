@@ -234,8 +234,8 @@ select[disabled] { background-color:gainsboro;};
         <br><br>
         <div class="outer" style="overflow: auto">
             <table class="table table-bordered" >
-              <div class="head" style="position: sticky;top: 0;z-index: 1;">
-              <thead style="font-size: 15px">
+<!--              <div class="head" style="position: sticky;top: 0;z-index: 1;">-->
+              <thead style="font-size: 17px">
 	    		<tr>
 	    			<th>Sl No</th>
 	    			<th>Item</th>
@@ -248,9 +248,8 @@ select[disabled] { background-color:gainsboro;};
 	    			<th>Value</th>
 	    		</tr>
               </thead>
-              </div>
-              <div class="body">
-              <tbody>
+ 
+              <tbody style="font-size: 17px">
                 <tr ng-repeat = "purchase in purchaseitem1" ng-model="purchaseitem1">
                   <td ng-model="index">{{$index+1}}</td>
                   <td ng-model="purchase.item">{{purchase.item}}</td>
@@ -263,7 +262,6 @@ select[disabled] { background-color:gainsboro;};
                   <td ng-model="purchase.value">{{purchase.value| number : 3}}</td>
                 </tr>
               </tbody>
-              </div>
 	    	</table>
 	    	</div>
         <br>
