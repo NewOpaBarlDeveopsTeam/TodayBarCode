@@ -1,4 +1,4 @@
-<html ng-app="myapp">
+ <html ng-app="myapp">
 <head>
 	  <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -42,6 +42,10 @@
   	background-color: white ;
 
   	   }
+  .selected {
+	background-color:blue;
+	 
+}
   	   .col-md-8{
   	border:2px solid;
   	height:530;
@@ -102,6 +106,7 @@
 		<div class="col-md-4"> 
 		       <table class="table table-bordered" style="width:100%">
 		       	<tr>
+		       	
 		       		<th>T...</th>
 		       		 
 		       		<th> WAITER</th>
@@ -111,17 +116,21 @@
 		       		<th> TIME</th>
 		       		 
 		       	</tr>
-		       	<tr ng-repeat="t in shivanew">
-                   <td>{{t.tablename}}</td>
+		       	<tbody>
+<tr ng-repeat="t in shivanew" ng-class="{'selected':$index == index1}"      
+              ng-click="setClickedRow($index,t.tablename)">
+	               
+                   <td ng-model="t.tablename">{{t.tablename}}</td>
                    <td>{{t.waitername}}</td>
-                   <td></td>
-                   <td></td>
+                   <td>{{t.allrateqty}}</td>
+                   <td>{{1}}</td>
 
 		       		<!-- <td>{{tablename}}</td>
 		       		<td>{{waitername}}</td>
 		       		<td>{{wholerate}}</td>
 		       		<td>1</td> -->
 		       	</tr>
+		       </tbody>
 		       </table>
 		     
 			</div>

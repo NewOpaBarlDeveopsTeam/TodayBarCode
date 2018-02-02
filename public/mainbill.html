@@ -1,0 +1,185 @@
+<html ng-app="myapp2">
+<head>
+    <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  <title>Main Bill</title>
+</head>
+<style>
+.container-fluid
+      {
+        border:2px solid ;
+        height:1000px;
+        width: 1100px;
+        margin-top: 10px;
+        margin-left: 10px;
+      }
+  .container
+  {
+      /*  border:2px solid;*/
+        height:920px;
+        margin-top: 10px;
+        width: 1050px;
+        margin-left: 10px;
+        background-color: #eee;
+  }
+  .p1{
+    margin-left:400px;
+    margin-top: 820px;
+
+  }
+  .div1{
+         height:580px;
+        margin-top: 30px;
+        width: 1020px;
+        margin-left: 5px;
+        background-color: lightgrey;
+      }
+    .div2
+    {
+         height:100px;
+         width:300px;
+         border:1px solid black;
+         background-color:rgb(240, 240, 240);
+         margin-left:500px;
+         margin-top: -80px;
+    }
+
+    .div3
+    {
+         height:400px;
+         width:1000px;
+         border:2px solid black;
+        background-color:rgb(120, 120, 120);
+         margin-top: 10px;
+         margin-left:10px;
+         
+    }
+    th{
+     
+      background-color:blue;
+      color:white;
+    }
+    td{background-color: white}
+    input[type=number]{
+    background-color: #FFFF99;
+    }
+    span{
+      color:blue;
+    }
+
+</style>
+<body ng-controller="billctrl">
+
+  <div class="container-fluid">
+    <center><strong>BAR 2017 & 2018 -POS:RESTURANT CASHIER -USER ADMIN 1</center>
+      <div class="container">
+
+        <div class="div1">
+          <br>
+        
+        <strong><span style="margin-left: 58px"> BILL NO</strong> </span>  <input type="number" style="width:40px">
+          <input type="number" style="width:80px" value="1">
+          <input type="number" style="width:40px"><br><br>
+          <span style="margin-left: 40px;">BILL DATE</span>
+          <input type="date" style="width:170px" ng-model="date2.date1">
+
+          <div class="div2">
+            <br><br>
+           &nbsp; &nbsp;  &nbsp; <strong>TABLES</strong>&nbsp; &nbsp;  &nbsp;<select style="width:150px;border:2px black solid" ng-model="tablename" ng-blur="billtable(tablename)">
+              <option ng-repeat="ta in billtables">{{ta._id.Tablename}}</option>
+                          <option></option>
+              
+                   </select>
+          </div>
+
+          <div class="div3">
+            <table class="table table-bordered">
+              <tr>
+                <th>CODE</th>
+                <th>ITEM NAME</th>
+                <th>QTY</th>
+                <th>PIECES</th>
+                <th>UOM</th>
+                <th>MRP</th>
+                <th>ITEM VALUE</th>
+                <th>DISC GIVEN</th>
+                <th>DISC IN</th>
+                <th>DISC VAL</th>
+                <th>TAX</th>
+                <th>TOTAL</th>
+              </tr>
+              <tr ng-repeat="to in kotmama">
+                <td>{{to.itemcode}}</td>
+                <td>{{to.itemname}}</td>
+                <td>{{to.uom}}</td>
+                <td>{{to.itemqty}}</td>
+                <td>{{to.uomcase}}</td>
+                <td>{{to.mrp}}</td>
+                <td>{{to.itemvalue}}</td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td></td>
+                <td>{{to.itemvalue}}</td>
+
+              </tr>
+            </table>
+
+          </div>
+  
+<br>
+<button style="margin-left:40px" class="btn btn-default"> DELETE</button>
+         &nbsp;&nbsp;&nbsp;&nbsp;
+         <span> TOTAL ITEMS</span>
+         <input type="number" style="width:100px;font-size:20;color:blue" ng-model="totalitems">
+         &nbsp;&nbsp;&nbsp;&nbsp;
+        <span> TOTAL QTY</span>
+         <input type="number" style="width:100px;font-size:20;color:blue" ng-model="totaluom">
+         
+         &nbsp;&nbsp;&nbsp;&nbsp;
+          <span> TOTAL pcs</span>
+         <input type="number" style="width:100px;font-size:20;color:blue" ng-model="totalqty">
+
+        </div>
+        <span style="margin-left:110px"> ITEM VALUE TOTAL</span>
+        <input type="number" style="width:100px;font-size:20;color:blue" ng-model="itemvaluetotal">
+
+       <span style="margin-left:16px"> DISC TOTAL</span>
+        <input type="number" style="width:100px">
+       
+       <span style="margin-left:16px"> TAX TOTAL</span>
+        <input type="number" style="width:100px">
+
+        <span style="margin-left:16px"> ITEM TOTAL</span>
+        <input type="number" style="width:100px;font-size:20;color:blue"" ng-model="itemvaluetotal">
+
+        <br><br><br>
+         <span style="margin-left:250px;font-size:25px"> steward:w</span><br>
+         <span style="margin-left:250px;font-size:25px">covers:0</span>
+          
+        <span style="margin-left:400px;height:10px"> ROUND OFF</span>
+        <input type="number" style="width:100px"><br><br>
+
+        <span style="margin-left:760px"> BILL TOTAL</span>
+        <input type="number" style="width:100px"><br>
+        <span style="margin-left:760px"> RECIEPTS</span>
+       &nbsp;&nbsp; <input type="number" style="width:100px"><br><br>
+
+        <span style="margin-left:760px">RECIVABLE</span>
+        <input type="number" style="width:100px"><br>
+     
+       <button class="btn btn-primary" style="margin-left:400px">PINDING</button>
+        <button class="btn btn-success" style="margin-left:20px">SAVE</button>
+
+      </div>
+       <button class="btn btn-danger" style="margin-left:10px">CLOSE</button>
+        <button class="btn btn-warning" style="margin-left:890px">CANCEL</button>
+  </div>
+</body>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/ngstorage/0.3.6/ngStorage.min.js"></script> 
+    <script type="text/javascript" src="controllers/mainorderctrl.js"></script> 
+</html>

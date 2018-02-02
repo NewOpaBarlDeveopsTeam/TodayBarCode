@@ -4572,7 +4572,8 @@ db.DiscountByItem.insert({"ItemId":itemid,"Discount":disc,"DiscountByMasterId":r
 
 /////////////////////////////MAIN TABLE ORDER FROM SHIVA///////////////////////////
 
-app.get('/maincode:login',function(req,res)
+
+ app.get('/maincode:login',function(req,res)
 {
     var logs=req.params.login;
    
@@ -4585,7 +4586,7 @@ app.get('/maincode:login',function(req,res)
    })
 
 })
-
+//////////////////// MAIN TABLE SALE FROM SHIVA//////////////
  app.get('/mainuom:login',function(req,res)
 {
     var logs=req.params.login;
@@ -4598,6 +4599,40 @@ app.get('/maincode:login',function(req,res)
    })
 
 })
+
+  app.get('/uoo',function(req,res)
+{
+  
+
+
+ db.ItemSKU.aggregate([
+        {$match:{"POSName":"Bar"}},
+
+
+ { "$lookup": 
+       {
+        "from": "UOMSizeMaster",
+        "localField":  "UOMSize",
+        "foreignField": "UOMSizeMasterID",
+        "as": "uom"
+        }},
+// 
+{$unwind:"$uom"},
+ {$project:{"ItemSKUID":1,"UOMSize":1,"ItemCode":1,"ItemName":1,"uom.UOMSize":1}},
+],function(err,doc){
+    res.json(doc);
+})
+
+
+ 
+    
+   
+
+})
+
+
+
+
  app.get('/getqty:uoid',function(req,res)
 {
     var uids=req.params.uoid;
@@ -4756,6 +4791,7 @@ app.get("/kotitemnamefetch:kotitemcode",function(req,res){
          var itemcode=str[0];
          console.log(itemcode);
          var itemqty=str[1];
+         var itemqty=parseInt(itemqty)
          console.log(itemqty+"qtyyyyyyyy");
          var kono=str[2];
          console.log(kono);
@@ -4798,6 +4834,7 @@ app.get("/kotitemnamefetch:kotitemcode",function(req,res){
 
          var secid=str[5];
          console.log(secid);
+          secid=parseInt(secid);
       
 
          db.KotMaster.insert({"TabId":tabid,"WaiterId":waitid,"KotNo":kono,
@@ -5067,6 +5104,418 @@ app.get('/idget:id123',function(req,res){
 
 })  
 
+ app.get("/tabres",function(req,res){
+
+//  db.TableMaster.aggregate([
+// {$project:{"TableName":1,"TabId":1}},
+// {$group:{_id:{Tablename:"$TableName","tabid":"$TabId"}}},
+// {$unwind:"$_id"},
+
+//               {
+//    $lookup:
+//      {
+//        from: "KotMaster",
+//        localField: "_id.tabid",
+//        foreignField: "TabId",
+//        as: "kott"
+//      }
+     
+// },
+// {$unwind:"$kott"},
+//  {   "$project": {
+//             "kott.WaiterId": 1,  
+//             "kott.KotNo" : 1,
+//             "kott.SectionId" : 1
+         
+//         }
+//     },
+    
+//      {
+//    $lookup:
+//      {
+//        from: "TableMapping",
+//        localField: "kott.WaiterId",
+//        foreignField: "waiterId",
+//        as: "waiter"
+//      }
+     
+// },
+// {$unwind:"$waiter"},
+//  {   "$project": {
+//             "kott.WaiterId": 1,  
+//             "kott.KotNo" : 1,
+//             "kott.SectionId" : 1,
+//             "waiter.WaiterName":1
+         
+//         }
+//     },
+    
+    
+    
+          
+//     {
+//    $lookup:
+//      {
+//        from: "KotTrans",
+//        localField: "kott.KotNo",
+//        foreignField: "KotNo",
+//        as: "items"
+//      }
+     
+// },
+// {$unwind:"$items"},
+//  {   "$project": {
+//             "items.ItemSkuid": 1,  
+//             "items.ItemCode" : 1,
+//             "items.qty" : 1,
+//               "kott.KotNo" : 1,
+//             "kott.SectionId" : 1,
+//             "waiter.WaiterName":1
+         
+//         }
+//     },
+//         {
+//    $lookup:
+//      {
+//        from: "ItemSKURate",
+//        localField: "items.ItemSkuid",
+//        foreignField: "ItemSKUID",
+//        as: "rates"
+//      }
+     
+// },
+// {$unwind:"$rates"},
+  
+// { "$project" :{"rates.SaleRate":1,"waiter.WaiterName":1,"items.ItemCode" : 1, "items.ItemSkuid": 1,"items.qty" : 1,"kott.KotNo" : 1,"kott.SectionId":1,cmpTo250: { $cmp: ["$rates.SectionId","$kott.SectionId"] }
+//               }},
+//             {$match:{"cmpTo250" : 0}}
+
+
+//////////// FOR NEW ETRYS IN RUNNING TABLES
+
+db.TableMaster.aggregate([
+{$project:{"TableName":1,"TabId":1}},
+{$group:{_id:{Tablename:"$TableName",tabid:"$TabId"}}},
+              {
+   $lookup:
+     {
+       from: "KotMaster",
+       localField: "_id.tabid",
+       foreignField: "TabId",
+       as: "kott"
+     }
+     
+ },
+ {$unwind:"$kott"},
+ 
+
+ 
+             {
+   $lookup:
+     {
+       from: "TableMapping",
+       localField: "kott.WaiterId",
+       foreignField: "waiterId",
+       as: "waiter"
+     }  
+},
+    {$unwind:"$waiter"},
+     {$project:{"kott.WaiterId":1,
+                "kott.KotNo":1,
+               "kott.SectionId":1,
+                 "waiter.WaiterName":1              
+                }},
+    {
+       $lookup:
+     {
+       from: "KotTrans",
+       localField: "kott.KotNo",
+       foreignField: "KotNo",
+       as: "items"
+     }  
+},
+   {$unwind:"$items"}, 
+      {
+       $lookup:
+     {
+       from: "ItemSKURate",
+       localField: "items.ItemSkuid",
+       foreignField: "ItemSKUID",
+       as: "rate"
+     }  
+},
+   {$unwind:"$rate"},
+{   "$project": {
+            "items.ItemCode": 1,
+            "items.qty": 1, 
+            "items.ItemSkuid": 1,
+            "waiter.WaiterName": 1,
+            "waiter.WaiterName": 1,
+            "TableName": 1, 
+            "TabId":1,
+            "kott.WaiterId":1,
+            "kott.KotNo":1,
+            "kott.SectionId":1,
+            "rate.SectionId":1,
+            "rate.SaleRate" :1,
+            cmpTo250: { $cmp: ["$kott.SectionId","$rate.SectionId"] }
+              }},
+            {$match:{"cmpTo250" :0}},
+   {$group:{_id:{Tablename:"$_id.Tablename",qts:"$items.qty",tabid:"$_id.tabid",waitername:"$waiter.WaiterName",salerate:"$rate.SaleRate"}}},  
+      
+             { $project: { "_id.Tablename": 1, "_id.waitername": 1, total: { $multiply: [ "$_id.qts", "$_id.salerate" ] } } },
+            
+            {$group:{_id:{Table:"$_id.Tablename",waitername:"$_id.waitername"},rate:{$sum:"$total"}}}
+
+
+            
+           //{$group:{_id:{Tablename:"$_id.Tablename",qts:"$items.qty",tabid:"$_id.tabid",waitername:"$waiter.WaiterName",salerate:"$rate.SaleRate"}}},  
+     // {$group:{_id:{Table:"$_id.Tablename",waitername:"$_id.waitername"},rate:{$sum:"$_id.salerate"},qqq:{$sum:"$_id.qts"}}}
+                         ],function(err,doc){
+  res.json(doc);
+  })
+   })
+
+
+
+
+
+
+// db.TableMaster.aggregate([
+// {$project:{"TableName":1,"TabId":1}},
+// {$group:{_id:{Tablename:"$TableName",tabid:"$TabId"}}},
+//               {
+//    $lookup:
+//      {
+//        from: "KotMaster",
+//        localField: "_id.tabid",
+//        foreignField: "TabId",
+//        as: "kott"
+//      }
+     
+//  },
+//  {$unwind:"$kott"},
+ 
+
+ 
+//              {
+//    $lookup:
+//      {
+//        from: "TableMapping",
+//        localField: "kott.WaiterId",
+//        foreignField: "waiterId",
+//        as: "waiter"
+//      }  
+// },
+//     {$unwind:"$waiter"},
+//      {$project:{"kott.WaiterId":1,
+//                 "kott.KotNo":1,
+//                "kott.SectionId":1,
+//                  "waiter.WaiterName":1              
+//                 }},
+//     {
+//        $lookup:
+//      {
+//        from: "KotTrans",
+//        localField: "kott.KotNo",
+//        foreignField: "KotNo",
+//        as: "items"
+//      }  
+// },
+//    {$unwind:"$items"}, 
+//       {
+//        $lookup:
+//      {
+//        from: "ItemSKURate",
+//        localField: "items.ItemSkuid",
+//        foreignField: "ItemSKUID",
+//        as: "rate"
+//      }  
+// },
+//    {$unwind:"$rate"},
+// {   "$project": {
+//             "items.ItemCode": 1,
+//             "items.qty": 1, 
+//             "items.ItemSkuid": 1,
+//             "waiter.WaiterName": 1,
+//             "waiter.WaiterName": 1,
+//             "TableName": 1, 
+//             "TabId":1,
+//             "kott.WaiterId":1,
+//             "kott.KotNo":1,
+//             "kott.SectionId":1,
+//             "rate.SectionId":1,
+//             "rate.SaleRate" :1,
+//             cmpTo250: { $cmp: ["$kott.SectionId","$rate.SectionId"] }
+//               }},
+//             {$match:{"cmpTo250" :0}},
+//            {$group:{_id:{Tablename:"$_id.Tablename",tabid:"$_id.tabid",waitername:"$waiter.WaiterName",salerate:"$rate.SaleRate"}}},  
+//          // {$group:{_id:{Table:"$_id.Tablename",waitername:"$_id.waitername"},rate:{$sum:"$_id.salerate"}}}
+//           {$group:{_id:{Table:"$_id.Tablename",waitername:"$_id.waitername"},rate:{$sum:"$_id.salerate"},qqq:{$sum:"$_id.qts"}}}
+//                  ],function(err,doc){
+//  res.json(doc);
+//  })
+//   })
+
+
+// db.TableMaster.aggregate([
+// {$project:{"TableName":1,"TabId":1}},
+//               {
+//    $lookup:
+//      {
+//        from: "KotMaster",
+//        localField: "TabId",
+//        foreignField: "TabId",
+//        as: "kott"
+//      }
+     
+// },
+//  {$unwind:"$kott"},
+ 
+//              {
+//    $lookup:
+//      {
+//        from: "TableMapping",
+//        localField: "kott.WaiterId",
+//        foreignField: "waiterId",
+//        as: "waiter"
+//      }  
+// },
+//     {$unwind:"$waiter"},
+    
+//     {
+//        $lookup:
+//      {
+//        from: "KotTrans",
+//        localField: "kott.KotNo",
+//        foreignField: "KotNo",
+//        as: "items"
+//      }  
+// },
+//    {$unwind:"$items"}, 
+//       {
+//        $lookup:
+//      {
+//        from: "ItemSKURate",
+//        localField: "items.ItemSkuid",
+//        foreignField: "ItemSKUID",
+//        as: "rate"
+//      }  
+// },
+//    {$unwind:"$rate"},
+// {   "$project": {
+//             "items.ItemCode": 1,
+//             "items.qty": 1, 
+//             "items.ItemSkuid": 1,
+//             "waiter.WaiterName": 1,
+//             "waiter.WaiterName": 1,
+//             "TableName": 1, 
+//             "TabId":1,
+//             "kott.WaiterId":1,
+//             "kott.KotNo":1,
+//             "kott.SectionId":1,
+//             "rate.SectionId":1,
+//             "rate.SaleRate" :1,
+//             cmpTo250: { $cmp: ["$kott.SectionId","$rate.SectionId"] }
+//               }},
+//             {$match:{"cmpTo250" :0}},
+//            {$group:{_id:{Tablename:"$TableName",qunty:"$items.qty",waitername:"$waiter.WaiterName",kotN0:"$kott.KotNo",skuid:"$items.ItemSkuid",salerate:"$rate.SaleRate"}}},  
+//           {$group:{_id:{Table:"$_id.Tablename",qty:"$_id.qunty",waitername:"$_id.waitername"},rate:{$sum:"$_id.salerate"}}}
+//         ],function(err,doc){
+// res.json(doc);
+// })
+//  })
+
+
+/////////////////////////////////////////////////////////////
+   app.get('/billingtable',function(req,res)
+{   
+db.TableMaster.aggregate([
+{$project:{"TableName":1}},
+{$group:{_id:{Tablename:"$TableName"}}}
+],function(err,doc){
+res.json(doc);
+})
+})
+
+
+   app.get("/billtab:tabnames",function(req,res){
+     var tabname=req.params.tabnames;
+     console.log(tabname+"tttttttttttttttt")
+     db.TableMapping.find({"TableName":tabname},function(err,doc)
+     {
+        res.json(doc);
+     })
+
+})
+
+app.get("/gotabid:tabid",function(req,res){
+
+    var tabid=req.params.tabid
+    console.log(tabid)
+    db.KotMaster.find({"TabId":tabid},function(err,doc){
+        res.json(doc);
+    })
+
+})
+
+app.get("/gotkotid:kot1",function(req,res){
+
+    var kot1=req.params.kot1
+    console.log(kot1+"yashwanthh999999999999999999");
+    console.log(typeof(kot1))
+    db.KotTrans.find({"KotNo":kot1},function(err,doc){
+        res.json(doc);
+    })
+})  
+
+app.get("/kotitemskuid:skkk",function(req,res){
+    console.log("bbbbbbbbbbbbbbbbhhhhhhhhhhhhhhhhhhhhhhhhhhh")
+    var skid=req.params.skkk;
+    console.log(skid);
+    //console.log(typeof(skid))
+    var skid=parseInt(skid);
+    console.log(typeof(skid));
+db.ItemSKU.aggregate([
+{$match:{ItemSKUID:skid}},
+{"$lookup":
+    {
+        "from":"UOMConversion",
+        "localField":"UOMSize",
+        "foreignField":"UOMSizeMasterID",
+        "as":"uom"
+     }},
+     {"$unwind":"$uom"},
+     {"$lookup":
+    {
+        "from":"UOM",
+        "localField":"UOMID",
+        "foreignField":"UOMID",
+        "as":"uomid"
+     }},
+     
+      {"$lookup":
+    {
+        "from":"ItemSKURate",
+        "localField":"ItemSKUID",
+        "foreignField":"ItemSKUID",
+        "as":"rate"
+     }},
+     {"$unwind":"$uomid"},
+   {$project:{"uom.BaseQty":1,"UOMSize":1,"uomid.UOM":1,"rate.SectionId":1,"rate.SaleRate":1}},
+   {"$unwind":"$rate"},
+       
+      { $match : {"rate.SectionId":1}} ,
+     
+//      {$project:{"uom.BaseQty":1,"UOMSize":1,"uomid.UOM":1}},
+//      {$group:{_id:{uomsize:"$UOMSize",uom:"$uomid.UOM",baseqty:"$uom.BaseQty"}}}
+
+
+] ,function(err,doc){
+res.json(doc);
+})
+
+})
 
 
 var port=7000;  

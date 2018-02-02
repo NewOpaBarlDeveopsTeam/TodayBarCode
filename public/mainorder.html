@@ -162,9 +162,9 @@ P{
 				  				</tr>
 				  			</thead>
 				  			<tbody   style="overflow:auto">
-				  				<tr ng-repeat="co in codes"  ng-class="{'selected':$index == index1}"  ng-click="setClickedRow($index,co.ItemName,co.ItemCode)">
+				  				<tr ng-repeat="co in alluo"  ng-class="{'selected':$index == index1}"  ng-click="setClickedRow($index,co.ItemName,co.ItemCode)">
 				  					<td ng-model="co.ItemName">{{co.ItemName}}</td>
-				  					<td>{{co.UOMSize}}</td>
+				  					<td>{{co.uom.UOMSize}}</td>
 				  					<td ng-model="co.ItemCode">{{co.ItemCode}}</td>
 
 				  				</tr>

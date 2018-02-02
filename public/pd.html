@@ -1,0 +1,123 @@
+ <html ng-app="myapp1">
+<head>
+ <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+<!-- <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script> -->
+
+    <title>KOT</title>  
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.20/pdfmake.min.js'></script>
+        <script src='https://cdnjs.cloudflare.com/ajax/libs/pdfmake/0.1.20/vfs_fonts.js'></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/0.4.1/html2canvas.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/1.0.272/jspdf.debug.js"></script>
+       <!--  <body>
+    <p id="to-pdf">HTML content...</p>
+</body> -->
+<script type="text/javascript">
+function exportPDF()
+{
+  //alert(pdf function call)
+var pdf = new jsPDF('p','pt','a4');
+pdf.addHTML(document.body,function() {
+    pdf.save('web.pdf');
+});
+}
+</script>
+<style>
+#div1{
+	border:1px solid;
+	height:300px;
+	width:300px;
+	margin-left:20px;
+	margin-top:50px;
+}
+.maindiv{
+	border:1px solid;
+	height:650px;
+	width:350px;
+	margin-left:290px;
+}
+table{
+	border-collapse: collapse;
+	width:100%;
+}
+th{
+	border:1px solid;
+}
+.div2
+{
+     border:1px solid black;
+     height:20px;
+     width:300px;
+     margin-top:5px;
+     margin-left:20px;
+     
+}
+
+</style>
+
+<body ng-controller="kotctrl">
+<div class="maindiv" >
+	<p style="margin-left:90px"><strong>KITCHEN OREDR TICKET</strong></p>
+	<strong>DATE:: {{date}}            &nbsp;  &nbsp;   &nbsp;   &nbsp;   &nbsp;   &nbsp;   &nbsp;   &nbsp;   &nbsp;   &nbsp;   &nbsp;   &nbsp;   &nbsp;   &nbsp;   <strong>  
+	KOT NO::{{kot}}
+	<div id="div1" style="overflow:auto">
+		<table class="table table-bordered">
+			<tr>
+			<th>ITEMNAME</th>
+			<th>CODE</th>
+			<th>QTY</th>
+            </tr>
+            <tr ng-repeat="co in arrogant">
+            	<td>{{co.it11}}</td>
+            	<td>{{co.cd1}}</td>
+            	<td>{{co.qt1}}</td>
+            </tr>
+
+		</table>
+			</div>
+			<div class="div2">
+				<strong>NO OF ITEMS::{{length}}</strong>
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+				<strong>NO OF QTYS::{{qys}}</strong>
+				 
+		</div>
+
+</div>
+ <script src="script/jquery-3.2.1.min.js"></script>
+    <script src="script/FileSaver.js"></script>
+    <script src="script/jquery.wordexport.js"></script>
+    <script>
+    $('.word-export').ready(function(event){
+        setTimeout(function(){
+        $('.maindiv').wordExport("Template").trigger('click');
+      },1000);
+      });
+    </script>
+</body>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.0/angular.min.js"></script>
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/ngstorage/0.3.6/ngStorage.min.js"></script> 
+    <script type="text/javascript" src="controllers/mainorderctrl.js"></script> 
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
